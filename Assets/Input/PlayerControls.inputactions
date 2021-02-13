@@ -1,5 +1,5 @@
 {
-    "name": "Controls",
+    "name": "PlayerControls",
     "maps": [
         {
             "name": "Player",
@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Light",
+                    "name": "LightAttack",
                     "type": "Button",
                     "id": "f99540c8-022b-4559-a410-51ce89ce0dd1",
                     "expectedControlType": "Button",
@@ -22,7 +22,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Heavy",
+                    "name": "HeavyAttack",
                     "type": "Button",
                     "id": "196de06e-c96d-4e50-9414-17d76ace1f57",
                     "expectedControlType": "Button",
@@ -62,7 +62,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Light",
+                    "action": "LightAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -73,7 +73,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardAndMouse",
-                    "action": "Light",
+                    "action": "LightAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -84,7 +84,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Heavy",
+                    "action": "HeavyAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -95,7 +95,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardAndMouse",
-                    "action": "Heavy",
+                    "action": "HeavyAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -166,7 +166,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "2D Vector",
+                    "name": "Joystick",
                     "id": "82422ab1-ed4c-4cfe-8ab2-418b45df0fe2",
                     "path": "2DVector(mode=2)",
                     "interactions": "",
@@ -221,7 +221,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "2D Vector",
+                    "name": "WASD",
                     "id": "f09c0502-20bf-40af-9e3b-2645fca206ef",
                     "path": "2DVector",
                     "interactions": "",

@@ -43,7 +43,15 @@
                     "id": "ef729377-4842-4a78-86ff-0f2956589c6a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold"
+                    "interactions": "Press"
+                },
+                {
+                    "name": "StopBlock",
+                    "type": "Button",
+                    "id": "99a9e73c-a008-4bae-9956-13b3604df79f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)"
                 },
                 {
                     "name": "Interact",
@@ -332,6 +340,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "StopSprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aec321c1-1b96-43b6-bbb5-542b1b9500aa",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "StopBlock",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f32dd6a7-2cc7-4761-9cf1-62b8c9f1763a",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAndMouse",
+                    "action": "StopBlock",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

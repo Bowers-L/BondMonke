@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-//Input System is used for input
+//InputSystem package is used for input
 public class PlayerInputController : MonoBehaviour
 {
     public PlayerControls controls;
@@ -47,6 +47,7 @@ public class PlayerInputController : MonoBehaviour
     public bool Sprint
     {
         get;
+
         private set;
     }
 
@@ -56,6 +57,9 @@ public class PlayerInputController : MonoBehaviour
         controls.Player.Enable();
 
         //setup callbacks/actions associated with each control
+        //Actions can be added/deleted by going under Assets/Input/PlayerControls and setting them in the UI.
+        //They can also be added at runtime in code by using: var action = new InputAction("name", Binding: "<Configuration>/Binding");
+
         controls.Player.Movement.performed +=       ctx => Movement = GetMovement(ctx.ReadValue<Vector2>());
         controls.Player.Movement.canceled +=        ctx => Movement = Vector2.zero;
 
@@ -67,8 +71,10 @@ public class PlayerInputController : MonoBehaviour
 
         controls.Player.Block.performed +=          ctx =>  Block = true;
 
+        
         controls.Player.Sprint.performed +=         ctx => Sprint = true;
-        controls.Player.Sprint.canceled +=          ctx => Sprint = false;
+        controls.Player.StopSprint.performed +=     ctx => Sprint = false;
+        
     }
 
     Vector2 GetMovement(Vector2 rawInput)

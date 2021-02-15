@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     public float animationSpeed;
     public float rootMotionMovementSpeed;
 
+    private static int blockTimes = 0;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -34,6 +36,12 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("MovementX", input.Movement.x);
         animator.SetFloat("MovementY", input.Movement.y);
         animator.SetBool("Sprint", input.Sprint);
+
+        if (input.Block)
+        {
+            Debug.Log("Player is blocking: " + blockTimes);
+            blockTimes++;
+        }
     }
 
     /*

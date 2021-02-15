@@ -70,9 +70,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": ""Sprint"",
                     ""type"": ""PassThrough"",
                     ""id"": ""d9b8fe78-89a0-4170-aa36-fce3a0b8fd26"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Hold""
+                },
+                {
+                    ""name"": ""StopSprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""cea0328e-9f1f-4aae-9c63-1f0b057c2b77"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press(behavior=1)""
                 }
             ],
             ""bindings"": [
@@ -317,6 +325,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ae26dcd9-db2e-4220-9067-50e681c74628"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardAndMouse"",
+                    ""action"": ""StopSprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de182bb9-a3d0-4aa5-b664-e3b0ec76b654"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""StopSprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -343,6 +373,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Player_StopSprint = m_Player.FindAction("StopSprint", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -399,6 +430,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Block;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Sprint;
+    private readonly InputAction m_Player_StopSprint;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -410,6 +442,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Block => m_Wrapper.m_Player_Block;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+        public InputAction @StopSprint => m_Wrapper.m_Player_StopSprint;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -440,6 +473,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Sprint.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
                 @Sprint.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
                 @Sprint.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
+                @StopSprint.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStopSprint;
+                @StopSprint.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStopSprint;
+                @StopSprint.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnStopSprint;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -465,6 +501,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
+                @StopSprint.started += instance.OnStopSprint;
+                @StopSprint.performed += instance.OnStopSprint;
+                @StopSprint.canceled += instance.OnStopSprint;
             }
         }
     }
@@ -496,5 +535,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnBlock(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnStopSprint(InputAction.CallbackContext context);
     }
 }

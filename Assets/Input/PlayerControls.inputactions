@@ -57,9 +57,17 @@
                     "name": "Sprint",
                     "type": "PassThrough",
                     "id": "d9b8fe78-89a0-4170-aa36-fce3a0b8fd26",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold"
+                },
+                {
+                    "name": "StopSprint",
+                    "type": "Button",
+                    "id": "cea0328e-9f1f-4aae-9c63-1f0b057c2b77",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press(behavior=1)"
                 }
             ],
             "bindings": [
@@ -302,6 +310,28 @@
                     "processors": "",
                     "groups": "KeyboardAndMouse",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ae26dcd9-db2e-4220-9067-50e681c74628",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAndMouse",
+                    "action": "StopSprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "de182bb9-a3d0-4aa5-b664-e3b0ec76b654",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "StopSprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

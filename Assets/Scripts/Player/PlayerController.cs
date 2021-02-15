@@ -8,24 +8,31 @@ public class PlayerController : MonoBehaviour
 {
 
     public PlayerInputController input;
-    public float playerSpeed;
+    public Animator animator;
+    public Rigidbody rb;
+
+    public float animationSpeed;
+    public float rootMotionMovementSpeed;
 
     private void Awake()
     {
-        
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
+
+        animator.applyRootMotion = true;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator.speed = animationSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(input.Movement);
-        this.transform.position += new Vector3(input.Movement.x, 0, input.Movement.y) * playerSpeed;
+        animator.SetFloat("MovementX", input.Movement.x);
+        animator.SetFloat("MovementY", input.Movement.y);
     }
 
     /*
@@ -47,7 +54,19 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Player uppercut");
     }
 
+    void OnAnimatorMove()
+    {
 
+        Vector3 newRootPosition = new Vector3(animator.rootPosition.x, this.transform.position.y, animator.rootPosition.z);
+        Debug.Log(newRootPosition);
+        Quaternion newRootRotation = animator.rootRotation;
+
+
+        newRootPosition = Vector3.LerpUnclamped(this.transform.position, newRootPosition, rootMotionMovementSpeed);
+
+        this.transform.position = newRootPosition;
+        this.transform.rotation = newRootRotation;
+    }
 
 
 }

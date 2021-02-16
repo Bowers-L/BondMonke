@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,6 +41,11 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("MovementX", input.Movement.x);
         animator.SetFloat("MovementY", input.Movement.y);
         animator.SetBool("Sprint", input.Sprint);
+
+        if (input.Block)
+        {
+            Debug.Log("Player is blocking.");
+        }
     }
 
     /*
@@ -61,9 +67,13 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Player uppercut");
     }
 
+    public void OnInteract()
+    {
+        Debug.Log("Player interacted");
+    }
+
     void OnAnimatorMove()
     {
-        Debug.Log(animator.GetFloat("MovementX"));
         Vector3 newRootPosition = new Vector3(animator.rootPosition.x, this.transform.position.y, animator.rootPosition.z);
         
 

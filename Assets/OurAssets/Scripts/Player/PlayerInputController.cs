@@ -68,6 +68,8 @@ public class PlayerInputController : MonoBehaviour
 
         controls.Player.Dodge.performed +=          ctx => playerController.OnDodge();
 
+        controls.Player.Interact.performed +=        ctx => playerController.OnInteract();
+
         //Im guessing there's a way to do these held actions more elegantly with only one action, but I haven't found it.
         controls.Player.Block.performed +=          ctx => Block = true;
         controls.Player.StopBlock.performed +=      ctx => Block = false;

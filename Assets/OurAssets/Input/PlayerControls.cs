@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Input/PlayerControls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/OurAssets/Input/PlayerControls.inputactions'
 
 using System;
 using System.Collections;
@@ -117,7 +117,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""54fdd440-5a5d-4893-b442-00377e04bce9"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",

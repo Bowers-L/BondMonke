@@ -63,8 +63,7 @@ public class PlayerController : MonoBehaviour
 
     void OnAnimatorMove()
     {
-        Debug.Log("Animator Moving");
-
+        Debug.Log(animator.GetFloat("MovementX"));
         Vector3 newRootPosition = new Vector3(animator.rootPosition.x, this.transform.position.y, animator.rootPosition.z);
         
 
@@ -74,7 +73,7 @@ public class PlayerController : MonoBehaviour
         this.transform.position = newRootPosition;
         //this.transform.rotation = newRootRotation;
 
-        transform.RotateAround(transform.position, transform.up, turnSpeed * animator.GetFloat("MovementX"));  //doing rotation programmatically
+        transform.RotateAround(transform.position, Vector3.up, turnSpeed * animator.GetFloat("MovementX"));  //doing rotation programmatically
     }
 
 

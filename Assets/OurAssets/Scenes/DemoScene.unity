@@ -121,6 +121,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &209406287 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2149887303298958259, guid: db58ca215850cbc4b98d6c358be595ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 2149887304733370544}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,12 +315,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eda56988d4a9854cb0a5c71d3ee8005, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 2000329412817815653}
-  followTrans: {fileID: 9043886346210011936}
-  smoothingPosSpeed: 1
+  playerTransform: {fileID: 209406287}
+  followTrans: {fileID: 2004028555}
+  smoothingPosSpeed: 2
   smoothingPosMaxSpeed: 100
-  smoothingRotSpeed: 10
-  smoothingRotMaxSpeed: 100
+  smoothingRotSpeed: 100
+  smoothingRotMaxSpeed: 300
 --- !u!1 &1150132806
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,11 +445,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &2000329412817815653 stripped
+--- !u!4 &2004028555 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 7119225067927332180, guid: 750df7f70fd973f4bab216beefae4cac,
+  m_CorrespondingSourceObject: {fileID: 6309278229493255261, guid: db58ca215850cbc4b98d6c358be595ca,
     type: 3}
-  m_PrefabInstance: {fileID: 8722918849769958705}
+  m_PrefabInstance: {fileID: 2149887304733370544}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2149887304733370544
 PrefabInstance:
@@ -515,7 +521,12 @@ PrefabInstance:
     - target: {fileID: 2149887303299259987, guid: db58ca215850cbc4b98d6c358be595ca,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149887304299887274, guid: db58ca215850cbc4b98d6c358be595ca,
+        type: 3}
+      propertyPath: turnSpeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2149887304299887274, guid: db58ca215850cbc4b98d6c358be595ca,
         type: 3}
@@ -526,6 +537,21 @@ PrefabInstance:
         type: 3}
       propertyPath: rootMotionMovementSpeed
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149887304299887277, guid: db58ca215850cbc4b98d6c358be595ca,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149887304299887277, guid: db58ca215850cbc4b98d6c358be595ca,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149887304299887277, guid: db58ca215850cbc4b98d6c358be595ca,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6309278229493255261, guid: db58ca215850cbc4b98d6c358be595ca,
         type: 3}
@@ -582,6 +608,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Brute Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119225067927173492, guid: 750df7f70fd973f4bab216beefae4cac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7119225067927332180, guid: 750df7f70fd973f4bab216beefae4cac,
         type: 3}
@@ -652,9 +683,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfca8b06c33a22249859f0f244756bcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &9043886346210011936 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 327741108723549713, guid: 750df7f70fd973f4bab216beefae4cac,
-    type: 3}
-  m_PrefabInstance: {fileID: 8722918849769958705}
-  m_PrefabAsset: {fileID: 0}

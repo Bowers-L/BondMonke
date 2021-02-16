@@ -16,10 +16,17 @@ public class CameraFollowPlayer : MonoBehaviour
     private Vector3 currVelForSmoothing;
     private Quaternion currRotForSmoothing;
 
+    private void Awake()
+    {
+        if (followTrans == null)
+        {
+            followTrans = GameObject.Find("FollowCamera").GetComponent<Transform>();
+        } 
+    }
     private void LateUpdate()
     {
         //smoothly transition to follow the player
-        this.transform.position = Vector3.SmoothDamp(this.transform.position, followTrans.position, ref currVelForSmoothing, smoothingPosSpeed, smoothingPosMaxSpeed);
+        this.transform.position = Vector3.SmoothDamp(this.transform.position, followTrans.position, ref currVelForSmoothing, 1.0f/smoothingPosSpeed, smoothingPosMaxSpeed);
         this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, Quaternion.LookRotation(playerTransform.position - followTrans.position + Vector3.up*1, Vector3.up), smoothingRotSpeed*Time.deltaTime);
     }
 }

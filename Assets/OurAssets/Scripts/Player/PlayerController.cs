@@ -23,8 +23,16 @@ public class PlayerController : MonoBehaviour
         {
             animator = GetComponentInChildren<Animator>();
         }
+        if (animator == null)
+        {
+            Debug.LogError("Player is missing animator component.");
+        }
 
         rb = GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Debug.LogError("Player is missing rigidbody component.");
+        }
 
         animator.applyRootMotion = true;
     }
@@ -60,6 +68,7 @@ public class PlayerController : MonoBehaviour
     public void OnLightAttack()
     {
         Debug.Log("Player punched");
+        animator.SetTrigger("Attack");
     }
 
     public void OnHeavyAttack()

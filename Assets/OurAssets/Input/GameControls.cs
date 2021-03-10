@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/OurAssets/Input/PlayerControls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/OurAssets/Input/GameControls.inputactions'
 
 using System;
 using System.Collections;
@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public class @PlayerControls : IInputActionCollection, IDisposable
+public class @GameControls : IInputActionCollection, IDisposable
 {
     public InputActionAsset asset { get; }
-    public @PlayerControls()
+    public @GameControls()
     {
         asset = InputActionAsset.FromJson(@"{
-    ""name"": ""PlayerControls"",
+    ""name"": ""GameControls"",
     ""maps"": [
         {
             ""name"": ""Player"",
@@ -465,8 +465,8 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_StopSprint;
     public struct PlayerActions
     {
-        private @PlayerControls m_Wrapper;
-        public PlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        private @GameControls m_Wrapper;
+        public PlayerActions(@GameControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @LightAttack => m_Wrapper.m_Player_LightAttack;
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;

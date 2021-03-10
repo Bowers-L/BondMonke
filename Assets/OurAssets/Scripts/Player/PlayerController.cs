@@ -56,6 +56,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Disable Player's Input map
+    void DisableInput()
+    {
+        input.enabled = false;
+    }
+
     /*
      * Input Callback Functions
      */
@@ -81,6 +87,9 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Player interacted");
     }
 
+    /*
+     * Animator callback
+     */
     void OnAnimatorMove()
     {
         Vector3 newRootPosition = new Vector3(animator.rootPosition.x, this.transform.position.y, animator.rootPosition.z);

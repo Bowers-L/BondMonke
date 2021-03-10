@@ -9,9 +9,10 @@ using UnityEngine.InputSystem;
 //InputSystem package is used for input
 public class PlayerInputController : MonoBehaviour
 {
-    public PlayerControls controls;
+    
     public PlayerController playerController;
 
+    private GameControls controls;
     private bool mapMovementToCircle = true;
 
     public Vector2 Movement
@@ -52,7 +53,11 @@ public class PlayerInputController : MonoBehaviour
 
     private void Awake()
     {
-        controls = new PlayerControls();
+        controls = GameManager.Instance.controls;
+        if (controls == null)
+        {
+            Debug.LogError("Could not find GameManager instance from PlayerInputController script.");
+        }
         controls.Player.Enable();
 
         //setup callbacks/actions associated with each control

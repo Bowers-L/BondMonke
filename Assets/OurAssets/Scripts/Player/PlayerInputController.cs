@@ -51,7 +51,7 @@ public class PlayerInputController : MonoBehaviour
         private set;
     }
 
-    private void Start()    //Start instead of Awake just to make sure the game manager has called its own Awake
+    private void Awake()
     {
         controls = GameManager.Instance.controls;
         if (controls == null)

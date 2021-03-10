@@ -8,13 +8,13 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 
-    public PlayerInputController input;
-    public Animator animator;
-    public Rigidbody rb;
-
     public float animationSpeed;
     public float rootMotionMovementSpeed;
     public float turnSpeed;
+
+    private PlayerInputController input;
+    private Animator animator;
+    private Rigidbody rb;
 
     private void Awake()
     {
@@ -32,6 +32,12 @@ public class PlayerController : MonoBehaviour
         if (rb == null)
         {
             Debug.LogError("Player is missing rigidbody component.");
+        }
+
+        input = GetComponent<PlayerInputController>();
+        if (input == null)
+        {
+            Debug.LogError("Player is missing PlayerInputController component.");
         }
 
         animator.applyRootMotion = true;
@@ -57,7 +63,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //Disable Player's Input map
-    void DisableInput()
+    public void DisableInput()
     {
         input.enabled = false;
     }

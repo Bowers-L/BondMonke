@@ -80,12 +80,13 @@ public class PlayerController : MonoBehaviour
     public void OnLightAttack()
     {
         Debug.Log("Player punched");
-        animator.SetTrigger("Attack");
+        animator.SetTrigger("LightAttack");
     }
 
     public void OnHeavyAttack()
     {
         Debug.Log("Player uppercut");
+        animator.SetTrigger("HeavyAttack");
     }
 
     public void OnInteract()

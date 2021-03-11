@@ -8,9 +8,9 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 
-    public float animationSpeed;
-    public float rootMotionMovementSpeed;
-    public float turnSpeed;
+    public float animationSpeed = 1.0f;
+    public float rootMotionMovementSpeed = 1.0f;
+    public float turnSpeed = 1.0f;
 
     private PlayerInputController input;
     private Animator animator;
@@ -80,12 +80,13 @@ public class PlayerController : MonoBehaviour
     public void OnLightAttack()
     {
         Debug.Log("Player punched");
-        animator.SetTrigger("Attack");
+        animator.SetTrigger("LightAttack");
     }
 
     public void OnHeavyAttack()
     {
         Debug.Log("Player uppercut");
+        animator.SetTrigger("HeavyAttack");
     }
 
     public void OnInteract()

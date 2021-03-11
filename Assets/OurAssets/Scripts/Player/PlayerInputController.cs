@@ -10,8 +10,7 @@ using UnityEngine.InputSystem;
 public class PlayerInputController : MonoBehaviour
 {
     
-    public PlayerController playerController;
-
+    private PlayerController playerController;
     private GameControls controls;
     private bool mapMovementToCircle = true;
 
@@ -53,12 +52,21 @@ public class PlayerInputController : MonoBehaviour
 
     private void Awake()
     {
-        controls = GameManager.Instance.controls;
-        if (controls == null)
+        //Need to make sure in the script execution order that the GameManager comes BEFORE this.
+        if (GameManager.Instance == null)
         {
-            Debug.LogError("Could not find GameManager instance from PlayerInputController script.");
+            Debug.LogError("No instance of GameManager found");
+        } else
+        {
+            controls = GameManager.Instance.controls;
         }
         controls.Player.Enable();
+
+        playerController = GetComponent<PlayerController>();
+        if (playerController == null)
+        {
+            Debug.LogError("Missing player controller component.");
+        }
 
         //setup callbacks/actions associated with each control
         //Actions can be added/deleted by going under Assets/Input/PlayerControls and setting them in the UI.

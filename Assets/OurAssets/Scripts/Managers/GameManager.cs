@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
     #region Singleton Code
     private static GameManager _instance;
 
-    public static GameManager Instance { 
-        get { return _instance; } 
+    public static GameManager Instance {
+        get { return _instance; }
     }
 
     private void EnforceSingleton()

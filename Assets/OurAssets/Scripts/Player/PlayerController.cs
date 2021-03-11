@@ -8,9 +8,9 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 
-    public float animationSpeed;
-    public float rootMotionMovementSpeed;
-    public float turnSpeed;
+    public float animationSpeed = 1.0f;
+    public float rootMotionMovementSpeed = 1.0f;
+    public float turnSpeed = 1.0f;
 
     private PlayerInputController input;
     private Animator animator;

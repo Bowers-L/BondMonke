@@ -7,7 +7,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-
+    public GameObject bonfireSpot;
+    public float buttonCloseEnoughForMatchDistance = 2f;
+    public float buttonCloseEnoughForPressDistance = 0.22f;
+    public float buttonCloseEnoughForPressAngleDegrees = 5f;
     public float animationSpeed = 1.0f;
     public float rootMotionMovementSpeed = 1.0f;
     public float turnSpeed = 1.0f;

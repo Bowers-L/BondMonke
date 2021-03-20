@@ -14,13 +14,15 @@ public class PlayerController : MonoBehaviour
     public float animationSpeed = 1.0f;
     public float rootMotionMovementSpeed = 1.0f;
     public float turnSpeed = 1.0f;
-
+    
     private PlayerInputController input;
+    public PlayerCamera player_camera;
     private Animator animator;
     private Rigidbody rb;
 
     private void Awake()
     {
+        
         animator = GetComponent<Animator>();
         if (animator == null)
         {
@@ -44,6 +46,7 @@ public class PlayerController : MonoBehaviour
         }
 
         animator.applyRootMotion = true;
+        
     }
 
     // Start is called before the first frame update
@@ -55,9 +58,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        input.TickInput();
+        // Debug.Log("mouse " + input.CameraInput);
         animator.SetFloat("MovementX", input.Movement.x);
         animator.SetFloat("MovementY", input.Movement.y);
         animator.SetBool("Sprint", input.Sprint);
+        animator.SetBool("Block", input.Block);
 
         if (input.Block)
         {
@@ -78,6 +84,7 @@ public class PlayerController : MonoBehaviour
     public void OnDodge()
     {
         Debug.Log("Player dodged");
+        animator.SetTrigger("Roll");
     }
 
     public void OnLightAttack()
@@ -102,6 +109,7 @@ public class PlayerController : MonoBehaviour
      */
     void OnAnimatorMove()
     {
+        //Change root motion position based on parameters
         Vector3 newRootPosition = new Vector3(animator.rootPosition.x, this.transform.position.y, animator.rootPosition.z);
         
 
@@ -112,6 +120,8 @@ public class PlayerController : MonoBehaviour
         //this.transform.rotation = newRootRotation;
 
         transform.RotateAround(transform.position, Vector3.up, turnSpeed * animator.GetFloat("MovementX"));  //doing rotation programmatically
+
+        //Change the transitions
     }
 
 

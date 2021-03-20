@@ -11,9 +11,14 @@ public class PlayerInputController : MonoBehaviour
 {
     
     private PlayerController playerController;
+    PlayerCamera playerCamera;
     private GameControls controls;
     private bool mapMovementToCircle = true;
 
+    public Vector2 cameraInput;
+
+    public float mouseX;
+    public float mouseY;
     public Vector2 Movement
     {
         get;
@@ -52,6 +57,7 @@ public class PlayerInputController : MonoBehaviour
 
     private void Awake()
     {
+        playerCamera = PlayerCamera.singleton;
         //Need to make sure in the script execution order that the GameManager comes BEFORE this.
         if (GameManager.Instance == null)
         {
@@ -75,6 +81,8 @@ public class PlayerInputController : MonoBehaviour
         controls.Player.Movement.performed +=       ctx => Movement = GetMovement(ctx.ReadValue<Vector2>());
         controls.Player.Movement.canceled +=        ctx => Movement = Vector2.zero;
 
+        controls.Player.Camera.performed +=         ctx => cameraInput = ctx.ReadValue<Vector2>();
+
         controls.Player.LightAttack.performed +=    ctx => playerController.OnLightAttack();
 
         controls.Player.HeavyAttack.performed +=    ctx => playerController.OnHeavyAttack();
@@ -89,6 +97,8 @@ public class PlayerInputController : MonoBehaviour
 
         controls.Player.Sprint.performed +=         ctx => Sprint = true;
         controls.Player.StopSprint.performed +=     ctx => Sprint = false;
+
+        
     }
 
     Vector2 GetMovement(Vector2 rawInput)
@@ -125,4 +135,29 @@ public class PlayerInputController : MonoBehaviour
     {
         controls.Player.Disable();
     }
+
+    private void FixedUpdate()
+    {
+        float delta = Time.fixedDeltaTime;
+
+        if (playerCamera)
+        {
+            
+            playerCamera.FollowTarget(delta);
+            playerCamera.CameraRotation(delta, mouseX, mouseY);
+        }
+    }
+
+    public void TickInput()
+    {
+        MouseUpdate();
+    }
+
+    private void MouseUpdate()
+    {
+        mouseX = cameraInput.x;
+        mouseY = cameraInput.y;
+    }
+
+
 }

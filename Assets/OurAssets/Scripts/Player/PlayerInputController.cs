@@ -9,11 +9,16 @@ using UnityEngine.InputSystem;
 //InputSystem package is used for input
 public class PlayerInputController : MonoBehaviour
 {
-    public PlayerControls controls;
-    public PlayerController playerController;
-
+    
+    private PlayerController playerController;
+    PlayerCamera playerCamera;
+    private GameControls controls;
     private bool mapMovementToCircle = true;
 
+    public Vector2 cameraInput;
+
+    public float mouseX;
+    public float mouseY;
     public Vector2 Movement
     {
         get;
@@ -52,8 +57,22 @@ public class PlayerInputController : MonoBehaviour
 
     private void Awake()
     {
-        controls = new PlayerControls();
+        playerCamera = PlayerCamera.singleton;
+        //Need to make sure in the script execution order that the GameManager comes BEFORE this.
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("No instance of GameManager found");
+        } else
+        {
+            controls = GameManager.Instance.controls;
+        }
         controls.Player.Enable();
+
+        playerController = GetComponent<PlayerController>();
+        if (playerController == null)
+        {
+            Debug.LogError("Missing player controller component.");
+        }
 
         //setup callbacks/actions associated with each control
         //Actions can be added/deleted by going under Assets/Input/PlayerControls and setting them in the UI.
@@ -61,6 +80,8 @@ public class PlayerInputController : MonoBehaviour
 
         controls.Player.Movement.performed +=       ctx => Movement = GetMovement(ctx.ReadValue<Vector2>());
         controls.Player.Movement.canceled +=        ctx => Movement = Vector2.zero;
+
+        controls.Player.Camera.performed +=         ctx => cameraInput = ctx.ReadValue<Vector2>();
 
         controls.Player.LightAttack.performed +=    ctx => playerController.OnLightAttack();
 
@@ -76,6 +97,8 @@ public class PlayerInputController : MonoBehaviour
 
         controls.Player.Sprint.performed +=         ctx => Sprint = true;
         controls.Player.StopSprint.performed +=     ctx => Sprint = false;
+
+        
     }
 
     Vector2 GetMovement(Vector2 rawInput)
@@ -112,4 +135,29 @@ public class PlayerInputController : MonoBehaviour
     {
         controls.Player.Disable();
     }
+
+    private void FixedUpdate()
+    {
+        float delta = Time.fixedDeltaTime;
+
+        if (playerCamera)
+        {
+            
+            playerCamera.FollowTarget(delta);
+            playerCamera.CameraRotation(delta, mouseX, mouseY);
+        }
+    }
+
+    public void TickInput()
+    {
+        MouseUpdate();
+    }
+
+    private void MouseUpdate()
+    {
+        mouseX = cameraInput.x;
+        mouseY = cameraInput.y;
+    }
+
+
 }

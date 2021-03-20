@@ -8,25 +8,42 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 
-    public PlayerInputController input;
-    public Animator animator;
-    public Rigidbody rb;
-
-    public float animationSpeed;
-    public float rootMotionMovementSpeed;
-    public float turnSpeed;
+    public float animationSpeed = 1.0f;
+    public float rootMotionMovementSpeed = 1.0f;
+    public float turnSpeed = 1.0f;
+    
+    private PlayerInputController input;
+    public PlayerCamera player_camera;
+    private Animator animator;
+    private Rigidbody rb;
 
     private void Awake()
     {
+        
         animator = GetComponent<Animator>();
         if (animator == null)
         {
             animator = GetComponentInChildren<Animator>();
         }
+        if (animator == null)
+        {
+            Debug.LogError("Player is missing animator component.");
+        }
 
         rb = GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Debug.LogError("Player is missing rigidbody component.");
+        }
+
+        input = GetComponent<PlayerInputController>();
+        if (input == null)
+        {
+            Debug.LogError("Player is missing PlayerInputController component.");
+        }
 
         animator.applyRootMotion = true;
+        
     }
 
     // Start is called before the first frame update
@@ -38,14 +55,23 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        input.TickInput();
+        // Debug.Log("mouse " + input.CameraInput);
         animator.SetFloat("MovementX", input.Movement.x);
         animator.SetFloat("MovementY", input.Movement.y);
         animator.SetBool("Sprint", input.Sprint);
+        animator.SetBool("Block", input.Block);
 
         if (input.Block)
         {
             Debug.Log("Player is blocking.");
         }
+    }
+
+    //Disable Player's Input map
+    public void DisableInput()
+    {
+        input.enabled = false;
     }
 
     /*
@@ -55,16 +81,19 @@ public class PlayerController : MonoBehaviour
     public void OnDodge()
     {
         Debug.Log("Player dodged");
+        animator.SetTrigger("Roll");
     }
 
     public void OnLightAttack()
     {
         Debug.Log("Player punched");
+        animator.SetTrigger("LightAttack");
     }
 
     public void OnHeavyAttack()
     {
         Debug.Log("Player uppercut");
+        animator.SetTrigger("HeavyAttack");
     }
 
     public void OnInteract()
@@ -72,8 +101,12 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Player interacted");
     }
 
+    /*
+     * Animator callback
+     */
     void OnAnimatorMove()
     {
+        //Change root motion position based on parameters
         Vector3 newRootPosition = new Vector3(animator.rootPosition.x, this.transform.position.y, animator.rootPosition.z);
         
 
@@ -84,6 +117,8 @@ public class PlayerController : MonoBehaviour
         //this.transform.rotation = newRootRotation;
 
         transform.RotateAround(transform.position, Vector3.up, turnSpeed * animator.GetFloat("MovementX"));  //doing rotation programmatically
+
+        //Change the transitions
     }
 
 

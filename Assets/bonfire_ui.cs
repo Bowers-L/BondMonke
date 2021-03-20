@@ -3,52 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class PauseMenuToggle : MonoBehaviour
+public class bonfire_ui : MonoBehaviour
 {
     private CanvasGroup canvasGroup;
-    private GameControls controls;
+    private void Awake()
+    {
+        canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+        {
+            Debug.LogError("The component CanvasGroup is missing");
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
         
     }
-    private void Awake()
-    {
-        //Need to make sure in the script execution order that the GameManager comes BEFORE this.
-        if (GameManager.Instance == null)
-        {
-            Debug.LogError("No instance of GameManager found");
-        }
-        else
-        {
-            controls = GameManager.Instance.controls;
-        }
-
-        canvasGroup = GetComponent<CanvasGroup>();
-        if (canvasGroup == null)
-        {
-            Debug.LogError("CanvasGroup not found");
-        }
-
-
-        controls.Player.Enable();
-        Time.timeScale = 1f;
-    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if(Input.GetKeyUp(KeyCode.E))
         {
-            Debug.Log("pause menu pressed");
+            //if
             if (canvasGroup.interactable)
             {
                 canvasGroup.interactable = false;
                 canvasGroup.blocksRaycasts = false;
                 canvasGroup.alpha = 0f;
                 Time.timeScale = 1f;
-                Cursor.visible = false;
-                controls.Player.Enable();
             }
             else
             {
@@ -56,8 +39,6 @@ public class PauseMenuToggle : MonoBehaviour
                 canvasGroup.blocksRaycasts = true;
                 canvasGroup.alpha = 1f;
                 Time.timeScale = 0f;
-                Cursor.visible = true;
-                controls.Player.Disable();
             }
         }
     }

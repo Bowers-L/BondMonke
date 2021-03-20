@@ -50,6 +50,7 @@ public class PlayerInputController : MonoBehaviour
         private set;
     }
 
+
     private void Awake()
     {
         //Need to make sure in the script execution order that the GameManager comes BEFORE this.
@@ -82,6 +83,7 @@ public class PlayerInputController : MonoBehaviour
         controls.Player.Dodge.performed +=          ctx => playerController.OnDodge();
 
         controls.Player.Interact.performed +=        ctx => playerController.OnInteract();
+        
 
         //Im guessing there's a way to do these held actions more elegantly with only one action, but I haven't found it.
         controls.Player.Block.performed +=          ctx => Block = true;
@@ -89,6 +91,11 @@ public class PlayerInputController : MonoBehaviour
 
         controls.Player.Sprint.performed +=         ctx => Sprint = true;
         controls.Player.StopSprint.performed +=     ctx => Sprint = false;
+    }
+
+    private void Pause_performed(InputAction.CallbackContext obj)
+    {
+        throw new NotImplementedException();
     }
 
     Vector2 GetMovement(Vector2 rawInput)

@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
         else
         {
             _instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject); //TODO: might actually need this
         }
     }
 

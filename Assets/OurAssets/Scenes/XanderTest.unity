@@ -1590,6 +1590,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfca8b06c33a22249859f0f244756bcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bonfireSpot: {fileID: 0}
+  buttonCloseEnoughForMatchDistance: 2
+  buttonCloseEnoughForPressDistance: 0.22
+  buttonCloseEnoughForPressAngleDegrees: 5
   animationSpeed: 1
   rootMotionMovementSpeed: 1
   turnSpeed: 0.8
@@ -1955,7 +1959,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 70b1db7323dc81f459aefc9b4e7e8a79, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.03
   m_Pitch: 1
   Loop: 1
   Mute: 0

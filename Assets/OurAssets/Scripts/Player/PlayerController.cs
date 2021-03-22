@@ -7,10 +7,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject bonfireSpot;
-    public float buttonCloseEnoughForMatchDistance = 2f;
-    public float buttonCloseEnoughForPressDistance = 0.22f;
-    public float buttonCloseEnoughForPressAngleDegrees = 5f;
+    public bool enteredBonfire;
     public float animationSpeed = 1.0f;
     public float rootMotionMovementSpeed = 1.0f;
     public float turnSpeed = 1.0f;
@@ -104,6 +101,16 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Player interacted");
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Bonfire")
+            enteredBonfire = true;
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Bonfire")
+            enteredBonfire = false;
+    }
     /*
      * Animator callback
      */

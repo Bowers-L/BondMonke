@@ -91,12 +91,14 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player punched");
         animator.SetTrigger("LightAttack");
+        EventManager.TriggerEvent<DamageEvent, int>(1); //Only for testing purposes
     }
 
     public void OnHeavyAttack()
     {
         Debug.Log("Player uppercut");
         animator.SetTrigger("HeavyAttack");
+        EventManager.TriggerEvent<DamageEvent, int>(-1); //Only for testing purposes
     }
 
     public void OnInteract()

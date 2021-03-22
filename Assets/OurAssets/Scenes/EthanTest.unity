@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 290624985}
   - component: {fileID: 290624984}
   - component: {fileID: 290624983}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1594,6 +1594,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera Holder
       objectReference: {fileID: 0}
+    - target: {fileID: 2687830578002774069, guid: 0b11eccf557c3e44091bca3d6fc9afa6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2687830578002774070, guid: 0b11eccf557c3e44091bca3d6fc9afa6,
         type: 3}
       propertyPath: playerTransform
@@ -1652,6 +1657,21 @@ PrefabInstance:
     - target: {fileID: 2687830578002774071, guid: 0b11eccf557c3e44091bca3d6fc9afa6,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687830578550016857, guid: 0b11eccf557c3e44091bca3d6fc9afa6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687830579330498334, guid: 0b11eccf557c3e44091bca3d6fc9afa6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687830579330498335, guid: 0b11eccf557c3e44091bca3d6fc9afa6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

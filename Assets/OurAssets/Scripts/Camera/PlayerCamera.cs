@@ -9,6 +9,7 @@ public class PlayerCamera : MonoBehaviour
     public Transform cameraPivotTransform;
     private Vector3 cameraTransformPos;
     private LayerMask ignorelayers;
+    public Vector3 camera_velocity = Vector3.zero;
 
     public static PlayerCamera singleton;
     public float lookSpd = 0.1f;
@@ -42,7 +43,7 @@ public class PlayerCamera : MonoBehaviour
     public void FollowTarget(float delta)
     {
         Debug.Log("stuff1");
-        Vector3 targetPos = Vector3.Lerp(this.transform.position, playerTransform.position, delta / followSpd);
+        Vector3 targetPos = Vector3.SmoothDamp(this.transform.position, playerTransform.position, ref camera_velocity, delta / followSpd);
         this.transform.position = targetPos;
     }
 

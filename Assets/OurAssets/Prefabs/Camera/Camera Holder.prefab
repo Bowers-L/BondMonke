@@ -47,10 +47,14 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   cameraTransform: {fileID: 2687830578550016860}
   cameraPivotTransform: {fileID: 2687830579330498335}
+  camera_velocity: {x: 0, y: 0, z: 0}
   lookSpd: 0.1
   followSpd: 0.1
   pivotSpd: 0.03
   maxPivot: 35
+  camera_radius: 0.2
+  camera_offset: 0.2
+  min_camera_offset: 0.2
   smoothingPosSpeed: 1
   smoothingPosMaxSpeed: 100
   smoothingRotSpeed: 1
@@ -162,7 +166,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2687830579330498334}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2687830578550016860}

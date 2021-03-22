@@ -876,14 +876,10 @@ MonoBehaviour:
   playerTransform: {fileID: 1482285865}
   cameraTransform: {fileID: 963194228}
   cameraPivotTransform: {fileID: 0}
-  camera_velocity: {x: 0, y: 0, z: 0}
   lookSpd: 0.1
   followSpd: 0.1
   pivotSpd: 0.03
   maxPivot: 35
-  camera_radius: 0.2
-  camera_offset: 0.2
-  min_camera_offset: 0.2
   smoothingPosSpeed: 1
   smoothingPosMaxSpeed: 100
   smoothingRotSpeed: 1
@@ -1050,7 +1046,7 @@ PrefabInstance:
     - target: {fileID: 2687830578002774071, guid: 0b11eccf557c3e44091bca3d6fc9afa6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -12.06
       objectReference: {fileID: 0}
     - target: {fileID: 2687830578002774071, guid: 0b11eccf557c3e44091bca3d6fc9afa6,
         type: 3}
@@ -1060,7 +1056,7 @@ PrefabInstance:
     - target: {fileID: 2687830578002774071, guid: 0b11eccf557c3e44091bca3d6fc9afa6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -15.15
       objectReference: {fileID: 0}
     - target: {fileID: 2687830578002774071, guid: 0b11eccf557c3e44091bca3d6fc9afa6,
         type: 3}
@@ -1557,7 +1553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ba90c3f186b25d4f9b1b21389059317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: 
+  sceneName: Level1
 --- !u!114 &1442578274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1726,6 +1722,18 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1.25, z: 0}
+--- !u!114 &1482285867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482285860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0480dd204b71f9747aea9232c4b838e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1662061253
 GameObject:
   m_ObjectHideFlags: 0

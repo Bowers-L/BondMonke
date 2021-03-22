@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     
     private PlayerInputController input;
     public PlayerCamera player_camera;
+    public DamageCollider fist;
     private Animator animator;
     private Rigidbody rb;
 
@@ -94,6 +95,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player uppercut");
         animator.SetTrigger("HeavyAttack");
+        EventManager.TriggerEvent<DamageEvent, int>(-1); //Only for testing purposes
     }
 
     public void OnInteract()
@@ -130,6 +132,18 @@ public class PlayerController : MonoBehaviour
 
         //Change the transitions
     }
+
+
+    public void EnableFistCollider()
+    {
+        fist.EnableDamageCollider();
+    }
+
+    public void DisableFistCollider()
+    {
+        fist.DisableDamageCollider();
+    }
+
 
 
 }

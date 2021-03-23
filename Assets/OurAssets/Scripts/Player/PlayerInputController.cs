@@ -25,30 +25,12 @@ public class PlayerInputController : MonoBehaviour
         private set;
     }
 
-    public bool LightAttack
-    {
-        get;
-        private set;
-    }
-
-    public bool HeavyAttack
-    {
-        get;
-        private set;
-    }
-
-    public bool Interact
-    {
-        get;
-        private set;
-    }
-
     public bool Block
     {
         get;
         private set;
     }
-
+    
     public bool Sprint
     {
         get;

@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public DamageCollider fist;
     private Animator animator;
     private Rigidbody rb;
+    private CapsuleCollider capsule;
 
     private void Awake()
     {
@@ -33,6 +34,12 @@ public class PlayerController : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         if (rb == null)
+        {
+            Debug.LogError("Player is missing rigidbody component.");
+        }
+
+        capsule = GetComponent<CapsuleCollider>();
+        if (capsule == null)
         {
             Debug.LogError("Player is missing rigidbody component.");
         }
@@ -65,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
         if (input.Block)
         {
-            Debug.Log("Player is blocking.");
+            //Debug.Log("Player is blocking.");
         }
     }
 
@@ -132,6 +139,21 @@ public class PlayerController : MonoBehaviour
 
         //Change the transitions
     }
+
+    #region Animation Events
+
+    //Dodge Roll
+
+    public void OnRollEnter()
+    {
+        
+    }
+
+    public void OnRollExit()
+    {
+
+    }
+    #endregion
 
 
     public void EnableFistCollider()

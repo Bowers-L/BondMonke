@@ -146,12 +146,12 @@ public class PlayerController : MonoBehaviour
 
     public void OnRollEnter()
     {
-        
+        capsule.height /= 2.0f;
     }
 
     public void OnRollExit()
     {
-
+        capsule.height *= 2.0f;
     }
     #endregion
 

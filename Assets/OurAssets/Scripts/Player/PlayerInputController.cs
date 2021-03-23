@@ -134,6 +134,10 @@ public class PlayerInputController : MonoBehaviour
             
             playerCamera.FollowTarget(delta);
             playerCamera.CameraRotation(delta, mouseX, mouseY);
+        } else
+        {
+            playerCamera = PlayerCamera.singleton;
+            Debug.Log("Could not find player camera");
         }
     }
 

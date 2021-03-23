@@ -1616,7 +1616,8 @@ MonoBehaviour:
   animationSpeed: 1
   rootMotionMovementSpeed: 1
   turnSpeed: 0.8
-  player_camera: {fileID: 0}
+  player_camera: {fileID: 2687830578002774070, guid: 0b11eccf557c3e44091bca3d6fc9afa6,
+    type: 3}
 --- !u!1 &7846090515714412007
 GameObject:
   m_ObjectHideFlags: 0

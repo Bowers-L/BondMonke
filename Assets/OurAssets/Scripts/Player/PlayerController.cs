@@ -7,16 +7,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject bonfireSpot;
-    public float buttonCloseEnoughForMatchDistance = 2f;
-    public float buttonCloseEnoughForPressDistance = 0.22f;
-    public float buttonCloseEnoughForPressAngleDegrees = 5f;
+    public bool enteredBonfire;
     public float animationSpeed = 1.0f;
     public float rootMotionMovementSpeed = 1.0f;
     public float turnSpeed = 1.0f;
     
     private PlayerInputController input;
     public PlayerCamera player_camera;
+    public DamageCollider fist;
     private Animator animator;
     private Rigidbody rb;
 
@@ -97,6 +95,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player uppercut");
         animator.SetTrigger("HeavyAttack");
+        EventManager.TriggerEvent<DamageEvent, int>(-1); //Only for testing purposes
     }
 
     public void OnInteract()
@@ -104,6 +103,16 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Player interacted");
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Bonfire")
+            enteredBonfire = true;
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Bonfire")
+            enteredBonfire = false;
+    }
     /*
      * Animator callback
      */
@@ -123,6 +132,18 @@ public class PlayerController : MonoBehaviour
 
         //Change the transitions
     }
+
+
+    public void EnableFistCollider()
+    {
+        fist.EnableDamageCollider();
+    }
+
+    public void DisableFistCollider()
+    {
+        fist.DisableDamageCollider();
+    }
+
 
 
 }

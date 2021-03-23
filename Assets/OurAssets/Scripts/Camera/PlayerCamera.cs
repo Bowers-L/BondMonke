@@ -48,7 +48,7 @@ public class PlayerCamera : MonoBehaviour
 
     public void FollowTarget(float delta)
     {
-        Debug.Log("stuff1");
+        //Debug.Log("stuff1");
         Vector3 targetPos = Vector3.SmoothDamp(this.transform.position, playerTransform.position, ref camera_velocity, delta / followSpd);
         this.transform.position = targetPos;
 
@@ -57,7 +57,7 @@ public class PlayerCamera : MonoBehaviour
 
     public void CameraRotation(float delta, float mouseX, float mouseY)
     {
-        Debug.Log("udbfnuioerbgnfuisbngurieebns");
+       // Debug.Log("udbfnuioerbgnfuisbngurieebns");
         // take in free mouse input and change camera orientation based on inputs
         lookAngle += (mouseX * lookSpd) / delta;
         pivotAngle -= (mouseY * pivotSpd) / delta;

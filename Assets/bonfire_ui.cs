@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(CanvasGroup))]
 public class bonfire_ui : MonoBehaviour
 {
+    public GameObject manager;
+    public GameObject m_player;
     private CanvasGroup canvasGroup;
     private void Awake()
     {
@@ -23,11 +25,11 @@ public class bonfire_ui : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyUp(KeyCode.E))
+        if(Input.GetKeyUp(KeyCode.E) && m_player.GetComponent<PlayerController>().enteredBonfire)
         {
-            //if
             if (canvasGroup.interactable)
             {
+                manager.GetComponent<manager>().switcher();
                 canvasGroup.interactable = false;
                 canvasGroup.blocksRaycasts = false;
                 canvasGroup.alpha = 0f;

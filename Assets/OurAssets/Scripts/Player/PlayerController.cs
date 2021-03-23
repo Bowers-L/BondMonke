@@ -146,6 +146,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnRollEnter()
     {
+        //rolling makes the player collider smaller so
+        //the player can move under obstacles and avoid enemies more easily.
         capsule.height /= 2.0f;
     }
 

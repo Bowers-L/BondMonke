@@ -137,7 +137,11 @@ public class PlayerInputController : MonoBehaviour
         } else
         {
             playerCamera = PlayerCamera.singleton;
-            Debug.Log("Could not find player camera");
+            if (!playerCamera)
+            {
+                Debug.LogError("Could not find player camera");
+            }
+
         }
     }
 

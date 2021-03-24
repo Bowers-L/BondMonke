@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour
     public DamageCollider fist;
     private Animator animator;
     private Rigidbody rb;
+
+    [SerializeField]
+    private HurtBoxMarker hurtBox;
+    [SerializeField]
     private CapsuleCollider capsule;
 
     private void Awake()
@@ -42,6 +46,11 @@ public class PlayerController : MonoBehaviour
         if (capsule == null)
         {
             Debug.LogError("Player is missing rigidbody component.");
+        }
+
+        if (!hurtBox)
+        {
+            hurtBox = GetComponentInChildren<HurtBoxMarker>();
         }
 
         input = GetComponent<PlayerInputController>();
@@ -149,11 +158,15 @@ public class PlayerController : MonoBehaviour
         //rolling makes the player collider smaller so
         //the player can move under obstacles and avoid enemies more easily.
         capsule.height /= 2.0f;
+        //capsule.center = new Vector3(capsule.center.x, capsule.center.y * 0.9f, capsule.center.z);
+        hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y / 2, hurtBox.transform.localScale.z);
     }
 
     public void OnRollExit()
     {
         capsule.height *= 2.0f;
+        //capsule.center = new Vector3(capsule.center.x, capsule.center.y / 0.9f, capsule.center.z);
+        hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y * 2, hurtBox.transform.localScale.z);
     }
     #endregion
 

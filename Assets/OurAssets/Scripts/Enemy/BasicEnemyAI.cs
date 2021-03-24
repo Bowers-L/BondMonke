@@ -149,7 +149,14 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Disable AI
         enabled = false;
-        GetComponentInChildren<DeathFader>().enabled = true;
+        if (GetComponentInChildren<DeathFader>() == null)
+        {
+            Debug.Log("DeathFader not added to enemy mesh");
+        }
+        else
+        {
+            GetComponentInChildren<DeathFader>().enabled = true;
+        }
 
         //Death Animation
         anim.SetTrigger("Death");

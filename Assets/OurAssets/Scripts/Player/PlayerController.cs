@@ -11,8 +11,13 @@ public class PlayerController : MonoBehaviour
     public float animationSpeed = 1.0f;
     public float rootMotionMovementSpeed = 1.0f;
     public float turnSpeed = 1.0f;
+
+    //Attacks
+    public int lightAttackDamage;
+    public int heavyAttackDamage;
     
     private PlayerInputController input;
+    private CombatAgent combat;
     public PlayerCamera player_camera;
     public DamageCollider fist;
     private Animator animator;
@@ -109,17 +114,15 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player punched");
         animator.SetTrigger("LightAttack");
-
-        EnableFistCollider();
+        combat.AttackWithDamage(fist, lightAttackDamage);
     }
 
     public void OnHeavyAttack()
     {
         Debug.Log("Player uppercut");
         animator.SetTrigger("HeavyAttack");
-        EventManager.TriggerEvent<DamageEvent, int>(-1); //Only for testing purposes
-
-        EnableFistCollider();
+        combat.AttackWithDamage(fist, heavyAttackDamage);
+        //EventManager.TriggerEvent<DamageEvent, int>(-1); //Only for testing purposes
     }
 
     public void OnInteract()

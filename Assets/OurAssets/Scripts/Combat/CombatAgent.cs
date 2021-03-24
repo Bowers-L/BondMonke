@@ -5,6 +5,10 @@ using UnityEngine;
 public abstract class CombatAgent : MonoBehaviour
 {
 
-    public abstract void TakeDamage();
-    public abstract void DealDamage();
+    public void AttackWithDamage(DamageCollider hitbox, int damageAmount)
+    {
+        hitbox.EnableDamageCollider(damageAmount);
+    }
+
+    public abstract void TakeDamage(int damage);
 }

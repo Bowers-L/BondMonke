@@ -13,6 +13,7 @@ public class BasicEnemyAI : MonoBehaviour
     NavMeshAgent navMeshAgent;
     public Animator anim;
     public EnemyStats stats;
+    public float combatStoppingDistance = 2f;
 
     public enum EnemyState
     {
@@ -68,7 +69,7 @@ public class BasicEnemyAI : MonoBehaviour
 
                 if(Vector3.Distance(this.transform.position, playerTransform.transform.position) <= rangeOfSight)
                 {
-                    this.navMeshAgent.stoppingDistance = 3;
+                    this.navMeshAgent.stoppingDistance = combatStoppingDistance;
                     currentState = EnemyState.CHASE;
                 }
                 break;

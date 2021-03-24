@@ -8,8 +8,11 @@ public class BasicEnemyAI : MonoBehaviour
 
     //public Transform dest;
     public Transform playerTransform;
+    public float rangeOfSight;
 
     NavMeshAgent navMeshAgent;
+    public Animator anim;
+    public EnemyStats stats;
 
     public enum EnemyState
     {
@@ -24,14 +27,32 @@ public class BasicEnemyAI : MonoBehaviour
     public GameObject[] patrolPoints;
     private int currPoint;
 
+    private DamageCollider fist;
+    private HurtBoxMarker hurtBox;
+
     // Start is called before the first frame update
     void Start()
     {
         navMeshAgent = this.GetComponent<NavMeshAgent>();
         if(navMeshAgent == null)
         {
-            Debug.Log("No NavMesh Agent component attached");
+            Debug.LogError("No NavMesh Agent component attached");
         }
+
+        anim = GetComponent<Animator>();
+        if (anim == null)
+        {
+            Debug.LogError("Enemy does not have Animator component.");
+        }
+
+        stats = GetComponent<EnemyStats>();
+        if (stats == null)
+        {
+            Debug.LogError("Enemy does not have EnemyStats component.");
+        }
+
+        fist = GetComponentInChildren<DamageCollider>();
+        hurtBox = GetComponentInChildren<HurtBoxMarker>();
 
         currentState = EnemyState.PATROL;
         currPoint = 0;
@@ -45,7 +66,7 @@ public class BasicEnemyAI : MonoBehaviour
             case EnemyState.PATROL:
                 Patrolling();
 
-                if(Vector3.Distance(this.transform.position, playerTransform.transform.position) <= 3.0f)
+                if(Vector3.Distance(this.transform.position, playerTransform.transform.position) <= rangeOfSight)
                 {
                     currentState = EnemyState.CHASE;
                 }
@@ -62,6 +83,18 @@ public class BasicEnemyAI : MonoBehaviour
             navMeshAgent.SetDestination(target);
         }
         */
+
+        if (stats.current_health <= 0)
+        {
+            Die();
+        }
+
+        //Animate movement
+        anim.SetFloat("MovementY", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
+
+        //Render the visible hurtbox for debug purposes.
+        fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
+        hurtBox.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
     }
 
     void OnCollisionEnter(Collision other)
@@ -107,5 +140,19 @@ public class BasicEnemyAI : MonoBehaviour
         {
             Debug.Log("Player transform not set");
         }
+    }
+
+    public void Die()
+    {
+        //TODO: Kill the enemy
+
+        //Disable AI
+        enabled = false;
+
+        //Death Animation
+        anim.SetTrigger("Death");
+
+        //Either disable the GO after the animation or enable ragdoll physics
+        //(can set up animation event to do this)
     }
 }

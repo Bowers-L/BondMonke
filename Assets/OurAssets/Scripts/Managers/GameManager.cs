@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
 
     public GameControls controls;   //Contains the input mappings for the game
 
+    public bool debugMode;
+
     private void Awake()
     {
         EnforceSingleton();

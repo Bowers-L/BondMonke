@@ -11,12 +11,23 @@ public class PlayerController : MonoBehaviour
     public float animationSpeed = 1.0f;
     public float rootMotionMovementSpeed = 1.0f;
     public float turnSpeed = 1.0f;
+
+    //Attacks
+    public int lightAttackDamage;
+    public int heavyAttackDamage;
     
     private PlayerInputController input;
+    private CombatAgent combat;
     public PlayerCamera player_camera;
     public DamageCollider fist;
     private Animator animator;
     private Rigidbody rb;
+    private PlayerStats stats;
+
+    [SerializeField]
+    private HurtBoxMarker hurtBox;
+    [SerializeField]
+    private CapsuleCollider capsule;
 
     private void Awake()
     {
@@ -25,10 +36,17 @@ public class PlayerController : MonoBehaviour
         if (animator == null)
         {
             animator = GetComponentInChildren<Animator>();
+
+            if (animator == null)
+            {
+                Debug.LogError("Player is missing animator component.");
+            }
         }
-        if (animator == null)
+
+        combat = GetComponent<CombatAgent>();
+        if (combat == null)
         {
-            Debug.LogError("Player is missing animator component.");
+            Debug.LogError("Player is missing CombatAgent component");
         }
 
         rb = GetComponent<Rigidbody>();
@@ -37,10 +55,27 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("Player is missing rigidbody component.");
         }
 
+        capsule = GetComponent<CapsuleCollider>();
+        if (capsule == null)
+        {
+            Debug.LogError("Player is missing rigidbody component.");
+        }
+
+        if (!hurtBox)
+        {
+            hurtBox = GetComponentInChildren<HurtBoxMarker>();
+        }
+
         input = GetComponent<PlayerInputController>();
         if (input == null)
         {
             Debug.LogError("Player is missing PlayerInputController component.");
+        }
+
+        stats = GetComponent<PlayerStats>();
+        if (stats == null)
+        {
+            Debug.LogError("Player is missing PlayerStats component.");
         }
 
         animator.applyRootMotion = true;
@@ -65,7 +100,16 @@ public class PlayerController : MonoBehaviour
 
         if (input.Block)
         {
-            Debug.Log("Player is blocking.");
+            //Debug.Log("Player is blocking.");
+        }
+
+        //Render the visible hurtbox for debug purposes.
+        fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
+        hurtBox.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
+
+        if (stats.current_health <= 0)
+        {
+            Die();
         }
     }
 
@@ -76,9 +120,9 @@ public class PlayerController : MonoBehaviour
     }
 
     /*
-     * Input Callback Functions
+     * Events triggered on input
      */
-
+    #region Player Move Events
     public void OnDodge()
     {
         Debug.Log("Player dodged");
@@ -89,19 +133,50 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player punched");
         animator.SetTrigger("LightAttack");
+        combat.AttackWithDamage(fist, lightAttackDamage);
     }
 
     public void OnHeavyAttack()
     {
         Debug.Log("Player uppercut");
         animator.SetTrigger("HeavyAttack");
-        EventManager.TriggerEvent<DamageEvent, int>(-1); //Only for testing purposes
+        combat.AttackWithDamage(fist, heavyAttackDamage);  
+        //EventManager.TriggerEvent<DamageEvent, int>(-1); //Only for testing purposes
     }
 
     public void OnInteract()
     {
         Debug.Log("Player interacted");
     }
+    #endregion
+
+    /*
+     * Events triggered by a player animation
+     */
+    #region Player Move Animation Events
+
+    public void OnAttackExit()
+    {
+        combat.FinishAttack();
+    }
+
+    public void OnRollEnter()
+    {
+        //rolling makes the player collider smaller so
+        //the player can move under obstacles and avoid enemies more easily.
+        capsule.height /= 2.0f;
+        //capsule.center = new Vector3(capsule.center.x, capsule.center.y * 0.9f, capsule.center.z);
+        hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y / 2, hurtBox.transform.localScale.z);
+    }
+
+    public void OnRollExit()
+    {
+        capsule.height *= 2.0f;
+        //capsule.center = new Vector3(capsule.center.x, capsule.center.y / 0.9f, capsule.center.z);
+        hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y * 2, hurtBox.transform.localScale.z);
+    }
+
+    #endregion
 
     public void OnTriggerEnter(Collider other)
     {
@@ -144,6 +219,9 @@ public class PlayerController : MonoBehaviour
         fist.DisableDamageCollider();
     }
 
-
-
+    void Die()
+    {
+        input.enabled = false;
+        animator.SetTrigger("Death");
+    }
 }

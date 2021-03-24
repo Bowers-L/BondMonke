@@ -8,6 +8,7 @@ public class BasicEnemyAI : MonoBehaviour
 
     //public Transform dest;
     public Transform playerTransform;
+    public float rangeOfSight;
 
     NavMeshAgent navMeshAgent;
 
@@ -45,7 +46,7 @@ public class BasicEnemyAI : MonoBehaviour
             case EnemyState.PATROL:
                 Patrolling();
 
-                if(Vector3.Distance(this.transform.position, playerTransform.transform.position) <= 3.0f)
+                if(Vector3.Distance(this.transform.position, playerTransform.transform.position) <= rangeOfSight)
                 {
                     currentState = EnemyState.CHASE;
                 }
@@ -107,5 +108,17 @@ public class BasicEnemyAI : MonoBehaviour
         {
             Debug.Log("Player transform not set");
         }
+    }
+
+    public void Die()
+    {
+        //TODO: Kill the enemy
+
+        //Disable AI
+        
+        //Death Animation
+
+        //Either disable the GO after the animation or enable ragdoll physics
+        //(can set up animation event to do this)
     }
 }

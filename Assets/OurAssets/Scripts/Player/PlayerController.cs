@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player uppercut");
         animator.SetTrigger("HeavyAttack");
-        combat.AttackWithDamage(fist, heavyAttackDamage);
+        combat.AttackWithDamage(fist, heavyAttackDamage);  
         //EventManager.TriggerEvent<DamageEvent, int>(-1); //Only for testing purposes
     }
 
@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnAttackExit()
     {
-        DisableFistCollider();
+        combat.FinishAttack();
     }
 
     public void OnRollEnter()

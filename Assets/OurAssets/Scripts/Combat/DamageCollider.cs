@@ -23,12 +23,6 @@ public class DamageCollider : MonoBehaviour
         damageCollider.enabled = true;
     }
 
-    public void EnableDamageCollider(int damageAmount)
-    {
-        EnableDamageCollider();
-        this.damageAmount = damageAmount;
-    }
-
     public void DisableDamageCollider()
     {
         damageCollider.enabled = false;
@@ -43,7 +37,10 @@ public class DamageCollider : MonoBehaviour
             //idk if we should trigger an event for this since it should only affect what is hit.
             //EventManager.TriggerEvent<DamageEvent, int>(5);
             CombatAgent opponent = other.GetComponent<CombatAgent>();
-            opponent.TakeDamage();
+            if (opponent != null)
+            {
+                opponent.TakeDamage(damageAmount);
+            }
         }
     }
 }

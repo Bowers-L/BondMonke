@@ -11,6 +11,7 @@ public class BasicEnemyAI : MonoBehaviour
     public float rangeOfSight;
 
     NavMeshAgent navMeshAgent;
+    public Animator anim;
 
     public enum EnemyState
     {
@@ -31,7 +32,13 @@ public class BasicEnemyAI : MonoBehaviour
         navMeshAgent = this.GetComponent<NavMeshAgent>();
         if(navMeshAgent == null)
         {
-            Debug.Log("No NavMesh Agent component attached");
+            Debug.LogError("No NavMesh Agent component attached");
+        }
+
+        anim = GetComponent<Animator>();
+        if (anim == null)
+        {
+            Debug.LogError("Could not find animator component for enemy.");
         }
 
         currentState = EnemyState.PATROL;
@@ -63,6 +70,9 @@ public class BasicEnemyAI : MonoBehaviour
             navMeshAgent.SetDestination(target);
         }
         */
+
+        //Animate movement
+        anim.SetFloat("MovementY", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
     }
 
     void OnCollisionEnter(Collision other)

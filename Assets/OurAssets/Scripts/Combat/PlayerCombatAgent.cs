@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UnityEngine;
 
-namespace Assets.OurAssets.Scripts.Combat
+class PlayerCombatAgent : CombatAgent
 {
-    class PlayerCombatAgent : CombatAgent
+    public override void TakeDamage(int damage)
     {
-        public override void TakeDamage(int damage)
-        {
-            GetComponent<PlayerStats>().TakeDamage(damage);
-        }
+        GetComponent<PlayerStats>().TakeDamage(damage);
     }
 }

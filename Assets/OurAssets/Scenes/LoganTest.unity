@@ -1994,6 +1994,24 @@ Transform:
   m_Father: {fileID: 221390443}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1499198890 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8163377064654157462, guid: c3204dbdf5c725c4c8420fda04599716,
+    type: 3}
+  m_PrefabInstance: {fileID: 1969661059}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1499198891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499198890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c12be9e4af8c34b438faa8e3599baf17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1543030771 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2687830578002774070, guid: 0b11eccf557c3e44091bca3d6fc9afa6,
@@ -2698,6 +2716,11 @@ PrefabInstance:
       propertyPath: player_camera
       value: 
       objectReference: {fileID: 1543030771}
+    - target: {fileID: 9046409907589637513, guid: c3204dbdf5c725c4c8420fda04599716,
+        type: 3}
+      propertyPath: max_health
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9046409908276566145, guid: c3204dbdf5c725c4c8420fda04599716,
         type: 3}
       propertyPath: m_Layer
@@ -3160,6 +3183,11 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[1]
       value: 
       objectReference: {fileID: 1075420994}
+    - target: {fileID: 2424317660641514625, guid: 807bb00ed6bdaf146a2df3132c3ea5ed,
+        type: 3}
+      propertyPath: max_health
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2751225946998725924, guid: 807bb00ed6bdaf146a2df3132c3ea5ed,
         type: 3}
       propertyPath: m_RootOrder

@@ -68,6 +68,7 @@ public class BasicEnemyAI : MonoBehaviour
 
                 if(Vector3.Distance(this.transform.position, playerTransform.transform.position) <= rangeOfSight)
                 {
+                    this.navMeshAgent.stoppingDistance = 1;
                     currentState = EnemyState.CHASE;
                 }
                 break;
@@ -148,6 +149,7 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Disable AI
         enabled = false;
+        GetComponentInChildren<DeathFader>().enabled = true;
 
         //Death Animation
         anim.SetTrigger("Death");

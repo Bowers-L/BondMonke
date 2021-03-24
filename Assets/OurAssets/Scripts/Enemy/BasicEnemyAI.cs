@@ -12,6 +12,7 @@ public class BasicEnemyAI : MonoBehaviour
 
     NavMeshAgent navMeshAgent;
     public Animator anim;
+    public EnemyStats stats;
 
     public enum EnemyState
     {
@@ -41,7 +42,13 @@ public class BasicEnemyAI : MonoBehaviour
         anim = GetComponent<Animator>();
         if (anim == null)
         {
-            Debug.LogError("Could not find animator component for enemy.");
+            Debug.LogError("Enemy does not have Animator component.");
+        }
+
+        stats = GetComponent<EnemyStats>();
+        if (stats == null)
+        {
+            Debug.LogError("Enemy does not have EnemyStats component.");
         }
 
         fist = GetComponentInChildren<DamageCollider>();
@@ -76,6 +83,11 @@ public class BasicEnemyAI : MonoBehaviour
             navMeshAgent.SetDestination(target);
         }
         */
+
+        if (stats.current_health <= 0)
+        {
+            Die();
+        }
 
         //Animate movement
         anim.SetFloat("MovementY", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
@@ -135,8 +147,10 @@ public class BasicEnemyAI : MonoBehaviour
         //TODO: Kill the enemy
 
         //Disable AI
-        
+        enabled = false;
+
         //Death Animation
+        anim.SetTrigger("Death");
 
         //Either disable the GO after the animation or enable ragdoll physics
         //(can set up animation event to do this)

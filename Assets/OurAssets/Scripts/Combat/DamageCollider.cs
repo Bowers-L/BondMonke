@@ -32,13 +32,14 @@ public class DamageCollider : MonoBehaviour
     {
        if(other.CompareTag("Hittable"))
         {
-            //collision
+            Debug.Log("Damage Collision");
 
             //idk if we should trigger an event for this since it should only affect what is hit.
             //EventManager.TriggerEvent<DamageEvent, int>(5);
-            CombatAgent opponent = other.GetComponent<CombatAgent>();
+            CombatAgent opponent = other.GetComponentInParent<CombatAgent>();
             if (opponent != null)
             {
+                Debug.Log("Found combat agent");
                 opponent.TakeDamage(damageAmount);
             }
         }

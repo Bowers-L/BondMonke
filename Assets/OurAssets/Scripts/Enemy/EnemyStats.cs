@@ -8,10 +8,11 @@ public class EnemyStats : MonoBehaviour
     public int current_health;
 
     // UI ELEMENTS
-    public HealthBar health_bar;
+    //public HealthBar health_bar;
 
     private void Awake()
     {
+        /*
         if (health_bar == null)
         {
             health_bar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
@@ -20,6 +21,7 @@ public class EnemyStats : MonoBehaviour
                 Debug.LogError("Enemy doesn't have a health bar. Forgot to set reference in inspector?");
             }
         }
+        */
     }
 
     private void Start()

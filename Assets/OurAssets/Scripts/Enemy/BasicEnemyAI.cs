@@ -26,6 +26,9 @@ public class BasicEnemyAI : MonoBehaviour
     public GameObject[] patrolPoints;
     private int currPoint;
 
+    private DamageCollider fist;
+    private HurtBoxMarker hurtBox;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +43,9 @@ public class BasicEnemyAI : MonoBehaviour
         {
             Debug.LogError("Could not find animator component for enemy.");
         }
+
+        fist = GetComponentInChildren<DamageCollider>();
+        hurtBox = GetComponentInChildren<HurtBoxMarker>();
 
         currentState = EnemyState.PATROL;
         currPoint = 0;
@@ -73,6 +79,10 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Animate movement
         anim.SetFloat("MovementY", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
+
+        //Render the visible hurtbox for debug purposes.
+        fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
+        hurtBox.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
     }
 
     void OnCollisionEnter(Collision other)

@@ -35,10 +35,17 @@ public class PlayerController : MonoBehaviour
         if (animator == null)
         {
             animator = GetComponentInChildren<Animator>();
+
+            if (animator == null)
+            {
+                Debug.LogError("Player is missing animator component.");
+            }
         }
-        if (animator == null)
+
+        combat = GetComponent<CombatAgent>();
+        if (combat == null)
         {
-            Debug.LogError("Player is missing animator component.");
+            Debug.LogError("Player is missing CombatAgent component");
         }
 
         rb = GetComponent<Rigidbody>();

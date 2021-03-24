@@ -83,6 +83,10 @@ public class PlayerController : MonoBehaviour
         {
             //Debug.Log("Player is blocking.");
         }
+
+        //Render the visible hurtbox for debug purposes.
+        fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
+        hurtBox.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
     }
 
     //Disable Player's Input map
@@ -92,9 +96,9 @@ public class PlayerController : MonoBehaviour
     }
 
     /*
-     * Input Callback Functions
+     * Events triggered on input
      */
-
+    #region Player Move Events
     public void OnDodge()
     {
         Debug.Log("Player dodged");
@@ -105,6 +109,8 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player punched");
         animator.SetTrigger("LightAttack");
+
+        EnableFistCollider();
     }
 
     public void OnHeavyAttack()
@@ -112,12 +118,43 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Player uppercut");
         animator.SetTrigger("HeavyAttack");
         EventManager.TriggerEvent<DamageEvent, int>(-1); //Only for testing purposes
+
+        EnableFistCollider();
     }
 
     public void OnInteract()
     {
         Debug.Log("Player interacted");
     }
+    #endregion
+
+    /*
+     * Events triggered by a player animation
+     */
+    #region Player Move Animation Events
+
+    public void OnAttackExit()
+    {
+        DisableFistCollider();
+    }
+
+    public void OnRollEnter()
+    {
+        //rolling makes the player collider smaller so
+        //the player can move under obstacles and avoid enemies more easily.
+        capsule.height /= 2.0f;
+        //capsule.center = new Vector3(capsule.center.x, capsule.center.y * 0.9f, capsule.center.z);
+        hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y / 2, hurtBox.transform.localScale.z);
+    }
+
+    public void OnRollExit()
+    {
+        capsule.height *= 2.0f;
+        //capsule.center = new Vector3(capsule.center.x, capsule.center.y / 0.9f, capsule.center.z);
+        hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y * 2, hurtBox.transform.localScale.z);
+    }
+
+    #endregion
 
     public void OnTriggerEnter(Collider other)
     {
@@ -148,27 +185,6 @@ public class PlayerController : MonoBehaviour
 
         //Change the transitions
     }
-
-    #region Animation Events
-
-    //Dodge Roll
-
-    public void OnRollEnter()
-    {
-        //rolling makes the player collider smaller so
-        //the player can move under obstacles and avoid enemies more easily.
-        capsule.height /= 2.0f;
-        //capsule.center = new Vector3(capsule.center.x, capsule.center.y * 0.9f, capsule.center.z);
-        hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y / 2, hurtBox.transform.localScale.z);
-    }
-
-    public void OnRollExit()
-    {
-        capsule.height *= 2.0f;
-        //capsule.center = new Vector3(capsule.center.x, capsule.center.y / 0.9f, capsule.center.z);
-        hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y * 2, hurtBox.transform.localScale.z);
-    }
-    #endregion
 
 
     public void EnableFistCollider()

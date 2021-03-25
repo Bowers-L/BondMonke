@@ -43,7 +43,7 @@ public class PlayerCamera : MonoBehaviour
         defaultPos = cameraTransform.localPosition.z;
         // ignore layers specificity
 
-        
+        Debug.Log("Player camera awoke");
     }
 
     public void FollowTarget(float delta)

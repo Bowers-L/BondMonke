@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class PlayerStats : MonoBehaviour
+public class EnemyStats : MonoBehaviour
 {
     // STATS
     public int health_stat;
@@ -10,18 +8,20 @@ public class PlayerStats : MonoBehaviour
     public int current_health;
 
     // UI ELEMENTS
-    public HealthBar health_bar;
+    //public HealthBar health_bar;
 
     private void Awake()
     {
+        /*
         if (health_bar == null)
         {
             health_bar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
             if (health_bar == null)
             {
-                Debug.LogError("Player doesn't have a health bar. Forgot to set reference in inspector?");
+                Debug.LogError("Enemy doesn't have a health bar. Forgot to set reference in inspector?");
             }
         }
+        */
     }
 
     private void Start()
@@ -29,8 +29,8 @@ public class PlayerStats : MonoBehaviour
         max_health = SetMaxHealthFromStat();
         current_health = max_health;
 
-        health_bar.setMaxHealth(max_health);
-        health_bar.setCurrentHealth(current_health);
+        //health_bar.setMaxHealth(max_health);
+        //health_bar.setCurrentHealth(current_health);
     }
 
     public void SetHealthStat(int _health_stat)
@@ -43,7 +43,8 @@ public class PlayerStats : MonoBehaviour
         if (health_stat <= 5)
         {
             max_health = 10 * health_stat;
-        } else
+        }
+        else
         {
             max_health = 50 + 20 * (health_stat - 5);
         }
@@ -63,6 +64,6 @@ public class PlayerStats : MonoBehaviour
             current_health = max_health;
         }
 
-        health_bar.setCurrentHealth(current_health);
+        //health_bar.setCurrentHealth(current_health);
     }
 }

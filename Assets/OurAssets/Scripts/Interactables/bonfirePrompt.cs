@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class bonfirePrompt : MonoBehaviour
 {
-    public GameObject m_player;
+    private GameObject player;
     public GameObject manager;
     private CanvasGroup canvasGroup;
     private void Awake()
@@ -14,17 +14,17 @@ public class bonfirePrompt : MonoBehaviour
         {
             Debug.LogError("The component CanvasGroup is missing");
         }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-
+        player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogError("Player is not found");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (m_player.GetComponent<PlayerController>().enteredBonfire)
+        if (player.GetComponent<PlayerController>().enteredBonfire)
         {
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;

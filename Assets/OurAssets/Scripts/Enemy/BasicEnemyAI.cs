@@ -9,11 +9,14 @@ public class BasicEnemyAI : MonoBehaviour
     //public Transform dest;
     public Transform playerTransform;
     public float rangeOfSight;
-
+    int lightAttackDamage = 4;
     NavMeshAgent navMeshAgent;
     public Animator anim;
     public EnemyStats stats;
     public float combatStoppingDistance = 2f;
+    private CombatAgent combat;
+    public Vector3 originPoint;
+    public bool reset;
 
     public enum EnemyState
     {
@@ -30,7 +33,14 @@ public class BasicEnemyAI : MonoBehaviour
 
     private DamageCollider fist;
     private HurtBoxMarker hurtBox;
-
+    private void Awake()
+    {
+        combat = GetComponent<CombatAgent>();
+        if (combat == null)
+        {
+            Debug.LogError("Player is missing CombatAgent component");
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +67,8 @@ public class BasicEnemyAI : MonoBehaviour
 
         currentState = EnemyState.PATROL;
         currPoint = 0;
+        originPoint = this.transform.position;
+        reset = false;
     }
 
     // Update is called once per frame
@@ -67,6 +79,7 @@ public class BasicEnemyAI : MonoBehaviour
             case EnemyState.PATROL:
                 Patrolling();
 
+
                 if(Vector3.Distance(this.transform.position, playerTransform.transform.position) <= rangeOfSight)
                 {
                     this.navMeshAgent.stoppingDistance = combatStoppingDistance;
@@ -76,6 +89,12 @@ public class BasicEnemyAI : MonoBehaviour
             
             case EnemyState.CHASE:
                 Chasing();
+                if (reset)
+                {
+                    navMeshAgent.SetDestination(originPoint);
+                    currentState = EnemyState.PATROL;
+                    reset = false;
+                }
                 break;
         }
         /*
@@ -85,7 +104,11 @@ public class BasicEnemyAI : MonoBehaviour
             navMeshAgent.SetDestination(target);
         }
         */
-
+        if (Input.GetKeyUp(KeyCode.K))
+        {
+            anim.SetTrigger("LightAttack");
+            combat.SetDamage(fist, lightAttackDamage);
+        }
         if (stats.current_health <= 0)
         {
             Die();
@@ -124,7 +147,7 @@ public class BasicEnemyAI : MonoBehaviour
         }
         else
         {
-            Debug.Log("No waypoints set");
+           // Debug.Log("No waypoints set");
         }
     }
 
@@ -164,5 +187,14 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Either disable the GO after the animation or enable ragdoll physics
         //(can set up animation event to do this)
+    }
+    public void EnableFistCollider()
+    {
+        combat.StartAttack(fist);
+    }
+
+    public void DisableFistCollider()
+    {
+        combat.FinishAttack();
     }
 }

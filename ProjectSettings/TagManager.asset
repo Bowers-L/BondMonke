@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bonfire
   - Hittable
+  - Enemy
   layers:
   - Default
   - TransparentFX

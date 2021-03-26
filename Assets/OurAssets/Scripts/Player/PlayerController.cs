@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private Rigidbody rb;
     private PlayerStats stats;
+    public Vector3 respawnPoint;
 
     [SerializeField]
     private HurtBoxMarker hurtBox;
@@ -86,6 +87,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         animator.speed = animationSpeed;
+        respawnPoint = this.transform.position;
     }
 
     // Update is called once per frame
@@ -107,10 +109,6 @@ public class PlayerController : MonoBehaviour
         fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
         hurtBox.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
 
-        if (stats.current_health <= 0)
-        {
-            Die();
-        }
     }
 
     //Disable Player's Input map
@@ -133,14 +131,14 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player punched");
         animator.SetTrigger("LightAttack");
-        combat.AttackWithDamage(fist, lightAttackDamage);
+        combat.SetDamage(fist, lightAttackDamage); //call this as animation event
     }
 
     public void OnHeavyAttack()
     {
         Debug.Log("Player uppercut");
         animator.SetTrigger("HeavyAttack");
-        combat.AttackWithDamage(fist, heavyAttackDamage);  
+        combat.SetDamage(fist, heavyAttackDamage);  
         //EventManager.TriggerEvent<DamageEvent, int>(-1); //Only for testing purposes
     }
 
@@ -154,11 +152,6 @@ public class PlayerController : MonoBehaviour
      * Events triggered by a player animation
      */
     #region Player Move Animation Events
-
-    public void OnAttackExit()
-    {
-        combat.FinishAttack();
-    }
 
     public void OnRollEnter()
     {
@@ -211,17 +204,12 @@ public class PlayerController : MonoBehaviour
 
     public void EnableFistCollider()
     {
-        fist.EnableDamageCollider();
+        combat.StartAttack(fist);
     }
 
     public void DisableFistCollider()
     {
-        fist.DisableDamageCollider();
+        combat.FinishAttack();
     }
 
-    void Die()
-    {
-        input.enabled = false;
-        animator.SetTrigger("Death");
-    }
 }

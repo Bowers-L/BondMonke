@@ -107,7 +107,6 @@ public class PlayerController : MonoBehaviour
         fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
         hurtBox.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
 
-        
     }
 
     //Disable Player's Input map
@@ -130,14 +129,14 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player punched");
         animator.SetTrigger("LightAttack");
-        combat.AttackWithDamage(fist, lightAttackDamage);
+        combat.SetDamage(fist, lightAttackDamage); //call this as animation event
     }
 
     public void OnHeavyAttack()
     {
         Debug.Log("Player uppercut");
         animator.SetTrigger("HeavyAttack");
-        combat.AttackWithDamage(fist, heavyAttackDamage);  
+        combat.SetDamage(fist, heavyAttackDamage);  
         //EventManager.TriggerEvent<DamageEvent, int>(-1); //Only for testing purposes
     }
 
@@ -151,11 +150,6 @@ public class PlayerController : MonoBehaviour
      * Events triggered by a player animation
      */
     #region Player Move Animation Events
-
-    public void OnAttackExit()
-    {
-        combat.FinishAttack();
-    }
 
     public void OnRollEnter()
     {
@@ -208,12 +202,12 @@ public class PlayerController : MonoBehaviour
 
     public void EnableFistCollider()
     {
-        fist.EnableDamageCollider();
+        combat.StartAttack(fist);
     }
 
     public void DisableFistCollider()
     {
-        fist.DisableDamageCollider();
+        combat.FinishAttack();
     }
 
 }

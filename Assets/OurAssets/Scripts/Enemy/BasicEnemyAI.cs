@@ -64,6 +64,11 @@ public class BasicEnemyAI : MonoBehaviour
 
         currentState = EnemyState.PATROL;
         currPoint = 0;
+
+        if (Input.GetKeyUp(KeyCode.K))
+        {
+            anim.SetTrigger("LightAttack");
+        }
     }
 
     // Update is called once per frame

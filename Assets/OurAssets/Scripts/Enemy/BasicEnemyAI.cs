@@ -14,6 +14,8 @@ public class BasicEnemyAI : MonoBehaviour
     public Animator anim;
     public EnemyStats stats;
     private CombatAgent combat;
+    public Vector3 originPoint;
+    public bool reset;
 
     public enum EnemyState
     {
@@ -64,11 +66,8 @@ public class BasicEnemyAI : MonoBehaviour
 
         currentState = EnemyState.PATROL;
         currPoint = 0;
-
-        if (Input.GetKeyUp(KeyCode.K))
-        {
-            anim.SetTrigger("LightAttack");
-        }
+        originPoint = this.transform.position;
+        reset = false;
     }
 
     // Update is called once per frame
@@ -79,6 +78,7 @@ public class BasicEnemyAI : MonoBehaviour
             case EnemyState.PATROL:
                 Patrolling();
 
+
                 if(Vector3.Distance(this.transform.position, playerTransform.transform.position) <= rangeOfSight)
                 {
                     currentState = EnemyState.CHASE;
@@ -87,6 +87,12 @@ public class BasicEnemyAI : MonoBehaviour
             
             case EnemyState.CHASE:
                 Chasing();
+                if (reset)
+                {
+                    navMeshAgent.SetDestination(originPoint);
+                    currentState = EnemyState.PATROL;
+                    reset = false;
+                }
                 break;
         }
         /*
@@ -99,9 +105,9 @@ public class BasicEnemyAI : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.K))
         {
             anim.SetTrigger("LightAttack");
-            combat.AttackWithDamage(fist, lightAttackDamage);
+            combat.SetDamage(fist, lightAttackDamage);
         }
-            if (stats.current_health <= 0)
+        if (stats.current_health <= 0)
         {
             Die();
         }
@@ -171,5 +177,14 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Either disable the GO after the animation or enable ragdoll physics
         //(can set up animation event to do this)
+    }
+    public void EnableFistCollider()
+    {
+        combat.StartAttack(fist);
+    }
+
+    public void DisableFistCollider()
+    {
+        combat.FinishAttack();
     }
 }

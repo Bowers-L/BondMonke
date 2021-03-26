@@ -8,6 +8,8 @@ public class bonfire_ui : MonoBehaviour
     public GameObject manager;
     private GameObject player;
     private CanvasGroup canvasGroup;
+    public HealthBar health_bar;
+    private GameObject[] enemies;
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -20,13 +22,21 @@ public class bonfire_ui : MonoBehaviour
         {
             Debug.LogError("Player is not found");
         }
+        if (health_bar == null)
+        {
+            health_bar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
+            if (health_bar == null)
+            {
+                Debug.LogError("Player doesn't have a health bar. Forgot to set reference in inspector?");
+            }
+        }
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (enemies[0] == null)
+        {
+            Debug.LogError("there are no tagged enemies fuck");
+        }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -43,6 +53,17 @@ public class bonfire_ui : MonoBehaviour
             }
             else
             {
+                for (int i = 0; i < enemies.Length; i++)
+                {
+                    if (enemies[i].activeSelf)
+                    {
+                        enemies[i].GetComponent<BasicEnemyAI>().transform.position = enemies[i].GetComponent<BasicEnemyAI>().originPoint;
+                        enemies[i].GetComponent<BasicEnemyAI>().reset = true;
+                    }
+                }
+                player.GetComponent<PlayerController>().respawnPoint = player.transform.position;
+                health_bar.setCurrentHealth(player.GetComponent<PlayerStats>().max_health);
+                player.GetComponent<PlayerStats>().current_health = player.GetComponent<PlayerStats>().max_health;
                 canvasGroup.interactable = true;
                 canvasGroup.blocksRaycasts = true;
                 canvasGroup.alpha = 1f;

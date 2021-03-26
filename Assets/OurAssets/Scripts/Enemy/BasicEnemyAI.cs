@@ -9,10 +9,11 @@ public class BasicEnemyAI : MonoBehaviour
     //public Transform dest;
     public Transform playerTransform;
     public float rangeOfSight;
-
+    int lightAttackDamage = 4;
     NavMeshAgent navMeshAgent;
     public Animator anim;
     public EnemyStats stats;
+    private CombatAgent combat;
 
     public enum EnemyState
     {
@@ -29,7 +30,14 @@ public class BasicEnemyAI : MonoBehaviour
 
     private DamageCollider fist;
     private HurtBoxMarker hurtBox;
-
+    private void Awake()
+    {
+        combat = GetComponent<CombatAgent>();
+        if (combat == null)
+        {
+            Debug.LogError("Player is missing CombatAgent component");
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -83,8 +91,12 @@ public class BasicEnemyAI : MonoBehaviour
             navMeshAgent.SetDestination(target);
         }
         */
-
-        if (stats.current_health <= 0)
+        if (Input.GetKeyUp(KeyCode.K))
+        {
+            anim.SetTrigger("LightAttack");
+            combat.AttackWithDamage(fist, lightAttackDamage);
+        }
+            if (stats.current_health <= 0)
         {
             Die();
         }
@@ -122,7 +134,7 @@ public class BasicEnemyAI : MonoBehaviour
         }
         else
         {
-            Debug.Log("No waypoints set");
+           // Debug.Log("No waypoints set");
         }
     }
 

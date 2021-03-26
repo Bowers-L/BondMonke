@@ -6,7 +6,7 @@ using UnityEngine;
 public class bonfire_ui : MonoBehaviour
 {
     public GameObject manager;
-    public GameObject m_player;
+    private GameObject player;
     private CanvasGroup canvasGroup;
     private void Awake()
     {
@@ -14,6 +14,11 @@ public class bonfire_ui : MonoBehaviour
         if (canvasGroup == null)
         {
             Debug.LogError("The component CanvasGroup is missing");
+        }
+        player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogError("Player is not found");
         }
     }
     // Start is called before the first frame update
@@ -25,7 +30,7 @@ public class bonfire_ui : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyUp(KeyCode.E) && m_player.GetComponent<PlayerController>().enteredBonfire)
+        if(Input.GetKeyUp(KeyCode.E) && player.GetComponent<PlayerController>().enteredBonfire)
         {
             if (canvasGroup.interactable)
             {
@@ -33,6 +38,7 @@ public class bonfire_ui : MonoBehaviour
                 canvasGroup.interactable = false;
                 canvasGroup.blocksRaycasts = false;
                 canvasGroup.alpha = 0f;
+                player.GetComponent<PlayerInputController>().enabled = true;
                 Time.timeScale = 1f;
             }
             else
@@ -40,6 +46,7 @@ public class bonfire_ui : MonoBehaviour
                 canvasGroup.interactable = true;
                 canvasGroup.blocksRaycasts = true;
                 canvasGroup.alpha = 1f;
+                player.GetComponent<PlayerInputController>().enabled = false;
                 Time.timeScale = 0f;
             }
         }

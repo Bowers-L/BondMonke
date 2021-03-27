@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 2201170341388484394}
   - component: {fileID: 6519958462569567789}
   m_Layer: 8
-  m_Name: BasicEnemy 1
+  m_Name: BasicEnemyType1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1164,6 +1164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 963321722682316527}
   - component: {fileID: 7044264962454469774}
+  - component: {fileID: 3579157416767342372}
   m_Layer: 8
   m_Name: Mesh-Karate
   m_TagString: Untagged
@@ -1288,6 +1289,19 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0017327666, y: 1.2101545, z: 0.10626024}
     m_Extent: {x: 1.3940363, y: 1.2284772, z: 0.30851498}
   m_DirtyAABB: 0
+--- !u!114 &3579157416767342372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5130526292430002609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf93683cc38fd984b9a2da12c15aa6f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.01
 --- !u!1 &5148648253758743181
 GameObject:
   m_ObjectHideFlags: 0

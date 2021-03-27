@@ -265,6 +265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6379464864731869530}
   - component: {fileID: 3752695683369147195}
+  - component: {fileID: 4240275102936753997}
   m_Layer: 8
   m_Name: Mesh-Karate
   m_TagString: Untagged
@@ -389,6 +390,19 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0017327666, y: 1.2101545, z: 0.10626024}
     m_Extent: {x: 1.3940363, y: 1.2284772, z: 0.30851498}
   m_DirtyAABB: 0
+--- !u!114 &4240275102936753997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361576946401525252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf93683cc38fd984b9a2da12c15aa6f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.8
 --- !u!1 &1501899734725627943
 GameObject:
   m_ObjectHideFlags: 0
@@ -1622,7 +1636,7 @@ GameObject:
   - component: {fileID: 3348258692670825735}
   - component: {fileID: 2300138869004725424}
   m_Layer: 8
-  m_Name: Player 1
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -110,7 +110,10 @@ public class PlayerController : MonoBehaviour
         //Render the visible hurtbox for debug purposes.
         fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
         hurtBox.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
-
+        if (stats.current_health <= 0)
+        {
+            Die();
+        }
     }
 
     //Disable Player's Input map
@@ -212,6 +215,21 @@ public class PlayerController : MonoBehaviour
     public void DisableFistCollider()
     {
         combat.FinishAttack();
+    }
+    public void Die()
+    {
+        enabled = false;
+        if (GetComponentInChildren<DeathFader>() == null)
+        {
+            Debug.Log("DeathFader not added to enemy mesh");
+        }
+        else
+        {
+            GetComponentInChildren<DeathFader>().enabled = true;
+        }
+
+        //Death Animation
+        animator.SetTrigger("Death");
     }
 
 }

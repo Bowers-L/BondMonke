@@ -8,13 +8,20 @@ public class BasicEnemyAI : MonoBehaviour
 
     //public Transform dest;
     public Transform playerTransform;
+    public float rangeOfSight;
+    
+    public float attackRange;
+    public float attackRestTime;//time between executing an attack
+    private float restTimer;
+    public string[] enemyAttacks;
 
     NavMeshAgent navMeshAgent;
 
     public enum EnemyState
     {
         PATROL,
-        CHASE
+        CHASE,
+        ATTACKING
     };
 
     //Current state of this enemy
@@ -35,6 +42,13 @@ public class BasicEnemyAI : MonoBehaviour
 
         currentState = EnemyState.PATROL;
         currPoint = 0;
+
+        restTimer = 0;
+
+        if (Input.GetKeyUp(KeyCode.K))
+        {
+            anim.SetTrigger("LightAttack");
+        }
     }
 
     // Update is called once per frame
@@ -53,6 +67,22 @@ public class BasicEnemyAI : MonoBehaviour
             
             case EnemyState.CHASE:
                 Chasing();
+
+                if (Vector3.Distance(this.transform.position, playerTransform.transform.position) <= attackRange)
+                {
+                    currentState = EnemyState.ATTACKING;
+                }
+                break;
+
+            case EnemyState.ATTACKING:
+                Attacking();
+
+                if (Vector3.Distance(this.transform.position, playerTransform.transform.position) > attackRange)
+                {
+                    currentState = EnemyState.CHASE;
+                }
+
+                restTimer -= Time.deltaTime;
                 break;
         }
         /*
@@ -107,5 +137,29 @@ public class BasicEnemyAI : MonoBehaviour
         {
             Debug.Log("Player transform not set");
         }
+    }
+
+    public void Attacking()
+    {
+        if (restTimer <= 0)
+        {
+            int randomAttack = Random.Range(0, enemyAttacks.Length);
+            anim.SetTrigger(enemyAttacks[randomAttack]);
+            restTimer = attackRestTime;
+        }
+    }
+
+    public void Die()
+    {
+        //TODO: Kill the enemy
+
+        //Disable AI
+        enabled = false;
+
+        //Death Animation
+        anim.SetTrigger("Death");
+
+        //Either disable the GO after the animation or enable ragdoll physics
+        //(can set up animation event to do this)
     }
 }

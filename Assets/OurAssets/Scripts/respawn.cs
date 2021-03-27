@@ -50,7 +50,7 @@ public class respawn : MonoBehaviour
                     enemies[i].GetComponent<BasicEnemyAI>().reset = true;
                 }
             }
-            player.gameObject.SetActive(false);
+            //player.gameObject.SetActive(false);
             player.transform.position = player.GetComponent<PlayerController>().respawnPoint + new Vector3(0, .01f, 0);
             player.GetComponent<PlayerStats>().current_health = player.GetComponent<PlayerStats>().max_health;
             player.gameObject.SetActive(true);

@@ -1609,9 +1609,10 @@ GameObject:
   - component: {fileID: 4270720982509621470}
   - component: {fileID: 4270720982509621465}
   - component: {fileID: 5474790001816971972}
+  - component: {fileID: 1084794741704229827}
   m_Layer: 8
   m_Name: BasicEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1726,6 +1727,8 @@ MonoBehaviour:
   rangeOfSight: 3
   anim: {fileID: 159528143622647842}
   stats: {fileID: 4270720982509621471}
+  originPoint: {x: 0, y: 0, z: 0}
+  reset: 0
   patrolPoints: []
 --- !u!195 &5474790001816971972
 NavMeshAgent:
@@ -1749,6 +1752,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1084794741704229827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6889731691196428514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0480dd204b71f9747aea9232c4b838e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7281076954737044130
 GameObject:
   m_ObjectHideFlags: 0

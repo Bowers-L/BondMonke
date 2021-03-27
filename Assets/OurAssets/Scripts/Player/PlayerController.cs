@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private Rigidbody rb;
     private PlayerStats stats;
+    public Vector3 respawnPoint;
 
     [SerializeField]
     private HurtBoxMarker hurtBox;
@@ -86,6 +87,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         animator.speed = animationSpeed;
+        respawnPoint = this.transform.position;
     }
 
     // Update is called once per frame
@@ -106,6 +108,7 @@ public class PlayerController : MonoBehaviour
         //Render the visible hurtbox for debug purposes.
         fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
         hurtBox.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
+
     }
 
     //Disable Player's Input map
@@ -208,4 +211,5 @@ public class PlayerController : MonoBehaviour
     {
         combat.FinishAttack();
     }
+
 }

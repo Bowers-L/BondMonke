@@ -1631,9 +1631,10 @@ GameObject:
   - component: {fileID: 7501010929060213721}
   - component: {fileID: 7501010929060213726}
   - component: {fileID: 1554793361255024511}
+  - component: {fileID: 2598409605174759112}
   m_Layer: 8
-  m_Name: Player 1
-  m_TagString: Untagged
+  m_Name: Player
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1740,6 +1741,7 @@ MonoBehaviour:
   heavyAttackDamage: 10
   player_camera: {fileID: 0}
   fist: {fileID: 7501010928673394395}
+  respawnPoint: {x: 0, y: 0, z: 0}
   hurtBox: {fileID: 0}
   capsule: {fileID: 0}
 --- !u!114 &7501010929060213721
@@ -1782,6 +1784,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c12be9e4af8c34b438faa8e3599baf17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2598409605174759112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7267007026768158913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6666c9902baae624f89b9acf5996cd3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasSkillPoint: 0
 --- !u!1 &7501010928673394390
 GameObject:
   m_ObjectHideFlags: 0

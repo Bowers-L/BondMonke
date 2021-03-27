@@ -94,6 +94,12 @@ public class BasicEnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (reset) 
+        {
+            navMeshAgent.SetDestination(originPoint);
+            currentState = EnemyState.PATROL;
+            reset = false;
+        }
         switch (currentState)
         {
             case EnemyState.PATROL:

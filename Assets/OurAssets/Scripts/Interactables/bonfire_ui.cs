@@ -31,9 +31,9 @@ public class bonfire_ui : MonoBehaviour
             }
         }
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (enemies[0] == null)
+        if (enemies == null)
         {
-            Debug.LogError("there are no tagged enemies fuck");
+            Debug.LogError("there are no tagged enemies dangit");
         }
     }
     

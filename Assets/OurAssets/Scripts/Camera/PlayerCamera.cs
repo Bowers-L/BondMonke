@@ -12,7 +12,7 @@ public class PlayerCamera : MonoBehaviour
     public Vector3 camera_velocity = Vector3.zero;
 
     public static PlayerCamera singleton;
-    public float lookSpd = 0.1f;
+    public float lookSpd = 0.03f;
     public float followSpd = 0.1f;
     public float pivotSpd = 0.03f;
 

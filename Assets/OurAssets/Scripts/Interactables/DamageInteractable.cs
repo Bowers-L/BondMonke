@@ -2,36 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageCollider : MonoBehaviour
+public class DamageInteractable : MonoBehaviour
 {
     Collider damageCollider;
 
     //for now, each collider will deal a certain amount of damage, and we can have a different collider per attack.
     //Alternatively, we could set the damageAmount every time the collider is enabled to reuse colliders.
     public int damageAmount;
-    public float scalar = 10f;
 
     private void Awake()
     {
         damageCollider = GetComponent<Collider>();
         damageCollider.gameObject.SetActive(true);
         damageCollider.isTrigger = true;
-        damageCollider.enabled = false;
+        damageCollider.enabled = true;
     }
 
-    public void EnableDamageCollider()
+    public void EnableDamageInteractable()
     {
         damageCollider.enabled = true;
     }
 
-    public void DisableDamageCollider()
+    public void DisableDamageInteractable()
     {
         damageCollider.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-       if(other.CompareTag("Hittable"))
+        if (other.CompareTag("Hittable"))
         {
             Debug.Log("Damage Collision");
 
@@ -43,10 +42,10 @@ public class DamageCollider : MonoBehaviour
                 Debug.Log("Found combat agent");
                 opponent.TakeDamage(damageAmount);
             }
-        } else if (other.CompareTag("Destructible"))
+        }
+        else if (other.CompareTag("Destructible"))
         {
             Debug.Log("Hit destructible object");
-            other.GetComponent<Rigidbody>().AddRelativeTorque(gameObject.transform.forward*scalar*-1f, ForceMode.Impulse);
             other.GetComponent<DeathFader>().enabled = true;
         }
     }

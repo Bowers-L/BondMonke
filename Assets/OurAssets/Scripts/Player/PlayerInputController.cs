@@ -40,7 +40,7 @@ public class PlayerInputController : MonoBehaviour
 
     private void Awake()
     {
-        playerCamera = PlayerCamera.singleton;
+        
         //Need to make sure in the script execution order that the GameManager comes BEFORE this.
         if (GameManager.Instance == null)
         {
@@ -56,6 +56,8 @@ public class PlayerInputController : MonoBehaviour
         {
             Debug.LogError("Missing player controller component.");
         }
+
+        playerCamera = PlayerCamera.singleton;
 
         //setup callbacks/actions associated with each control
         //Actions can be added/deleted by going under Assets/Input/PlayerControls and setting them in the UI.
@@ -128,6 +130,8 @@ public class PlayerInputController : MonoBehaviour
     private void FixedUpdate()
     {
         float delta = Time.fixedDeltaTime;
+
+        Debug.Log(playerCamera);
 
         if (playerCamera)
         {

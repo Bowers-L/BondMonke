@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2687830578002774071}
   - component: {fileID: 2687830578002774070}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Camera Holder
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,11 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441722c11b1e10a4f9497116ebc68ac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 0}
+  playerTransform: {fileID: 7035937543555837368, guid: f92639d1897e22249a20eb69bd94970a,
+    type: 3}
   cameraTransform: {fileID: 2687830578550016860}
   cameraPivotTransform: {fileID: 2687830579330498335}
   camera_velocity: {x: 0, y: 0, z: 0}
-  lookSpd: 0.1
+  lookSpd: 0.03
   followSpd: 0.1
   pivotSpd: 0.03
   maxPivot: 35

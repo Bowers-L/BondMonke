@@ -87,13 +87,6 @@ public class BasicEnemyAI : MonoBehaviour
 
         restTimer = 0;
 
-        /*
-        if (Input.GetKeyUp(KeyCode.K))
-        {
-            anim.SetTrigger("LightAttack");
-        }
-        */
-
         originPoint = this.transform.position;
         reset = false;
     }

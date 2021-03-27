@@ -258,6 +258,11 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7501010928673394395, guid: 297cb5ce714da934b83ce30095b17c32,
+        type: 3}
+      propertyPath: scalar
+      value: 2000
+      objectReference: {fileID: 0}
     - target: {fileID: 7501010929060213716, guid: 297cb5ce714da934b83ce30095b17c32,
         type: 3}
       propertyPath: hurtBox
@@ -2558,6 +2563,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4358909912623491661, guid: 19262c3098de0d44a9aed65c35e94cae,
+        type: 3}
+      propertyPath: speed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4358909913806800630, guid: 19262c3098de0d44a9aed65c35e94cae,
         type: 3}
       propertyPath: m_Name

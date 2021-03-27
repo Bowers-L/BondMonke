@@ -9,30 +9,17 @@ using UnityEngine.InputSystem;
 //InputSystem package is used for input
 public class PlayerInputController : MonoBehaviour
 {
-    public PlayerControls controls;
-    public PlayerController playerController;
-
+    
+    private PlayerController playerController;
+    PlayerCamera playerCamera;
+    private GameControls controls;
     private bool mapMovementToCircle = true;
 
+    public Vector2 cameraInput;
+
+    public float mouseX;
+    public float mouseY;
     public Vector2 Movement
-    {
-        get;
-        private set;
-    }
-
-    public bool LightAttack
-    {
-        get;
-        private set;
-    }
-
-    public bool HeavyAttack
-    {
-        get;
-        private set;
-    }
-
-    public bool Interact
     {
         get;
         private set;
@@ -43,17 +30,34 @@ public class PlayerInputController : MonoBehaviour
         get;
         private set;
     }
-
+    
     public bool Sprint
     {
         get;
         private set;
     }
 
+
     private void Awake()
     {
-        controls = new PlayerControls();
+        
+        //Need to make sure in the script execution order that the GameManager comes BEFORE this.
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("No instance of GameManager found");
+        } else
+        {
+            controls = GameManager.Instance.controls;
+        }
         controls.Player.Enable();
+
+        playerController = GetComponent<PlayerController>();
+        if (playerController == null)
+        {
+            Debug.LogError("Missing player controller component.");
+        }
+
+        playerCamera = PlayerCamera.singleton;
 
         //setup callbacks/actions associated with each control
         //Actions can be added/deleted by going under Assets/Input/PlayerControls and setting them in the UI.
@@ -62,6 +66,8 @@ public class PlayerInputController : MonoBehaviour
         controls.Player.Movement.performed +=       ctx => Movement = GetMovement(ctx.ReadValue<Vector2>());
         controls.Player.Movement.canceled +=        ctx => Movement = Vector2.zero;
 
+        controls.Player.Camera.performed +=         ctx => cameraInput = ctx.ReadValue<Vector2>();
+
         controls.Player.LightAttack.performed +=    ctx => playerController.OnLightAttack();
 
         controls.Player.HeavyAttack.performed +=    ctx => playerController.OnHeavyAttack();
@@ -69,6 +75,7 @@ public class PlayerInputController : MonoBehaviour
         controls.Player.Dodge.performed +=          ctx => playerController.OnDodge();
 
         controls.Player.Interact.performed +=        ctx => playerController.OnInteract();
+        
 
         //Im guessing there's a way to do these held actions more elegantly with only one action, but I haven't found it.
         controls.Player.Block.performed +=          ctx => Block = true;
@@ -76,6 +83,13 @@ public class PlayerInputController : MonoBehaviour
 
         controls.Player.Sprint.performed +=         ctx => Sprint = true;
         controls.Player.StopSprint.performed +=     ctx => Sprint = false;
+
+        
+    }
+
+    private void Pause_performed(InputAction.CallbackContext obj)
+    {
+        throw new NotImplementedException();
     }
 
     Vector2 GetMovement(Vector2 rawInput)
@@ -112,4 +126,39 @@ public class PlayerInputController : MonoBehaviour
     {
         controls.Player.Disable();
     }
+
+    private void FixedUpdate()
+    {
+        float delta = Time.fixedDeltaTime;
+
+        Debug.Log(playerCamera);
+
+        if (playerCamera)
+        {
+            
+            playerCamera.FollowTarget(delta);
+            playerCamera.CameraRotation(delta, mouseX, mouseY);
+        } else
+        {
+            playerCamera = PlayerCamera.singleton;
+            if (!playerCamera)
+            {
+                Debug.LogError("Could not find player camera");
+            }
+
+        }
+    }
+
+    public void TickInput()
+    {
+        MouseUpdate();
+    }
+
+    private void MouseUpdate()
+    {
+        mouseX = cameraInput.x;
+        mouseY = cameraInput.y;
+    }
+
+
 }

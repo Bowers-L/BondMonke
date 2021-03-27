@@ -15,7 +15,13 @@ public class BasicEnemyAI : MonoBehaviour
     private float restTimer;
     public string[] enemyAttacks;
 
+    int lightAttackDamage = 4;
     NavMeshAgent navMeshAgent;
+    public Animator anim;
+    public EnemyStats stats;
+    private CombatAgent combat;
+    public Vector3 originPoint;
+    public bool reset;
 
     public enum EnemyState
     {
@@ -31,14 +37,39 @@ public class BasicEnemyAI : MonoBehaviour
     public GameObject[] patrolPoints;
     private int currPoint;
 
+    private DamageCollider fist;
+    private HurtBoxMarker hurtBox;
+    private void Awake()
+    {
+        combat = GetComponent<CombatAgent>();
+        if (combat == null)
+        {
+            Debug.LogError("Player is missing CombatAgent component");
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
         navMeshAgent = this.GetComponent<NavMeshAgent>();
         if(navMeshAgent == null)
         {
-            Debug.Log("No NavMesh Agent component attached");
+            Debug.LogError("No NavMesh Agent component attached");
         }
+
+        anim = GetComponent<Animator>();
+        if (anim == null)
+        {
+            Debug.LogError("Enemy does not have Animator component.");
+        }
+
+        stats = GetComponent<EnemyStats>();
+        if (stats == null)
+        {
+            Debug.LogError("Enemy does not have EnemyStats component.");
+        }
+
+        fist = GetComponentInChildren<DamageCollider>();
+        hurtBox = GetComponentInChildren<HurtBoxMarker>();
 
         currentState = EnemyState.PATROL;
         currPoint = 0;
@@ -49,6 +80,8 @@ public class BasicEnemyAI : MonoBehaviour
         {
             anim.SetTrigger("LightAttack");
         }
+        originPoint = this.transform.position;
+        reset = false;
     }
 
     // Update is called once per frame
@@ -59,7 +92,8 @@ public class BasicEnemyAI : MonoBehaviour
             case EnemyState.PATROL:
                 Patrolling();
 
-                if(Vector3.Distance(this.transform.position, playerTransform.transform.position) <= 3.0f)
+
+                if(Vector3.Distance(this.transform.position, playerTransform.transform.position) <= rangeOfSight)
                 {
                     currentState = EnemyState.CHASE;
                 }
@@ -83,6 +117,12 @@ public class BasicEnemyAI : MonoBehaviour
                 }
 
                 restTimer -= Time.deltaTime;
+                if (reset)
+                {
+                    navMeshAgent.SetDestination(originPoint);
+                    currentState = EnemyState.PATROL;
+                    reset = false;
+                }
                 break;
         }
         /*
@@ -92,6 +132,22 @@ public class BasicEnemyAI : MonoBehaviour
             navMeshAgent.SetDestination(target);
         }
         */
+        if (Input.GetKeyUp(KeyCode.K))
+        {
+            anim.SetTrigger("LightAttack");
+            combat.SetDamage(fist, lightAttackDamage);
+        }
+        if (stats.current_health <= 0)
+        {
+            Die();
+        }
+
+        //Animate movement
+        anim.SetFloat("MovementY", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
+
+        //Render the visible hurtbox for debug purposes.
+        fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
+        hurtBox.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
     }
 
     void OnCollisionEnter(Collision other)
@@ -119,7 +175,7 @@ public class BasicEnemyAI : MonoBehaviour
         }
         else
         {
-            Debug.Log("No waypoints set");
+           // Debug.Log("No waypoints set");
         }
     }
 
@@ -161,5 +217,14 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Either disable the GO after the animation or enable ragdoll physics
         //(can set up animation event to do this)
+    }
+    public void EnableFistCollider()
+    {
+        combat.StartAttack(fist);
+    }
+
+    public void DisableFistCollider()
+    {
+        combat.FinishAttack();
     }
 }

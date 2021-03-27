@@ -37,7 +37,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void Awake()
     {
-        ignorelayers = 1 << 0 | 1 << 10;
+        ignorelayers = 1 << 10;
         
         singleton = this;
         defaultPos = cameraTransform.localPosition.z;
@@ -82,7 +82,7 @@ public class PlayerCamera : MonoBehaviour
         Vector3 cameradir = cameraTransform.position - cameraPivotTransform.position;
         cameradir.Normalize();
 
-        if (Physics.SphereCast(cameraPivotTransform.position, camera_radius, cameradir, out hit, Mathf.Abs(targetPos)))
+        if (Physics.SphereCast(cameraPivotTransform.position, camera_radius, cameradir, out hit, Mathf.Abs(targetPos), ignorelayers))
         {
             float dist = Vector3.Distance(cameraPivotTransform.position, hit.point);
             targetPos = -(dist - camera_offset);

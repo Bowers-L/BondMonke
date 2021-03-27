@@ -131,8 +131,6 @@ public class PlayerInputController : MonoBehaviour
     {
         float delta = Time.fixedDeltaTime;
 
-        Debug.Log(playerCamera);
-
         if (playerCamera)
         {
             

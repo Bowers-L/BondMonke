@@ -31,9 +31,9 @@ public class respawn : MonoBehaviour
             }
         }
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (enemies[0] == null)
+        if (enemies == null)
         {
-            Debug.LogError("there are no tagged enemies fuck");
+            Debug.LogError("there are no tagged enemies dangit");
         }
     }
 
@@ -51,7 +51,7 @@ public class respawn : MonoBehaviour
                 }
             }
             player.gameObject.SetActive(false);
-            player.transform.position = player.GetComponent<PlayerController>().respawnPoint;
+            player.transform.position = player.GetComponent<PlayerController>().respawnPoint + new Vector3(0, .01f, 0);
             player.GetComponent<PlayerStats>().current_health = player.GetComponent<PlayerStats>().max_health;
             player.gameObject.SetActive(true);
             health_bar.setCurrentHealth(player.GetComponent<PlayerStats>().current_health);

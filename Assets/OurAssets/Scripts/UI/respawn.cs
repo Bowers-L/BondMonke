@@ -2,21 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CanvasGroup))]
 public class respawn : MonoBehaviour
 {
-    private CanvasGroup canvasGroup;
     private GameObject player;
     public HealthBar health_bar;
     private GameObject[] enemies;
+    public Material playerMaterial;
 
     private void Awake()
     {
-        canvasGroup = GetComponent<CanvasGroup>();
-        if (canvasGroup == null)
-        {
-            Debug.LogError("The component CanvasGroup is missing");
-        }
         player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
         {
@@ -46,20 +40,19 @@ public class respawn : MonoBehaviour
             {
                 if (enemies[i].activeSelf)
                 {
-                    enemies[i].GetComponent<BasicEnemyAI>().transform.position = enemies[i].GetComponent<BasicEnemyAI>().originPoint;
                     enemies[i].GetComponent<BasicEnemyAI>().reset = true;
                 }
             }
-            //player.gameObject.SetActive(false);
+        }
+        if (!player.activeSelf)
+        {
             player.transform.position = player.GetComponent<PlayerController>().respawnPoint + new Vector3(0, .01f, 0);
             player.GetComponent<PlayerStats>().current_health = player.GetComponent<PlayerStats>().max_health;
+            player.GetComponentInChildren<DeathFader>().enabled = false;
+            player.GetComponentInChildren<Renderer>().material = playerMaterial;
+            player.GetComponent<PlayerController>().enabled = true;
             player.gameObject.SetActive(true);
             health_bar.setCurrentHealth(player.GetComponent<PlayerStats>().current_health);
         }
-    }
-
-    private void Respawn()
-    {
-
     }
 }

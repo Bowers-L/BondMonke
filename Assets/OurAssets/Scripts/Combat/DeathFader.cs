@@ -7,9 +7,9 @@ public class DeathFader : MonoBehaviour
     public float speed = 0.01f; // 0.6 looks good on xanders computer
     Color startAlpha;
     float startTime;
-    // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
+        Debug.Log("i was enabled");
         startTime = Time.time;
         SwitchRenderModeToFade(GetComponent<Renderer>().material);
         startAlpha = GetComponent<Renderer>().material.color;

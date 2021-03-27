@@ -13,6 +13,7 @@ public class BasicEnemyAI : MonoBehaviour
     NavMeshAgent navMeshAgent;
     public Animator anim;
     public EnemyStats stats;
+    public float combatStoppingDistance = 2f;
     private CombatAgent combat;
     public Vector3 originPoint;
     public bool reset;
@@ -81,6 +82,7 @@ public class BasicEnemyAI : MonoBehaviour
 
                 if(Vector3.Distance(this.transform.position, playerTransform.transform.position) <= rangeOfSight)
                 {
+                    this.navMeshAgent.stoppingDistance = combatStoppingDistance;
                     currentState = EnemyState.CHASE;
                 }
                 break;
@@ -171,6 +173,14 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Disable AI
         enabled = false;
+        if (GetComponentInChildren<DeathFader>() == null)
+        {
+            Debug.Log("DeathFader not added to enemy mesh");
+        }
+        else
+        {
+            GetComponentInChildren<DeathFader>().enabled = true;
+        }
 
         //Death Animation
         anim.SetTrigger("Death");

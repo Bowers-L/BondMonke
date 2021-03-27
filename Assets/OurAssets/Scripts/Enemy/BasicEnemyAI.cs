@@ -6,6 +6,13 @@ using UnityEngine.AI;
 public class BasicEnemyAI : MonoBehaviour
 {
 
+    [System.Serializable]
+    public struct EnemyAttack
+    {
+        public string attackName;
+        public int attackDamage;
+    }
+
     //public Transform dest;
     public Transform playerTransform;
     public float rangeOfSight;
@@ -13,7 +20,9 @@ public class BasicEnemyAI : MonoBehaviour
     public float attackRange;
     public float attackRestTime;//time between executing an attack
     private float restTimer;
-    public string[] enemyAttacks;
+
+    [SerializeField]
+    public EnemyAttack[] enemyAttacks;
 
     int lightAttackDamage = 4;
     NavMeshAgent navMeshAgent;
@@ -75,12 +84,16 @@ public class BasicEnemyAI : MonoBehaviour
         currentState = EnemyState.PATROL;
         currPoint = 0;
 
+
         restTimer = 0;
 
+        /*
         if (Input.GetKeyUp(KeyCode.K))
         {
             anim.SetTrigger("LightAttack");
         }
+        */
+
         originPoint = this.transform.position;
         reset = false;
     }
@@ -140,11 +153,13 @@ public class BasicEnemyAI : MonoBehaviour
             navMeshAgent.SetDestination(target);
         }
         */
+        /*
         if (Input.GetKeyUp(KeyCode.K))
         {
             anim.SetTrigger("LightAttack");
             combat.SetDamage(fist, lightAttackDamage);
         }
+        */
         if (stats.current_health <= 0)
         {
             Die();
@@ -156,6 +171,14 @@ public class BasicEnemyAI : MonoBehaviour
         //Render the visible hurtbox for debug purposes.
         fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
         hurtBox.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
+
+	/* Debug enemy ability to punch
+        if (Input.GetKeyUp(KeyCode.K))
+        {
+            Debug.Log("Enemy Punched");
+            anim.SetTrigger("LightAttack");
+        }
+	*/
     }
 
     void OnCollisionEnter(Collision other)
@@ -208,7 +231,8 @@ public class BasicEnemyAI : MonoBehaviour
         if (restTimer <= 0)
         {
             int randomAttack = Random.Range(0, enemyAttacks.Length);
-            anim.SetTrigger(enemyAttacks[randomAttack]);
+            anim.SetTrigger(enemyAttacks[randomAttack].attackName);
+            combat.SetDamage(fist, enemyAttacks[randomAttack].attackDamage); //call this as animation event
             restTimer = attackRestTime;
         }
     }

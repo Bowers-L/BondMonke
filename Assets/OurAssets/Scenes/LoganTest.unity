@@ -659,13 +659,38 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4270720982509621465, guid: 6026b9170b7511f498ff9e647027b3ad,
         type: 3}
+      propertyPath: attackRange
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4270720982509621465, guid: 6026b9170b7511f498ff9e647027b3ad,
+        type: 3}
+      propertyPath: rangeOfSight
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4270720982509621465, guid: 6026b9170b7511f498ff9e647027b3ad,
+        type: 3}
+      propertyPath: attackRestTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4270720982509621465, guid: 6026b9170b7511f498ff9e647027b3ad,
+        type: 3}
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 8791576901503076527}
     - target: {fileID: 4270720982509621465, guid: 6026b9170b7511f498ff9e647027b3ad,
         type: 3}
+      propertyPath: enemyAttacks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4270720982509621465, guid: 6026b9170b7511f498ff9e647027b3ad,
+        type: 3}
       propertyPath: patrolPoints.Array.size
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4270720982509621465, guid: 6026b9170b7511f498ff9e647027b3ad,
+        type: 3}
+      propertyPath: enemyAttacks.Array.data[0]
+      value: LightAttack
       objectReference: {fileID: 0}
     - target: {fileID: 4270720982509621465, guid: 6026b9170b7511f498ff9e647027b3ad,
         type: 3}
@@ -677,15 +702,30 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[1]
       value: 
       objectReference: {fileID: 1075420994}
+    - target: {fileID: 4270720982509621465, guid: 6026b9170b7511f498ff9e647027b3ad,
+        type: 3}
+      propertyPath: enemyAttacks.Array.data[0].attackName
+      value: LightAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 4270720982509621465, guid: 6026b9170b7511f498ff9e647027b3ad,
+        type: 3}
+      propertyPath: enemyAttacks.Array.data[0].attackDamage
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4270720982509621471, guid: 6026b9170b7511f498ff9e647027b3ad,
         type: 3}
       propertyPath: health_stat
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5474790001816971972, guid: 6026b9170b7511f498ff9e647027b3ad,
+        type: 3}
+      propertyPath: m_StoppingDistance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6113336142146562648, guid: 6026b9170b7511f498ff9e647027b3ad,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6113336142146562648, guid: 6026b9170b7511f498ff9e647027b3ad,
         type: 3}
@@ -2860,6 +2900,11 @@ PrefabInstance:
       propertyPath: player_camera
       value: 
       objectReference: {fileID: 1543030771}
+    - target: {fileID: 7501010929060213726, guid: 297cb5ce714da934b83ce30095b17c32,
+        type: 3}
+      propertyPath: health_stat
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8039568342471211643, guid: 297cb5ce714da934b83ce30095b17c32,
         type: 3}
       propertyPath: m_RootOrder

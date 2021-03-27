@@ -11,13 +11,13 @@ public class DeathFader : MonoBehaviour
     {
         Debug.Log("i was enabled");
         startTime = Time.time;
-        SwitchRenderModeToFade(GetComponent<Renderer>().material);
         startAlpha = GetComponent<Renderer>().material.color;
     }
 
     // Update is called once per frame
     void Update()
     {
+        SwitchRenderModeToFade(GetComponent<Renderer>().material);
         if (GetComponent<Renderer>().material.color.a != 0)
         {
             Debug.Log("Fading dead enemy");

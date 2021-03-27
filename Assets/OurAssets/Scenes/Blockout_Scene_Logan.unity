@@ -120,7 +120,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: ea99e6fe5d2f764408d1edb475c23d84, type: 2}
 --- !u!1001 &92723320
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14251,11 +14251,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicEnemyType1
       objectReference: {fileID: 0}
+    - target: {fileID: 3579157416767342372, guid: 4151fcc4d0a421f418161e4842bff48c,
+        type: 3}
+      propertyPath: speed
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7940649506620032311, guid: 4151fcc4d0a421f418161e4842bff48c,
         type: 3}
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 8039568341292318335}
+    - target: {fileID: 7940649506620032311, guid: 4151fcc4d0a421f418161e4842bff48c,
+        type: 3}
+      propertyPath: patrolPoints.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4151fcc4d0a421f418161e4842bff48c, type: 3}
 --- !u!4 &1994266386 stripped
@@ -14667,6 +14677,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 46.619003, y: 35.655003, z: 27.537}
+--- !u!1 &2954802110177007736 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1361576946401525252, guid: 8b75d8b8adbae8349b4ca659bccea9ce,
+    type: 3}
+  m_PrefabInstance: {fileID: 4315816072246945404}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2954802110177007737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2954802110177007736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf93683cc38fd984b9a2da12c15aa6f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.5
 --- !u!1001 &4315816072246945404
 PrefabInstance:
   m_ObjectHideFlags: 0

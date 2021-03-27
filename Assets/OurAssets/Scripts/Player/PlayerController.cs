@@ -79,6 +79,10 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("Player is missing PlayerStats component.");
         }
 
+        //disable the death fader to start with
+        DeathFader fader = GetComponentInChildren<DeathFader>();
+        fader.enabled = false;  //start with the enemy
+
         animator.applyRootMotion = true;
         
     }

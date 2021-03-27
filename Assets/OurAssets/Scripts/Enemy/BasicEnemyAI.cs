@@ -56,6 +56,9 @@ public class BasicEnemyAI : MonoBehaviour
         {
             Debug.LogError("Player is missing CombatAgent component");
         }
+
+        DeathFader fader = GetComponentInChildren<DeathFader>();
+        fader.enabled = false;  //start with the enemy
     }
     // Start is called before the first frame update
     void Start()
@@ -89,6 +92,15 @@ public class BasicEnemyAI : MonoBehaviour
 
         originPoint = this.transform.position;
         reset = false;
+
+        //Set a default patrol point if there are none
+        if (patrolPoints == null || patrolPoints.Length <= 0)
+        {
+            Debug.Log("Creating patrol point");
+            patrolPoints = new GameObject[1];
+            GameObject emptyToSpawn = new GameObject("waypoint");
+            patrolPoints[0] = GameObject.Instantiate(emptyToSpawn, transform.position, transform.rotation);
+        }
     }
 
     // Update is called once per frame

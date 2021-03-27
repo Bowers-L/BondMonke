@@ -344,8 +344,7 @@ MonoBehaviour:
   combatStoppingDistance: 2
   originPoint: {x: 0, y: 0, z: 0}
   reset: 0
-  patrolPoints:
-  - {fileID: 0}
+  patrolPoints: []
 --- !u!195 &2201170341388484394
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1301,7 +1300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf93683cc38fd984b9a2da12c15aa6f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.01
+  speed: 0.6
 --- !u!1 &5148648253758743181
 GameObject:
   m_ObjectHideFlags: 0

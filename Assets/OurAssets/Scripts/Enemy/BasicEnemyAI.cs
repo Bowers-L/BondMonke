@@ -87,13 +87,6 @@ public class BasicEnemyAI : MonoBehaviour
 
         restTimer = 0;
 
-        /*
-        if (Input.GetKeyUp(KeyCode.K))
-        {
-            anim.SetTrigger("LightAttack");
-        }
-        */
-
         originPoint = this.transform.position;
         reset = false;
     }
@@ -153,13 +146,8 @@ public class BasicEnemyAI : MonoBehaviour
             navMeshAgent.SetDestination(target);
         }
         */
-        /*
-        if (Input.GetKeyUp(KeyCode.K))
-        {
-            anim.SetTrigger("LightAttack");
-            combat.SetDamage(fist, lightAttackDamage);
-        }
-        */
+        
+
         if (stats.current_health <= 0)
         {
             Die();

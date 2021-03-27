@@ -140,13 +140,8 @@ public class BasicEnemyAI : MonoBehaviour
             navMeshAgent.SetDestination(target);
         }
         */
-        /*
-        if (Input.GetKeyUp(KeyCode.K))
-        {
-            anim.SetTrigger("LightAttack");
-            combat.SetDamage(fist, lightAttackDamage);
-        }
-        */
+        
+
         if (stats.current_health <= 0)
         {
             Die();

@@ -100,10 +100,8 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Sprint", input.Sprint);
         animator.SetBool("Block", input.Block);
 
-        if (input.Block)
-        {
-            //Debug.Log("Player is blocking.");
-        }
+
+        hurtBox.GetComponent<CapsuleCollider>().enabled = !input.Block;
 
         //Render the visible hurtbox for debug purposes.
         fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;

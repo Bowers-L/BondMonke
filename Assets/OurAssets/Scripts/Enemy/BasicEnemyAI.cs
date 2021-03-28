@@ -57,6 +57,15 @@ public class BasicEnemyAI : MonoBehaviour
             Debug.LogError("Player is missing CombatAgent component");
         }
 
+        if (playerTransform == null)
+        {
+            playerTransform = GameObject.Find("Player").transform;
+            if (playerTransform == null)
+            {
+                Debug.LogError("No player in the scene");
+            }
+        }
+
         DeathFader fader = GetComponentInChildren<DeathFader>();
         fader.enabled = false;  //start with the enemy
     }

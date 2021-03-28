@@ -271,6 +271,7 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Disable AI
         enabled = false;
+        EventManager.TriggerEvent<DeathAudioEvent, Vector3>(transform.position);
         if (GetComponentInChildren<DeathFader>() == null)
         {
             Debug.Log("DeathFader not added to enemy mesh");

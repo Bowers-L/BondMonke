@@ -139,7 +139,10 @@ public class PlayerInputController : MonoBehaviour
         {
             
             playerCamera.FollowTarget(delta);
-            playerCamera.CameraRotation(delta, mouseX, mouseY);
+            if (Time.timeScale != 0f)
+            {
+                playerCamera.CameraRotation(delta, mouseX, mouseY);
+            }
         } else
         {
             playerCamera = PlayerCamera.singleton;

@@ -167,6 +167,7 @@ MonoBehaviour:
   eventSound3DPrefab: {fileID: 771906743323100433, guid: fe86e2757965d9545900bfd99221ab01,
     type: 3}
   punchAudio: {fileID: 8300000, guid: a37c484a2ab2dc648a9a9f1eb3e65ca9, type: 3}
+  deathAudio: {fileID: 8300000, guid: 792fef55893130a4eadeadb5c5bec966, type: 3}
 --- !u!1 &6414086767115568247
 GameObject:
   m_ObjectHideFlags: 0

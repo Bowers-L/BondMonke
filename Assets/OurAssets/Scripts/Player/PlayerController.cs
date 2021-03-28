@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private CapsuleCollider capsule;
 
+    public float killPlaneY = -10.0f;
+
     private void Awake()
     {
         
@@ -98,19 +100,25 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //ground check
         float distToGround = this.GetComponent<Collider>().bounds.extents.y;
-        Debug.Log(distToGround);
         isGrounded = Physics.Raycast(transform.position, Vector3.down, distToGround + .1f);
         input.TickInput();
-        if (isGrounded) {
-            Debug.Log(isGrounded);
+
+        //fall check
+        if (transform.position.y <= killPlaneY)
+        {
+            stats.TakeDamage(stats.current_health);
+            Die();
         }
+
+        //Set animation parameters
         animator.SetFloat("MovementX", input.Movement.x);
         animator.SetFloat("MovementY", input.Movement.y);
         animator.SetBool("Sprint", input.Sprint);
         animator.SetBool("Block", input.Block);
 
-
+        //Disable the hurtbox if the player is blocking
         hurtBox.GetComponent<CapsuleCollider>().enabled = !input.Block;
 
         //Render the visible hurtbox for debug purposes.
@@ -187,13 +195,25 @@ public class PlayerController : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Bonfire")
+        if (other.CompareTag("Bonfire"))
             enteredBonfire = true;
+
+        if (other.CompareTag("PromptTrigger"))
+        {
+            PromptTrigger pt = other.GetComponent<PromptTrigger>();
+            pt.enableText();
+        }
     }
     public void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Bonfire")
+        if (other.CompareTag("Bonfire"))
             enteredBonfire = false;
+
+        if (other.CompareTag("PromptTrigger"))
+        {
+            PromptTrigger pt = other.GetComponent<PromptTrigger>();
+            pt.disableText();
+        }
     }
     /*
      * Animator callback
@@ -225,6 +245,7 @@ public class PlayerController : MonoBehaviour
     {
         combat.FinishAttack();
     }
+
     public void Die()
     {
         enabled = false;

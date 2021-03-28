@@ -53,6 +53,8 @@ public class respawn : MonoBehaviour
             player.GetComponent<PlayerController>().enabled = true;
             player.gameObject.SetActive(true);
             health_bar.setCurrentHealth(player.GetComponent<PlayerStats>().current_health);
+
+            player.GetComponent<PlayerController>().player_camera.enabled = true;   //in case the player fell
         }
     }
 }

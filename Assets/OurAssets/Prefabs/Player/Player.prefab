@@ -1747,6 +1747,7 @@ MonoBehaviour:
   respawnPoint: {x: 0, y: 0, z: 0}
   hurtBox: {fileID: 3348258694159950266}
   capsule: {fileID: 0}
+  killPlaneY: -10
 --- !u!114 &6051758639109837217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1800,6 +1801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasSkillPoint: 0
+  healthIncrease: 5
 --- !u!1 &7318077977822194332
 GameObject:
   m_ObjectHideFlags: 0

@@ -201,11 +201,23 @@ public class PlayerController : MonoBehaviour
     {
         if (other.tag == "Bonfire")
             enteredBonfire = true;
+
+        if (other.tag == "Prompt")
+        {
+            PromptTrigger pt = other.GetComponent<PromptTrigger>();
+            pt.enableText();
+        }
     }
     public void OnTriggerExit(Collider other)
     {
         if (other.tag == "Bonfire")
             enteredBonfire = false;
+
+        if (other.tag == "Prompt")
+        {
+            PromptTrigger pt = other.GetComponent<PromptTrigger>();
+            pt.disableText();
+        }
     }
     /*
      * Animator callback

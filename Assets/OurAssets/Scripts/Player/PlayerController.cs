@@ -102,17 +102,13 @@ public class PlayerController : MonoBehaviour
     {
         //ground check
         float distToGround = this.GetComponent<Collider>().bounds.extents.y;
-        Debug.Log(distToGround);
         isGrounded = Physics.Raycast(transform.position, Vector3.down, distToGround + .1f);
         input.TickInput();
-        if (isGrounded) {
-            Debug.Log(isGrounded);
-        }
 
         //fall check
         if (transform.position.y <= killPlaneY)
         {
-            stats.current_health = 0;
+            stats.TakeDamage(stats.current_health);
             Die();
         }
 
@@ -199,10 +195,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Bonfire")
+        if (other.CompareTag("Bonfire"))
             enteredBonfire = true;
 
-        if (other.tag == "Prompt")
+        if (other.CompareTag("PromptTrigger"))
         {
             PromptTrigger pt = other.GetComponent<PromptTrigger>();
             pt.enableText();
@@ -210,10 +206,10 @@ public class PlayerController : MonoBehaviour
     }
     public void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Bonfire")
+        if (other.CompareTag("Bonfire"))
             enteredBonfire = false;
 
-        if (other.tag == "Prompt")
+        if (other.CompareTag("PromptTrigger"))
         {
             PromptTrigger pt = other.GetComponent<PromptTrigger>();
             pt.disableText();

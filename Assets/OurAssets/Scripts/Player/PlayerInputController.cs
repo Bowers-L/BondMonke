@@ -124,10 +124,14 @@ public class PlayerInputController : MonoBehaviour
 
     private void OnDisable()
     {
+        //In case the player was pressing these
+        Sprint = false; 
+        Block = false;
+
         controls.Player.Disable();
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         float delta = Time.fixedDeltaTime;
 

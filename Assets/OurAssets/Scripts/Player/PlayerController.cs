@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float animationSpeed = 1.0f;
     public float rootMotionMovementSpeed = 1.0f;
     public float turnSpeed = 1.0f;
+    private bool isGrounded;
 
     //Attacks
     public int lightAttackDamage;
@@ -97,8 +98,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float distToGround = this.GetComponent<Collider>().bounds.extents.y;
+        Debug.Log(distToGround);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, distToGround + .1f);
         input.TickInput();
-        // Debug.Log("mouse " + input.CameraInput);
+        if (isGrounded) {
+            Debug.Log(isGrounded);
+        }
         animator.SetFloat("MovementX", input.Movement.x);
         animator.SetFloat("MovementY", input.Movement.y);
         animator.SetBool("Sprint", input.Sprint);
@@ -128,8 +134,11 @@ public class PlayerController : MonoBehaviour
     #region Player Move Events
     public void OnDodge()
     {
-        Debug.Log("Player dodged");
-        animator.SetTrigger("Roll");
+        if (isGrounded)
+        {
+            Debug.Log("Player dodged");
+            animator.SetTrigger("Roll");
+        }
     }
 
     public void OnLightAttack()
@@ -231,5 +240,4 @@ public class PlayerController : MonoBehaviour
         //Death Animation
         animator.SetTrigger("Death");
     }
-
 }

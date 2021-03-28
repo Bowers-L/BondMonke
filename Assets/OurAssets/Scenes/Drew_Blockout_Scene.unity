@@ -14766,6 +14766,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: ba92b8a57bf399c4aa7d30609f3dcbd4, type: 2}
+    - target: {fileID: 4240275102936753997, guid: 8b75d8b8adbae8349b4ca659bccea9ce,
+        type: 3}
+      propertyPath: speed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6051758639109837216, guid: 8b75d8b8adbae8349b4ca659bccea9ce,
+        type: 3}
+      propertyPath: m_Height
+      value: 2.6
+      objectReference: {fileID: 0}
     - target: {fileID: 6051758639109837222, guid: 8b75d8b8adbae8349b4ca659bccea9ce,
         type: 3}
       propertyPath: health_bar

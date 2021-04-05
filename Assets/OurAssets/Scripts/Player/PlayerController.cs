@@ -115,6 +115,7 @@ public class PlayerController : MonoBehaviour
         //Set animation parameters
         animator.SetFloat("MovementX", input.Movement.x);
         animator.SetFloat("MovementY", input.Movement.y);
+        animator.SetFloat("MovementMag", input.Movement.magnitude);
         animator.SetBool("Sprint", input.Sprint);
         animator.SetBool("Block", input.Block);
 
@@ -140,6 +141,15 @@ public class PlayerController : MonoBehaviour
      * Events triggered on input
      */
     #region Player Move Events
+
+    public void OnMovement()
+    {
+        faceDirectionOfCamera();
+        animator.SetFloat("MovementX", input.Movement.x);
+        animator.SetFloat("MovementY", input.Movement.y);
+        animator.SetFloat("MovementMag", input.Movement.magnitude);
+    }
+
     public void OnDodge()
     {
         if (isGrounded)
@@ -168,12 +178,29 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Player interacted");
     }
+
+    private void faceDirectionOfCamera()
+    {
+        if (input.Movement.magnitude > 0)
+        {
+            //Get rotation in direction of camera
+            Quaternion newRotation = Quaternion.LookRotation(player_camera.transform.forward, transform.up);
+
+            //Rotate around y axis based on Movement vector
+            float joystickAngle = Vector2.Angle(Vector2.up, input.Movement);
+
+            //Set player's rotation
+            newRotation.eulerAngles.Set(newRotation.eulerAngles.x, newRotation.eulerAngles.y + joystickAngle, newRotation.eulerAngles.z);
+
+            transform.rotation = newRotation;
+        }
+    }
     #endregion
 
     /*
      * Events triggered by a player animation
      */
-    #region Player Move Animation Events
+    #region Animation Events
 
     public void OnRollEnter()
     {
@@ -193,6 +220,7 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    #region Bonfire Trigger
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Bonfire"))
@@ -215,6 +243,9 @@ public class PlayerController : MonoBehaviour
             pt.disableText();
         }
     }
+    #endregion
+
+    #region Animation Callbacks
     /*
      * Animator callback
      */
@@ -230,11 +261,11 @@ public class PlayerController : MonoBehaviour
         this.transform.position = newRootPosition;
         //this.transform.rotation = newRootRotation;
 
-        transform.RotateAround(transform.position, Vector3.up, turnSpeed * animator.GetFloat("MovementX"));  //doing rotation programmatically
+        //transform.RotateAround(transform.position, Vector3.up, turnSpeed * animator.GetFloat("MovementX"));  //doing rotation programmatically
 
         //Change the transitions
     }
-
+    #endregion
 
     public void EnableFistCollider()
     {

@@ -63,8 +63,22 @@ public class PlayerInputController : MonoBehaviour
         //Actions can be added/deleted by going under Assets/Input/PlayerControls and setting them in the UI.
         //They can also be added at runtime in code by using: var action = new InputAction("name", Binding: "<Configuration>/Binding");
 
-        controls.Player.Movement.performed +=       ctx => Movement = GetMovement(ctx.ReadValue<Vector2>());
-        controls.Player.Movement.canceled +=        ctx => Movement = Vector2.zero;
+        controls.Player.Movement.performed += ctx => Movement = GetMovement(ctx.ReadValue<Vector2>());
+        controls.Player.Movement.canceled += ctx => Movement = Vector2.zero;
+
+        /*
+        controls.Player.Movement.performed += ctx =>
+        {
+            Movement = GetMovement(ctx.ReadValue<Vector2>());
+            playerController.OnMovement();
+        };
+
+        controls.Player.Movement.canceled += ctx => 
+        {
+            Movement = Vector2.zero;
+            playerController.OnMovement();
+        };
+        */
 
         controls.Player.Camera.performed +=         ctx => cameraInput = ctx.ReadValue<Vector2>();
 

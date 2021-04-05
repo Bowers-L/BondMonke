@@ -113,11 +113,10 @@ public class PlayerController : MonoBehaviour
         }
 
         //Set animation parameters
-        animator.SetFloat("MovementX", input.Movement.x);
-        animator.SetFloat("MovementY", input.Movement.y);
-        animator.SetFloat("MovementMag", input.Movement.magnitude);
         animator.SetBool("Sprint", input.Sprint);
         animator.SetBool("Block", input.Block);
+
+        OnMovement();
 
         //Disable the hurtbox if the player is blocking
         hurtBox.GetComponent<CapsuleCollider>().enabled = !input.Block;

@@ -26950,6 +26950,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0
+    functionName: DisableStaminaRegen
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.3
     functionName: ExecutePunch
     data: 
@@ -26959,6 +26966,13 @@ AnimationClip:
     messageOptions: 0
   - time: 0.4
     functionName: DisableFistCollider
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.8
+    functionName: EnableStaminaRegen
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -42495,6 +42495,13 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: DisableStaminaRegen
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.75
     functionName: EnableFistCollider
     data: 
@@ -42504,6 +42511,13 @@ AnimationClip:
     messageOptions: 0
   - time: 1.0833334
     functionName: DisableFistCollider
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.3333334
+    functionName: EnableStaminaRegen
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

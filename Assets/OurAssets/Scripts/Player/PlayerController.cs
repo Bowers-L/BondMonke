@@ -115,7 +115,6 @@ public class PlayerController : MonoBehaviour
         //Set animation parameters
         animator.SetBool("Sprint", input.Sprint);
         animator.SetBool("Block", input.Block);
-
         OnMovement();
 
         //Disable the hurtbox if the player is blocking
@@ -184,12 +183,13 @@ public class PlayerController : MonoBehaviour
         {
             //Get rotation in direction of camera
             Quaternion newRotation = Quaternion.LookRotation(player_camera.transform.forward, transform.up);
-
+            Debug.Log(newRotation.eulerAngles);
             //Rotate around y axis based on Movement vector
-            float joystickAngle = Vector2.Angle(Vector2.up, input.Movement);
+            float joystickAngle = -1.0f * Vector2.SignedAngle(Vector2.up, input.Movement);
+
 
             //Set player's rotation
-            newRotation.eulerAngles.Set(newRotation.eulerAngles.x, newRotation.eulerAngles.y + joystickAngle, newRotation.eulerAngles.z);
+            newRotation.eulerAngles = new Vector3(newRotation.eulerAngles.x, newRotation.eulerAngles.y + joystickAngle, newRotation.eulerAngles.z);
 
             transform.rotation = newRotation;
         }

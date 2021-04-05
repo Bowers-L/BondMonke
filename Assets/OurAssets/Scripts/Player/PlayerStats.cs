@@ -9,9 +9,16 @@ public class PlayerStats : MonoBehaviour
     public int max_health;
     public int current_health;
 
+    public int stamina_stat;
+    public int max_stamina;
+    public int current_stamina;
+
+    public int stamina_regen_enabled = 1;
+    public int stamina_regen_factor;
+
     // UI ELEMENTS
     public HealthBar health_bar;
-
+    public StaminaBar stamina_bar;
     private void Awake()
     {
         if (health_bar == null)
@@ -22,6 +29,21 @@ public class PlayerStats : MonoBehaviour
                 Debug.LogError("Player doesn't have a health bar. Forgot to set reference in inspector?");
             }
         }
+        if (stamina_bar == null)
+        {
+            stamina_bar = GameObject.Find("StaminaBar").GetComponent<StaminaBar>();
+            if (stamina_bar == null)
+            {
+                Debug.LogError("Player doesn't have a stamina bar. Forgot to set reference in inspector?");
+            }
+        }
+    }
+
+    private void Update()
+    {
+        //Stamina Regeneration
+        StaminaCost(-1* stamina_regen_enabled * stamina_regen_factor * (int) Time.timeScale);
+        //will not regen on pause
     }
 
     private void Start()
@@ -31,6 +53,12 @@ public class PlayerStats : MonoBehaviour
 
         health_bar.setMaxHealth(max_health);
         health_bar.setCurrentHealth(current_health);
+
+        max_stamina = SetMaxStaminaFromStat();
+        current_stamina = max_stamina;
+
+        stamina_bar.setMaxStamina(max_stamina);
+        stamina_bar.setCurrentStamina(current_stamina);
     }
 
     public void SetHealthStat(int _health_stat)
@@ -50,6 +78,24 @@ public class PlayerStats : MonoBehaviour
         return max_health;
     }
 
+    public void SetStaminaStat(int _stamina_stat)
+    {
+        stamina_stat = _stamina_stat;
+    }
+
+    private int SetMaxStaminaFromStat()
+    {
+        if (stamina_stat <= 5)
+        {
+            max_stamina = 200 * stamina_stat;
+        }
+        else
+        {
+            max_stamina = 1000 + 400 * (stamina_stat - 5);
+        }
+        return max_stamina;
+    }
+
     // used for damage or for healing when has negative input
     public void TakeDamage(int damage)
     {
@@ -64,5 +110,40 @@ public class PlayerStats : MonoBehaviour
         }
 
         health_bar.setCurrentHealth(current_health);
+    }
+
+    public void DisableStaminaRegen()
+    {
+        stamina_regen_enabled = 0;
+    }
+
+    public void EnableStaminaRegen()
+    {
+        stamina_regen_enabled = 1;
+    }
+
+    public void StaminaCost(int cost)
+    {
+        if (cost > current_stamina)
+        {
+            cost *= 32; //penalty for overexertion
+        }
+        current_stamina -= cost;
+        if (current_stamina < 0)
+        {
+            //need to tie to public variables
+            stamina_regen_factor = 1;
+        }
+        if (stamina_regen_factor == 1 && current_stamina >= max_stamina / 2)
+        {
+            stamina_regen_factor = 2;
+        }
+        // allows behind-the-scenes negative stamina (soft attack block)
+        if (current_stamina > max_stamina)
+        {
+            current_stamina = max_stamina;
+        }
+
+        stamina_bar.setCurrentStamina(current_stamina);
     }
 }

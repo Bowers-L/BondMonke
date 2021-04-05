@@ -15,7 +15,10 @@ public class PlayerController : MonoBehaviour
 
     //Attacks
     public int lightAttackDamage;
+    public int lightAttackCost; // for Stamina
+
     public int heavyAttackDamage;
+    public int heavyAttackCost; // for Stamina
     
     private PlayerInputController input;
     private CombatAgent combat;
@@ -151,17 +154,24 @@ public class PlayerController : MonoBehaviour
 
     public void OnLightAttack()
     {
-        Debug.Log("Player punched");
-        animator.SetTrigger("LightAttack");
-        combat.SetDamage(fist, lightAttackDamage); //call this as animation event
+        if (stats.current_stamina > 0)
+        {
+            Debug.Log("Player punched");
+            animator.SetTrigger("LightAttack");
+            combat.SetDamage(fist, lightAttackDamage); //call this as animation event
+            stats.StaminaCost(lightAttackCost);
+        }
     }
 
     public void OnHeavyAttack()
     {
-        Debug.Log("Player uppercut");
-        animator.SetTrigger("HeavyAttack");
-        combat.SetDamage(fist, heavyAttackDamage);  
-        //EventManager.TriggerEvent<DamageEvent, int>(-1); //Only for testing purposes
+        if (stats.current_stamina > 0)
+        {
+            Debug.Log("Player uppercut");
+            animator.SetTrigger("HeavyAttack");
+            combat.SetDamage(fist, heavyAttackDamage);
+            stats.StaminaCost(heavyAttackCost);
+        }
     }
 
     public void OnInteract()

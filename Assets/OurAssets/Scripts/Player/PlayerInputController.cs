@@ -88,7 +88,9 @@ public class PlayerInputController : MonoBehaviour
 
         controls.Player.Dodge.performed +=          ctx => playerController.OnDodge();
 
-        controls.Player.Interact.performed +=        ctx => playerController.OnInteract();
+        controls.Player.Interact.performed +=       ctx => playerController.OnInteract();
+
+        controls.Player.LockOn.performed +=         ctx => playerController.OnLockOn();
         
 
         //Im guessing there's a way to do these held actions more elegantly with only one action, but I haven't found it.
@@ -99,6 +101,11 @@ public class PlayerInputController : MonoBehaviour
         controls.Player.StopSprint.performed +=     ctx => Sprint = false;
 
         
+    }
+
+    private void LockOn_performed(InputAction.CallbackContext obj)
+    {
+        throw new NotImplementedException();
     }
 
     private void Pause_performed(InputAction.CallbackContext obj)

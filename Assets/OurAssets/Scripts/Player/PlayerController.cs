@@ -229,8 +229,8 @@ public class PlayerController : MonoBehaviour
         CombatAgent selected = agents[0];
         foreach (CombatAgent agent in agents)
         {
-
-            if (Vector3.Distance(transform.position, agent.transform.position) < Vector3.Distance(transform.position, selected.transform.position))
+            float agentDist = Vector3.Distance(transform.position, agent.transform.position);
+            if (agentDist < maxDistLockOn && agentDist < Vector3.Distance(transform.position, selected.transform.position))
             {
                 selected = agent;
             }

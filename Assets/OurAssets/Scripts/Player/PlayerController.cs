@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour
 
     public int heavyAttackDamage;
     public int heavyAttackCost; // for Stamina
+
+    //Lock on feature
+    private CombatAgent lockOn;
+    public float maxDistLockOn;
     
     private PlayerInputController input;
     private CombatAgent combat;
@@ -84,6 +88,8 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("Player is missing PlayerStats component.");
         }
+
+        lockOn = null;
 
         //disable the death fader to start with
         DeathFader fader = GetComponentInChildren<DeathFader>();
@@ -182,6 +188,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnLockOn()
+    {
+        Debug.Log("Player Lock On");
+        if (lockOn != null)
+        {
+            lockOn = null;
+        } else
+        {
+            lockOn = findNearestCombatAgent();
+        }
+    }
+
     public void OnInteract()
     {
         Debug.Log("Player interacted");
@@ -203,6 +221,22 @@ public class PlayerController : MonoBehaviour
 
             transform.rotation = newRotation;
         }
+    }
+
+    private CombatAgent findNearestCombatAgent()
+    {
+        CombatAgent[] agents = GameObject.FindObjectsOfType<EnemyCombatAgent>();
+        CombatAgent selected = agents[0];
+        foreach (CombatAgent agent in agents)
+        {
+            float agentDist = Vector3.Distance(transform.position, agent.transform.position);
+            if (agentDist < maxDistLockOn && agentDist < Vector3.Distance(transform.position, selected.transform.position))
+            {
+                selected = agent;
+            }
+        }
+
+        return selected;
     }
     #endregion
 

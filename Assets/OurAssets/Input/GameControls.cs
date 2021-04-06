@@ -97,6 +97,14 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""LockOn"",
+                    ""type"": ""Button"",
+                    ""id"": ""653df1a3-4c9f-469d-af04-6e29f28de699"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -429,6 +437,28 @@ public class @GameControls : IInputActionCollection, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9120c258-dc45-4d31-96af-3ddb33e09d82"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5aea001-606d-4038-93aa-44cff4c87d7a"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardAndMouse"",
+                    ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -458,6 +488,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_StopSprint = m_Player.FindAction("StopSprint", throwIfNotFound: true);
         m_Player_Camera = m_Player.FindAction("Camera", throwIfNotFound: true);
+        m_Player_LockOn = m_Player.FindAction("LockOn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -517,6 +548,7 @@ public class @GameControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_StopSprint;
     private readonly InputAction m_Player_Camera;
+    private readonly InputAction m_Player_LockOn;
     public struct PlayerActions
     {
         private @GameControls m_Wrapper;
@@ -531,6 +563,7 @@ public class @GameControls : IInputActionCollection, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @StopSprint => m_Wrapper.m_Player_StopSprint;
         public InputAction @Camera => m_Wrapper.m_Player_Camera;
+        public InputAction @LockOn => m_Wrapper.m_Player_LockOn;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -570,6 +603,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @Camera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
                 @Camera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
                 @Camera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCamera;
+                @LockOn.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockOn;
+                @LockOn.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockOn;
+                @LockOn.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockOn;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -604,6 +640,9 @@ public class @GameControls : IInputActionCollection, IDisposable
                 @Camera.started += instance.OnCamera;
                 @Camera.performed += instance.OnCamera;
                 @Camera.canceled += instance.OnCamera;
+                @LockOn.started += instance.OnLockOn;
+                @LockOn.performed += instance.OnLockOn;
+                @LockOn.canceled += instance.OnLockOn;
             }
         }
     }
@@ -638,5 +677,6 @@ public class @GameControls : IInputActionCollection, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnStopSprint(InputAction.CallbackContext context);
         void OnCamera(InputAction.CallbackContext context);
+        void OnLockOn(InputAction.CallbackContext context);
     }
 }

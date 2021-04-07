@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
     /*
      * Events triggered on input
      */
-    #region Player Move Events
+    #region Player Input Events
 
     public void OnMovement()
     {

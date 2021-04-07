@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /*
-     * Events triggered on input
+     * Events triggered immediately on input
      */
     #region Player Input Events
 
@@ -172,8 +172,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Player punched");
             animator.SetTrigger("LightAttack");
-            combat.SetDamage(fist, lightAttackDamage); //call this as animation event
-            stats.StaminaCost(lightAttackCost);
+
         }
     }
 
@@ -183,8 +182,6 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Player uppercut");
             animator.SetTrigger("HeavyAttack");
-            combat.SetDamage(fist, heavyAttackDamage);
-            stats.StaminaCost(heavyAttackCost);
         }
     }
 
@@ -245,13 +242,15 @@ public class PlayerController : MonoBehaviour
      */
     #region Animation Events
 
-    public void OnRollEnter()
+    public void OnRollEnter(int staminaCost)
     {
         //rolling makes the player collider smaller so
         //the player can move under obstacles and avoid enemies more easily.
         capsule.height /= 2.0f;
         //capsule.center = new Vector3(capsule.center.x, capsule.center.y * 0.9f, capsule.center.z);
         hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y / 2, hurtBox.transform.localScale.z);
+
+        stats.StaminaCost(staminaCost);
     }
 
     public void OnRollExit()
@@ -261,9 +260,24 @@ public class PlayerController : MonoBehaviour
         hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y * 2, hurtBox.transform.localScale.z);
     }
 
+    public void OnAttackStart(AttackInfo info)
+    {
+        combat.SetHitboxDamage(fist, info.damage); //call this as animation event
+        combat.EnableHitbox(fist);
+        stats.StaminaCost(info.staminaCost);
+    }
+
+    public void OnAttackFinish()
+    {
+        combat.DisableHitbox();
+    }
+
     #endregion
 
-    #region Bonfire Trigger
+    /*
+     * Trigger colliders (mainly for bonfires)
+     */
+    #region Trigger Collider Callbacks
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Bonfire"))
@@ -288,6 +302,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+
     #region Animation Callbacks
     /*
      * Animator callback
@@ -310,22 +325,13 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    public void EnableFistCollider()
-    {
-        combat.StartAttack(fist);
-    }
-
-    public void DisableFistCollider()
-    {
-        combat.FinishAttack();
-    }
 
     public void Die()
     {
         enabled = false;
         if (GetComponentInChildren<DeathFader>() == null)
         {
-            Debug.Log("DeathFader not added to enemy mesh");
+            Debug.Log("DeathFader not added to player mesh");
         }
         else
         {

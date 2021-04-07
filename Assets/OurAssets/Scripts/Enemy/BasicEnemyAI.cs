@@ -259,7 +259,7 @@ public class BasicEnemyAI : MonoBehaviour
 
             int randomAttack = Random.Range(0, enemyAttacks.Length);
             anim.SetTrigger(enemyAttacks[randomAttack].attackName);
-            combat.SetDamage(fist, enemyAttacks[randomAttack].attackDamage); //call this as animation event
+            combat.SetHitboxDamage(fist, enemyAttacks[randomAttack].attackDamage); //call this as animation event
             restTimer = attackRestTime;
 
         }
@@ -287,15 +287,20 @@ public class BasicEnemyAI : MonoBehaviour
         //Either disable the GO after the animation or enable ragdoll physics
         //(can set up animation event to do this)
     }
-    public void EnableFistCollider()
+
+    #region Animation Events
+    public void OnAttackStart(AttackInfo info)
     {
-        combat.StartAttack(fist);
+        combat.SetHitboxDamage(fist, info.damage); //call this as animation event
+        combat.EnableHitbox(fist);
+        //stats.StaminaCost(info.staminaCost);
     }
 
-    public void DisableFistCollider()
+    public void OnAttackFinish()
     {
-        combat.FinishAttack();
+        combat.DisableHitbox();
     }
+    #endregion
 
     private bool isFacingPlayer()
     {

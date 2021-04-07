@@ -124,6 +124,7 @@ public class PlayerController : MonoBehaviour
         //Set animation parameters
         animator.SetBool("Sprint", input.Sprint);
         animator.SetBool("Block", input.Block);
+        animator.SetBool("StaminaIsPos", stats.current_stamina > 0);
         OnMovement();
 
         //Disable the hurtbox if the player is blocking

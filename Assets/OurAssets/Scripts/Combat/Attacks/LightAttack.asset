@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LightAttack
   m_EditorClassIdentifier: 
   damage: 5
-  staminaCost: 20
+  staminaCost: 50
   breaksGuard: 0

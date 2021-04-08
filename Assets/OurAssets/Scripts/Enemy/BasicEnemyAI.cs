@@ -271,6 +271,7 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Disable AI
         enabled = false;
+        combat.enabled = false; //So player knows the enemy is dead.
         EventManager.TriggerEvent<DeathAudioEvent, Vector3>(transform.position);
         if (GetComponentInChildren<DeathFader>() == null)
         {

@@ -23,7 +23,11 @@ public class PlayerController : MonoBehaviour
     */
 
     //Lock on feature
-    private CombatAgent lockOn;
+    public CombatAgent lockOn
+    {
+        get;
+        private set;
+    }
     public float maxDistLockOn;
     
     private PlayerInputController input;
@@ -34,6 +38,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private PlayerStats stats;
     public Vector3 respawnPoint;
+
+    public bonfire_ui bonfireUI;
 
     [SerializeField]
     private HurtBoxMarker hurtBox;
@@ -96,6 +102,12 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("Player is missing PlayerStats component.");
         }
 
+        bonfireUI = GameObject.FindObjectOfType<bonfire_ui>();
+        if (bonfireUI == null)
+        {
+            Debug.LogError("Bonfire UI Not in scene");
+        }
+
         lockOn = null;
 
         //disable the death fader to start with
@@ -131,12 +143,13 @@ public class PlayerController : MonoBehaviour
         //lock on check
         if (lockOn != null)
         {
-            //Get out of lock on if player is too far away
+            //Get out of lock on if player is too far away or the enemy is dead
             faceDirectionOfEnemy();
-            if (Vector3.Distance(transform.position, lockOn.transform.position) > maxDistLockOn)
+            if (LockOnShouldExit())
             {
                 DisableLockOn();
             }
+
             
         } else
         {
@@ -217,6 +230,12 @@ public class PlayerController : MonoBehaviour
     public void OnInteract()
     {
         Debug.Log("Player interacted");
+        /*
+        if (enteredBonfire)
+        {
+            bonfireUI.OnPlayerRest();
+        }
+        */
     }
 
     private void faceDirectionOfCamera()
@@ -271,7 +290,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log(lockOn);
         if (lockOn != null)
         {
-            animator.SetTrigger("LockOn");
+            animator.SetBool("LockOn", true);
             return true;
         } else
         {
@@ -283,7 +302,21 @@ public class PlayerController : MonoBehaviour
     private void DisableLockOn()
     {
         lockOn = null;
-        animator.SetTrigger("EndLockOn");
+        animator.SetBool("LockOn", false);
+    }
+
+    private bool LockOnShouldExit()
+    {
+        if (lockOn == null)
+        {
+            return true;
+        } else
+        {
+            bool far = Vector3.Distance(transform.position, lockOn.transform.position) > maxDistLockOn;
+            bool enemyDead = !lockOn.enabled;
+            return far | enemyDead;
+        }
+
     }
     #endregion
 

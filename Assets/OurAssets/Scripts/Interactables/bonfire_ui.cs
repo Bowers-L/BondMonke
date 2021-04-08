@@ -35,12 +35,19 @@ public class bonfire_ui : MonoBehaviour
         {
             Debug.LogError("there are no tagged enemies dangit");
         }
+
+        GameManager.Instance.controls.UI.Interact.performed += ctx => OnPlayerRest();
     }
     
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyUp(KeyCode.E) && player.GetComponent<PlayerController>().enteredBonfire)
+
+    }
+
+    public void OnPlayerRest()
+    {
+        if (player.GetComponent<PlayerController>().enteredBonfire)
         {
             if (canvasGroup.interactable)
             {
@@ -71,5 +78,7 @@ public class bonfire_ui : MonoBehaviour
                 Time.timeScale = 0f;
             }
         }
+
+        GameObject.FindObjectOfType<bonfirePrompt>().TogglePrompt();
     }
 }

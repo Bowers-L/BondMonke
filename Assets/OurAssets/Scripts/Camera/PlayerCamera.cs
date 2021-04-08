@@ -68,9 +68,21 @@ public class PlayerCamera : MonoBehaviour
 
     public void CameraRotation(float delta, float mouseX, float mouseY)
     {
-       // Debug.Log("udbfnuioerbgnfuisbngurieebns");
-        // take in free mouse input and change camera orientation based on inputs
-        lookAngle += (mouseX * lookSpd) / delta;
+        //Change the look angle to lock on to the enemy if there is one.
+        CombatAgent playerLockOn = playerTransform.GetComponent<PlayerController>().lockOn;
+        if (playerLockOn == null)
+        {
+            //free rotation
+            // Debug.Log("udbfnuioerbgnfuisbngurieebns");
+            // take in free mouse input and change camera orientation based on inputs
+            lookAngle += (mouseX * lookSpd) / delta;
+
+        } else
+        {
+            Quaternion lookAtEnemy = Quaternion.LookRotation(playerLockOn.transform.position - playerTransform.position, Vector3.up);
+            lookAngle = lookAtEnemy.eulerAngles.y;
+        }
+
         pivotAngle -= (mouseY * pivotSpd) / delta;
         pivotAngle = Mathf.Clamp(pivotAngle, minPivot, maxPivot);
 

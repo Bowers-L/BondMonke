@@ -23,7 +23,10 @@ public class PlayerController : MonoBehaviour
     */
 
     //Lock on feature
-    private CombatAgent lockOn;
+    public CombatAgent lockOn
+    {
+        get;
+    }
     public float maxDistLockOn;
     
     private PlayerInputController input;
@@ -131,12 +134,13 @@ public class PlayerController : MonoBehaviour
         //lock on check
         if (lockOn != null)
         {
-            //Get out of lock on if player is too far away
+            //Get out of lock on if player is too far away or the enemy is dead
             faceDirectionOfEnemy();
-            if (Vector3.Distance(transform.position, lockOn.transform.position) > maxDistLockOn)
+            if (LockOnShouldExit())
             {
                 DisableLockOn();
             }
+
             
         } else
         {
@@ -284,6 +288,20 @@ public class PlayerController : MonoBehaviour
     {
         lockOn = null;
         animator.SetBool("LockOn", false);
+    }
+
+    private bool LockOnShouldExit()
+    {
+        if (lockOn == null)
+        {
+            return true;
+        } else
+        {
+            bool far = Vector3.Distance(transform.position, lockOn.transform.position) > maxDistLockOn;
+            bool enemyDead = !lockOn.enabled;
+            return far | enemyDead;
+        }
+
     }
     #endregion
 

@@ -13,12 +13,14 @@ public class PlayerController : MonoBehaviour
     public float turnSpeed = 1.0f;
     private bool isGrounded;
 
+    /* Attacks now under Scripts/Combat/Attacks
     //Attacks
     public int lightAttackDamage;
     public int lightAttackCost; // for Stamina
 
     public int heavyAttackDamage;
     public int heavyAttackCost; // for Stamina
+    */
 
     //Lock on feature
     private CombatAgent lockOn;
@@ -121,10 +123,28 @@ public class PlayerController : MonoBehaviour
             Die();
         }
 
+        //lock on check
+        if (lockOn != null)
+        {
+            //Get out of lock on if player is too far away
+            faceDirectionOfEnemy();
+            if (Vector3.Distance(transform.position, lockOn.transform.position) > maxDistLockOn)
+            {
+                DisableLockOn();
+            }
+            
+        } else
+        {
+            faceDirectionOfCamera();
+        }
+
         //Set animation parameters
         animator.SetBool("Sprint", input.Sprint);
         animator.SetBool("Block", input.Block);
-        OnMovement();
+        animator.SetBool("StaminaIsPos", stats.current_stamina > 0);
+        animator.SetFloat("MovementX", input.Movement.x);
+        animator.SetFloat("MovementY", input.Movement.y);
+        animator.SetFloat("MovementMag", input.Movement.magnitude);
 
         //Disable the hurtbox if the player is blocking
         hurtBox.GetComponent<CapsuleCollider>().enabled = !input.Block;
@@ -145,17 +165,9 @@ public class PlayerController : MonoBehaviour
     }
 
     /*
-     * Events triggered on input
+     * Events triggered immediately on input
      */
-    #region Player Move Events
-
-    public void OnMovement()
-    {
-        faceDirectionOfCamera();
-        animator.SetFloat("MovementX", input.Movement.x);
-        animator.SetFloat("MovementY", input.Movement.y);
-        animator.SetFloat("MovementMag", input.Movement.magnitude);
-    }
+    #region Player Input Events
 
     public void OnDodge()
     {
@@ -172,8 +184,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Player punched");
             animator.SetTrigger("LightAttack");
-            combat.SetDamage(fist, lightAttackDamage); //call this as animation event
-            stats.StaminaCost(lightAttackCost);
+
         }
     }
 
@@ -183,20 +194,18 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Player uppercut");
             animator.SetTrigger("HeavyAttack");
-            combat.SetDamage(fist, heavyAttackDamage);
-            stats.StaminaCost(heavyAttackCost);
         }
     }
 
     public void OnLockOn()
     {
-        Debug.Log("Player Lock On");
+        Debug.Log("Player Locked On");
         if (lockOn != null)
         {
-            lockOn = null;
+            DisableLockOn();
         } else
         {
-            lockOn = findNearestCombatAgent();
+            EnableLockOn();
         }
     }
 
@@ -211,7 +220,6 @@ public class PlayerController : MonoBehaviour
         {
             //Get rotation in direction of camera
             Quaternion newRotation = Quaternion.LookRotation(player_camera.transform.forward, transform.up);
-            Debug.Log(newRotation.eulerAngles);
             //Rotate around y axis based on Movement vector
             float joystickAngle = -1.0f * Vector2.SignedAngle(Vector2.up, input.Movement);
 
@@ -223,20 +231,44 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void faceDirectionOfEnemy()
+    {
+        if (lockOn == null)
+        {
+            Debug.LogError("Tried to face direction of enemy when lock on was not enabled");
+            return;
+        }
+
+        Quaternion rotationFacingEnemy = Quaternion.LookRotation(lockOn.transform.position - transform.position, transform.up);
+        transform.rotation = rotationFacingEnemy;
+    }
+
     private CombatAgent findNearestCombatAgent()
     {
         CombatAgent[] agents = GameObject.FindObjectsOfType<EnemyCombatAgent>();
-        CombatAgent selected = agents[0];
+        CombatAgent selected = null;
         foreach (CombatAgent agent in agents)
         {
             float agentDist = Vector3.Distance(transform.position, agent.transform.position);
-            if (agentDist < maxDistLockOn && agentDist < Vector3.Distance(transform.position, selected.transform.position))
+            if (agentDist < maxDistLockOn && (selected == null || agentDist < Vector3.Distance(transform.position, selected.transform.position)))
             {
                 selected = agent;
             }
         }
 
         return selected;
+    }
+
+    private void EnableLockOn()
+    {
+        lockOn = findNearestCombatAgent();
+        animator.SetTrigger("LockOn");
+    }
+
+    private void DisableLockOn()
+    {
+        lockOn = null;
+        animator.SetTrigger("EndLockOn");
     }
     #endregion
 
@@ -245,13 +277,15 @@ public class PlayerController : MonoBehaviour
      */
     #region Animation Events
 
-    public void OnRollEnter()
+    public void OnRollEnter(int staminaCost)
     {
         //rolling makes the player collider smaller so
         //the player can move under obstacles and avoid enemies more easily.
         capsule.height /= 2.0f;
         //capsule.center = new Vector3(capsule.center.x, capsule.center.y * 0.9f, capsule.center.z);
         hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y / 2, hurtBox.transform.localScale.z);
+
+        stats.StaminaCost(staminaCost);
     }
 
     public void OnRollExit()
@@ -261,9 +295,24 @@ public class PlayerController : MonoBehaviour
         hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y * 2, hurtBox.transform.localScale.z);
     }
 
+    public void OnAttackStart(AttackInfo info)
+    {
+        combat.SetHitboxDamage(fist, info.damage); //call this as animation event
+        combat.EnableHitbox(fist);
+        stats.StaminaCost(info.staminaCost);
+    }
+
+    public void OnAttackFinish()
+    {
+        combat.DisableHitbox();
+    }
+
     #endregion
 
-    #region Bonfire Trigger
+    /*
+     * Trigger colliders (mainly for bonfires)
+     */
+    #region Trigger Collider Callbacks
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Bonfire"))
@@ -288,6 +337,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+
     #region Animation Callbacks
     /*
      * Animator callback
@@ -310,22 +360,13 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    public void EnableFistCollider()
-    {
-        combat.StartAttack(fist);
-    }
-
-    public void DisableFistCollider()
-    {
-        combat.FinishAttack();
-    }
 
     public void Die()
     {
         enabled = false;
         if (GetComponentInChildren<DeathFader>() == null)
         {
-            Debug.Log("DeathFader not added to enemy mesh");
+            Debug.Log("DeathFader not added to player mesh");
         }
         else
         {

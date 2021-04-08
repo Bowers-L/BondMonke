@@ -8,27 +8,27 @@ public abstract class CombatAgent : MonoBehaviour
 {
     private DamageCollider lastUsedCollider;
 
-    public void StartAttack(DamageCollider hitbox)
+    public void EnableHitbox(DamageCollider hitbox)
     {
         hitbox.EnableDamageCollider();
         lastUsedCollider = hitbox;
     }
 
     //Call AttackWithDamage during an attack to add a hitbox/damage value to the player.
-    public void StartAttackWithDamage(DamageCollider hitbox, int damageAmount)
+    public void EnableHitboxWithDamage(DamageCollider hitbox, int damageAmount)
     {
         //enables the hitbox and sets the amount of damage the attack should do.
         hitbox.damageAmount = damageAmount;
-        StartAttack(hitbox);
+        EnableHitbox(hitbox);
     }
 
     //Call FinishAttack after the attack animation finishes to remove the hitbox.
-    public void FinishAttack()
+    public void DisableHitbox()
     {
         lastUsedCollider.DisableDamageCollider();
     }
 
-    public void SetDamage(DamageCollider hitbox, int damageAmount)
+    public void SetHitboxDamage(DamageCollider hitbox, int damageAmount)
     {
         hitbox.damageAmount = damageAmount;
     }

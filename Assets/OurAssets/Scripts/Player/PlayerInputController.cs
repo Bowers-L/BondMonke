@@ -13,7 +13,7 @@ public class PlayerInputController : MonoBehaviour
     private PlayerController playerController;
     PlayerCamera playerCamera;
     private GameControls controls;
-    private bool mapMovementToCircle = true;
+    private bool mapMovementToCircle = false;
 
     public Vector2 cameraInput;
 

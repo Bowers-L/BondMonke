@@ -271,7 +271,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log(lockOn);
         if (lockOn != null)
         {
-            animator.SetTrigger("LockOn");
+            animator.SetBool("LockOn", true);
             return true;
         } else
         {
@@ -283,7 +283,7 @@ public class PlayerController : MonoBehaviour
     private void DisableLockOn()
     {
         lockOn = null;
-        animator.SetTrigger("EndLockOn");
+        animator.SetBool("LockOn", false);
     }
     #endregion
 

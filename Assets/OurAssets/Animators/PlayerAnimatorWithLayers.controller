@@ -111,7 +111,7 @@ BlendTree:
     m_DirectBlendParameter: MovementX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 9bac133083f97e242a53a8615a0a6397,
+    m_Motion: {fileID: -203655887218126122, guid: 0c7e48f8f8ce5f14691acd871673fb2e,
       type: 3}
     m_Threshold: 0.067307696
     m_Position: {x: 0, y: 0.1}
@@ -120,7 +120,7 @@ BlendTree:
     m_DirectBlendParameter: MovementX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 9bac133083f97e242a53a8615a0a6397,
+    m_Motion: {fileID: -203655887218126122, guid: 0c7e48f8f8ce5f14691acd871673fb2e,
       type: 3}
     m_Threshold: 0.13461539
     m_Position: {x: 0, y: 0.5}
@@ -129,7 +129,7 @@ BlendTree:
     m_DirectBlendParameter: MovementX
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 9bac133083f97e242a53a8615a0a6397,
+    m_Motion: {fileID: -203655887218126122, guid: 0c7e48f8f8ce5f14691acd871673fb2e,
       type: 3}
     m_Threshold: 0.20192307
     m_Position: {x: 0, y: 1}
@@ -160,7 +160,7 @@ BlendTree:
       type: 3}
     m_Threshold: 0.40384614
     m_Position: {x: 0, y: -1}
-    m_TimeScale: 1.6
+    m_TimeScale: 2
     m_CycleOffset: 0
     m_DirectBlendParameter: MovementX
     m_Mirror: 0
@@ -187,7 +187,7 @@ BlendTree:
       type: 3}
     m_Threshold: 0.6057692
     m_Position: {x: -1, y: 0}
-    m_TimeScale: 1.2
+    m_TimeScale: 1.5
     m_CycleOffset: 0
     m_DirectBlendParameter: MovementX
     m_Mirror: 0
@@ -214,7 +214,7 @@ BlendTree:
       type: 3}
     m_Threshold: 0.8076923
     m_Position: {x: 1, y: 0}
-    m_TimeScale: 1.2
+    m_TimeScale: 1.5
     m_CycleOffset: 0
     m_DirectBlendParameter: MovementX
     m_Mirror: 0
@@ -309,7 +309,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 9bac133083f97e242a53a8615a0a6397,
+    m_Motion: {fileID: -203655887218126122, guid: 0c7e48f8f8ce5f14691acd871673fb2e,
       type: 3}
     m_Threshold: 0.1
     m_Position: {x: 0, y: 0}
@@ -490,7 +490,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -579,7 +579,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.803823
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -906,7 +906,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -1780,7 +1780,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.9096386
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1

@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public CombatAgent lockOn
     {
         get;
+        private set;
     }
     public float maxDistLockOn;
     
@@ -37,6 +38,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private PlayerStats stats;
     public Vector3 respawnPoint;
+
+    public bonfire_ui bonfireUI;
 
     [SerializeField]
     private HurtBoxMarker hurtBox;
@@ -97,6 +100,12 @@ public class PlayerController : MonoBehaviour
         if (stats == null)
         {
             Debug.LogError("Player is missing PlayerStats component.");
+        }
+
+        bonfireUI = GameObject.FindObjectOfType<bonfire_ui>();
+        if (bonfireUI == null)
+        {
+            Debug.LogError("Bonfire UI Not in scene");
         }
 
         lockOn = null;
@@ -221,6 +230,12 @@ public class PlayerController : MonoBehaviour
     public void OnInteract()
     {
         Debug.Log("Player interacted");
+        /*
+        if (enteredBonfire)
+        {
+            bonfireUI.OnPlayerRest();
+        }
+        */
     }
 
     private void faceDirectionOfCamera()

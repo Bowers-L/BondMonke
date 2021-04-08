@@ -1744,6 +1744,7 @@ MonoBehaviour:
   lightAttackCost: 20
   heavyAttackDamage: 10
   heavyAttackCost: 50
+  maxDistLockOn: 8
   player_camera: {fileID: 0}
   fist: {fileID: 6051758638724902051}
   respawnPoint: {x: 0, y: 0, z: 0}

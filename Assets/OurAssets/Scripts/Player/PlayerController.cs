@@ -13,12 +13,14 @@ public class PlayerController : MonoBehaviour
     public float turnSpeed = 1.0f;
     private bool isGrounded;
 
+    /* Attacks now under Scripts/Combat/Attacks
     //Attacks
     public int lightAttackDamage;
     public int lightAttackCost; // for Stamina
 
     public int heavyAttackDamage;
     public int heavyAttackCost; // for Stamina
+    */
 
     //Lock on feature
     private CombatAgent lockOn;
@@ -121,11 +123,28 @@ public class PlayerController : MonoBehaviour
             Die();
         }
 
+        //lock on check
+        if (lockOn != null)
+        {
+            //Get out of lock on if player is too far away
+            faceDirectionOfEnemy();
+            if (Vector3.Distance(transform.position, lockOn.transform.position) > maxDistLockOn)
+            {
+                DisableLockOn();
+            }
+            
+        } else
+        {
+            faceDirectionOfCamera();
+        }
+
         //Set animation parameters
         animator.SetBool("Sprint", input.Sprint);
         animator.SetBool("Block", input.Block);
         animator.SetBool("StaminaIsPos", stats.current_stamina > 0);
-        OnMovement();
+        animator.SetFloat("MovementX", input.Movement.x);
+        animator.SetFloat("MovementY", input.Movement.y);
+        animator.SetFloat("MovementMag", input.Movement.magnitude);
 
         //Disable the hurtbox if the player is blocking
         hurtBox.GetComponent<CapsuleCollider>().enabled = !input.Block;
@@ -149,14 +168,6 @@ public class PlayerController : MonoBehaviour
      * Events triggered immediately on input
      */
     #region Player Input Events
-
-    public void OnMovement()
-    {
-        faceDirectionOfCamera();
-        animator.SetFloat("MovementX", input.Movement.x);
-        animator.SetFloat("MovementY", input.Movement.y);
-        animator.SetFloat("MovementMag", input.Movement.magnitude);
-    }
 
     public void OnDodge()
     {
@@ -188,13 +199,13 @@ public class PlayerController : MonoBehaviour
 
     public void OnLockOn()
     {
-        Debug.Log("Player Lock On");
+        Debug.Log("Player Locked On");
         if (lockOn != null)
         {
-            lockOn = null;
+            DisableLockOn();
         } else
         {
-            lockOn = findNearestCombatAgent();
+            EnableLockOn();
         }
     }
 
@@ -209,7 +220,6 @@ public class PlayerController : MonoBehaviour
         {
             //Get rotation in direction of camera
             Quaternion newRotation = Quaternion.LookRotation(player_camera.transform.forward, transform.up);
-            Debug.Log(newRotation.eulerAngles);
             //Rotate around y axis based on Movement vector
             float joystickAngle = -1.0f * Vector2.SignedAngle(Vector2.up, input.Movement);
 
@@ -221,20 +231,44 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void faceDirectionOfEnemy()
+    {
+        if (lockOn == null)
+        {
+            Debug.LogError("Tried to face direction of enemy when lock on was not enabled");
+            return;
+        }
+
+        Quaternion rotationFacingEnemy = Quaternion.LookRotation(lockOn.transform.position - transform.position, transform.up);
+        transform.rotation = rotationFacingEnemy;
+    }
+
     private CombatAgent findNearestCombatAgent()
     {
         CombatAgent[] agents = GameObject.FindObjectsOfType<EnemyCombatAgent>();
-        CombatAgent selected = agents[0];
+        CombatAgent selected = null;
         foreach (CombatAgent agent in agents)
         {
             float agentDist = Vector3.Distance(transform.position, agent.transform.position);
-            if (agentDist < maxDistLockOn && agentDist < Vector3.Distance(transform.position, selected.transform.position))
+            if (agentDist < maxDistLockOn && (selected == null || agentDist < Vector3.Distance(transform.position, selected.transform.position)))
             {
                 selected = agent;
             }
         }
 
         return selected;
+    }
+
+    private void EnableLockOn()
+    {
+        lockOn = findNearestCombatAgent();
+        animator.SetTrigger("LockOn");
+    }
+
+    private void DisableLockOn()
+    {
+        lockOn = null;
+        animator.SetTrigger("EndLockOn");
     }
     #endregion
 

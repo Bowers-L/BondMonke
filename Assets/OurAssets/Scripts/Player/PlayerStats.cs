@@ -42,7 +42,6 @@ public class PlayerStats : MonoBehaviour
     private void Update()
     {
         //Stamina Regeneration
-        Debug.Log(stamina_regen_enabled);
         StaminaCost(-1* stamina_regen_enabled * stamina_regen_factor * (int) Time.timeScale);
         //will not regen on pause
     }

@@ -43,6 +43,17 @@ public class PlayerCamera : MonoBehaviour
         defaultPos = cameraTransform.localPosition.z;
         // ignore layers specificity
 
+        if (playerTransform == null)
+        {
+            GameObject player = GameObject.Find("Player");
+            if (player == null)
+            {
+                Debug.LogError("Can't find the player");
+            } else
+            {
+                playerTransform = player.transform;
+            }
+        }
         Debug.Log("Player camera awoke");
     }
 

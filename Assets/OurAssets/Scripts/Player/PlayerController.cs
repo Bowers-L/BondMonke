@@ -56,6 +56,11 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (player_camera == null)
+        {
+            player_camera = GameObject.FindObjectOfType<PlayerCamera>();
+        }
+
         combat = GetComponent<CombatAgent>();
         if (combat == null)
         {
@@ -219,7 +224,7 @@ public class PlayerController : MonoBehaviour
         if (input.Movement.magnitude > 0)
         {
             //Get rotation in direction of camera
-            Quaternion newRotation = Quaternion.LookRotation(player_camera.transform.forward, transform.up);
+            Quaternion newRotation = Quaternion.LookRotation(player_camera.transform.forward, Vector3.up);
             //Rotate around y axis based on Movement vector
             float joystickAngle = -1.0f * Vector2.SignedAngle(Vector2.up, input.Movement);
 
@@ -239,7 +244,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        Quaternion rotationFacingEnemy = Quaternion.LookRotation(lockOn.transform.position - transform.position, transform.up);
+        Quaternion rotationFacingEnemy = Quaternion.LookRotation(lockOn.transform.position - transform.position, Vector3.up);
         transform.rotation = rotationFacingEnemy;
     }
 
@@ -259,10 +264,20 @@ public class PlayerController : MonoBehaviour
         return selected;
     }
 
-    private void EnableLockOn()
+    //returns true if a target to lock onto could be found, otherwise false.
+    private bool EnableLockOn()
     {
         lockOn = findNearestCombatAgent();
-        animator.SetTrigger("LockOn");
+        Debug.Log(lockOn);
+        if (lockOn != null)
+        {
+            animator.SetTrigger("LockOn");
+            return true;
+        } else
+        {
+            return false;
+        }
+
     }
 
     private void DisableLockOn()

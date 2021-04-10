@@ -10,8 +10,8 @@ public class PlayerStats : MonoBehaviour
     public int current_health;
 
     public int stamina_stat;
-    public int max_stamina;
-    public int current_stamina;
+    public float max_stamina;
+    public float current_stamina;
 
     public int stamina_regen_enabled = 1;
     public float stamina_regen_factor;
@@ -83,7 +83,7 @@ public class PlayerStats : MonoBehaviour
         stamina_stat = _stamina_stat;
     }
 
-    private int SetMaxStaminaFromStat()
+    private float SetMaxStaminaFromStat()
     {
         if (stamina_stat <= 5)
         {

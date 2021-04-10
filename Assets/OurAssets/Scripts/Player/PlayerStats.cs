@@ -14,7 +14,7 @@ public class PlayerStats : MonoBehaviour
     public int current_stamina;
 
     public int stamina_regen_enabled = 1;
-    public int stamina_regen_factor;
+    public float stamina_regen_factor;
 
     // UI ELEMENTS
     public HealthBar health_bar;
@@ -42,7 +42,7 @@ public class PlayerStats : MonoBehaviour
     private void Update()
     {
         //Stamina Regeneration
-        StaminaCost(-1* stamina_regen_enabled * stamina_regen_factor * (int) Time.timeScale);
+        StaminaCost(-1* stamina_regen_enabled * (int) (stamina_regen_factor * Time.timeScale));
         //will not regen on pause
     }
 

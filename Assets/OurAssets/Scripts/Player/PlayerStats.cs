@@ -14,7 +14,9 @@ public class PlayerStats : MonoBehaviour
     public float current_stamina;
 
     public int stamina_regen_enabled = 1;
+    public float staminaRegenDelay; //In seconds
     public float stamina_regen_factor;
+    private int staminaDelayCount = 0;  //ensures that the stamina has to wait until the last move that used stamina is over
 
     // UI ELEMENTS
     public HealthBar health_bar;
@@ -42,7 +44,7 @@ public class PlayerStats : MonoBehaviour
     private void Update()
     {
         //Stamina Regeneration
-        StaminaCost(-1* stamina_regen_enabled * (int) (stamina_regen_factor * Time.timeScale));
+        StaminaCost(-1* stamina_regen_enabled * stamina_regen_factor * Time.timeScale);
         //will not regen on pause
     }
 
@@ -119,10 +121,22 @@ public class PlayerStats : MonoBehaviour
 
     public void EnableStaminaRegen()
     {
-        stamina_regen_enabled = 1;
+        StartCoroutine(staminaDelay());
+
     }
 
-    public void StaminaCost(int cost)
+    private IEnumerator staminaDelay()
+    {
+        staminaDelayCount++;
+        yield return new WaitForSeconds(staminaRegenDelay);
+        staminaDelayCount--;
+        if (staminaDelayCount == 0)
+        {
+            stamina_regen_enabled = 1;
+        }
+    }
+
+    public void StaminaCost(float cost)
     {
         if (cost > current_stamina)
         {

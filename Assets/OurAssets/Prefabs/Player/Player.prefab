@@ -1779,6 +1779,7 @@ MonoBehaviour:
   max_stamina: 0
   current_stamina: 0
   stamina_regen_enabled: 1
+  staminaRegenDelay: 1.5
   stamina_regen_factor: 0.5
   health_bar: {fileID: 0}
   stamina_bar: {fileID: 0}

@@ -330,7 +330,7 @@ public class PlayerController : MonoBehaviour
         //rolling makes the player collider smaller so
         //the player can move under obstacles and avoid enemies more easily.
         capsule.height /= 2.0f;
-        //capsule.center = new Vector3(capsule.center.x, capsule.center.y * 0.9f, capsule.center.z);
+        capsule.center = new Vector3(capsule.center.x, capsule.center.y * 0.5f, capsule.center.z);
         hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y / 2, hurtBox.transform.localScale.z);
 
         stats.StaminaCost(staminaCost);
@@ -339,7 +339,7 @@ public class PlayerController : MonoBehaviour
     public void OnRollExit()
     {
         capsule.height *= 2.0f;
-        //capsule.center = new Vector3(capsule.center.x, capsule.center.y / 0.9f, capsule.center.z);
+        capsule.center = new Vector3(capsule.center.x, capsule.center.y / 0.5f, capsule.center.z);
         hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y * 2, hurtBox.transform.localScale.z);
     }
 

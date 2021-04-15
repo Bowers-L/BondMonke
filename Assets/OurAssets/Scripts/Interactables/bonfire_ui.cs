@@ -9,6 +9,7 @@ public class bonfire_ui : MonoBehaviour
     private GameObject player;
     private CanvasGroup canvasGroup;
     public HealthBar health_bar;
+    public StaminaBar stamina_bar;
     private GameObject[] enemies;
     private void Awake()
     {
@@ -34,6 +35,14 @@ public class bonfire_ui : MonoBehaviour
         if (enemies == null)
         {
             Debug.LogError("there are no tagged enemies dangit");
+        }
+        if (stamina_bar == null)
+        {
+            stamina_bar = GameObject.Find("StaminaBar").GetComponent<StaminaBar>();
+            if (stamina_bar == null)
+            {
+                Debug.LogError("Player doesn't have a stamina bar. Forgot to set reference in inspector?");
+            }
         }
 
         GameManager.Instance.controls.UI.Interact.performed += ctx => OnPlayerRest();
@@ -70,7 +79,9 @@ public class bonfire_ui : MonoBehaviour
                 }
                 player.GetComponent<PlayerController>().respawnPoint = player.transform.position;
                 health_bar.setCurrentHealth(player.GetComponent<PlayerStats>().max_health);
+                stamina_bar.setCurrentStamina(player.GetComponent<PlayerStats>().max_health);
                 player.GetComponent<PlayerStats>().current_health = player.GetComponent<PlayerStats>().max_health;
+                player.GetComponent<PlayerStats>().current_stamina = player.GetComponent<PlayerStats>().max_stamina;
                 canvasGroup.interactable = true;
                 canvasGroup.blocksRaycasts = true;
                 canvasGroup.alpha = 1f;

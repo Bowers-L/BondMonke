@@ -6,6 +6,8 @@ public class BallCollector : MonoBehaviour
 {
     public int hasSkillPoint = 0;
     public int healthIncrease;
+    public bool final = false;
+    public GameObject canvas;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,5 +33,9 @@ public class BallCollector : MonoBehaviour
             Debug.LogWarning("No Stats Component on BallCollector");
         }
         
+    }
+    public void ReceiveFinal()
+    {
+        final = true;
     }
 }

@@ -2484,6 +2484,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bonfire
       objectReference: {fileID: 0}
+    - target: {fileID: 457466885324513948, guid: 81a9c973df900324fa885ee2be3c6813,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 457466885324513951, guid: 81a9c973df900324fa885ee2be3c6813,
         type: 3}
       propertyPath: m_RootOrder

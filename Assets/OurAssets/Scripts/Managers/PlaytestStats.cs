@@ -96,6 +96,7 @@ public class PlaytestStats
         writer.WriteLine("Deaths: " + deaths);
         writer.WriteLine("Enemies Defeated: " + enemiesDefeated);
         writer.WriteLine("Lock Ons: " + lockOns);
+        writer.WriteLine("");
         writer.Close();
 
         //file.Close();

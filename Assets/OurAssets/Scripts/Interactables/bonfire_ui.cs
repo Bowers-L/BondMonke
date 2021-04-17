@@ -47,12 +47,6 @@ public class bonfire_ui : MonoBehaviour
 
         GameManager.Instance.controls.UI.Interact.performed += ctx => OnPlayerRest();
     }
-    
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void OnPlayerRest()
     {
@@ -89,7 +83,6 @@ public class bonfire_ui : MonoBehaviour
                 Time.timeScale = 0f;
             }
         }
-
         GameObject.FindObjectOfType<bonfirePrompt>().TogglePrompt();
     }
 }

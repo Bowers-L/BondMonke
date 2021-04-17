@@ -291,6 +291,8 @@ public class BasicEnemyAI : MonoBehaviour
         //Death Animation
         anim.SetTrigger("Death");
 
+        GameManager.Instance.playtestStats.incEnemiesDefeated();
+
         //Either disable the GO after the animation or enable ragdoll physics
         //(can set up animation event to do this)
     }

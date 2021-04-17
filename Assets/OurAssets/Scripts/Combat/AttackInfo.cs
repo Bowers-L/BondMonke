@@ -8,6 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Attack", menuName = "ScriptableObjects/AttackInfo", order = 1)]
 public class AttackInfo : ScriptableObject
 {
+    public string attackName;
     public int damage;
     public int staminaCost;
     public bool breaksGuard;

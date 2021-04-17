@@ -174,6 +174,17 @@ public class PlayerController : MonoBehaviour
         {
             Die();
         }
+
+        //Inc Playtest Stats
+        if (input.Block)
+        {
+            GameManager.Instance.playtestStats.incBlockTime();
+        }
+
+        if (input.Sprint)
+        {
+            GameManager.Instance.playtestStats.incSprintTime();
+        }
     }
 
     //Disable Player's Input map
@@ -290,6 +301,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log(lockOn);
         if (lockOn != null)
         {
+            GameManager.Instance.playtestStats.incLockOns();
             animator.SetBool("LockOn", true);
             return true;
         } else
@@ -327,6 +339,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnRollEnter(int staminaCost)
     {
+        GameManager.Instance.playtestStats.incRolls();
         //rolling makes the player collider smaller so
         //the player can move under obstacles and avoid enemies more easily.
         capsule.height /= 2.0f;
@@ -348,6 +361,14 @@ public class PlayerController : MonoBehaviour
         combat.SetHitboxDamage(fist, info.damage); //call this as animation event
         combat.EnableHitbox(fist);
         stats.StaminaCost(info.staminaCost);
+
+        if (info.attackName.CompareTo("Light Attack") == 0)
+        {
+            GameManager.Instance.playtestStats.incLightAttacks();
+        } else
+        {
+            GameManager.Instance.playtestStats.incHeavyAttacks();
+        }
     }
 
     public void OnAttackFinish()
@@ -411,6 +432,8 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
+        GameManager.Instance.playtestStats.incDeaths();
+
         enabled = false;
         if (GetComponentInChildren<DeathFader>() == null)
         {

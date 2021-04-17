@@ -335,7 +335,7 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   rangeOfSight: 5
   attackRange: 2
-  attackRestTime: 1
+  attackRestTime: 0.7
   enemyAttacks:
   - attackName: LightAttack
     attackDamage: 5

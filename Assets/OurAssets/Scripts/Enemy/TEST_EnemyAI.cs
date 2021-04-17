@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BasicEnemyAI : MonoBehaviour
+public class TEST_EnemyAI : MonoBehaviour
 {
 
     [System.Serializable]
@@ -16,7 +16,7 @@ public class BasicEnemyAI : MonoBehaviour
     //public Transform dest;
     public Transform playerTransform;
     public float rangeOfSight;
-    
+
     public float attackRange;
     public float attackRestTime;//time between executing an attack
     private float restTimer;
@@ -33,6 +33,8 @@ public class BasicEnemyAI : MonoBehaviour
     public Vector3 originPoint;
     public bool reset;
     private bool blocking = false;
+    private float maxBlockRate = 1;
+    public float blockRate = 1;//chance for enemy to block if player attack is read
 
     public enum EnemyState
     {
@@ -74,7 +76,7 @@ public class BasicEnemyAI : MonoBehaviour
     void Start()
     {
         navMeshAgent = this.GetComponent<NavMeshAgent>();
-        if(navMeshAgent == null)
+        if (navMeshAgent == null)
         {
             Debug.LogError("No NavMesh Agent component attached");
         }
@@ -116,7 +118,7 @@ public class BasicEnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (reset) 
+        if (reset)
         {
             navMeshAgent.SetDestination(originPoint);
             currentState = EnemyState.PATROL;
@@ -128,13 +130,13 @@ public class BasicEnemyAI : MonoBehaviour
                 Patrolling();
 
 
-                if(Vector3.Distance(this.transform.position, playerTransform.transform.position) <= rangeOfSight)
+                if (Vector3.Distance(this.transform.position, playerTransform.transform.position) <= rangeOfSight)
                 {
                     this.navMeshAgent.stoppingDistance = combatStoppingDistance;
                     currentState = EnemyState.CHASE;
                 }
                 break;
-            
+
             case EnemyState.CHASE:
                 Chasing();
 
@@ -168,7 +170,7 @@ public class BasicEnemyAI : MonoBehaviour
             navMeshAgent.SetDestination(target);
         }
         */
-        
+
 
         if (stats.current_health <= 0)
         {
@@ -182,18 +184,18 @@ public class BasicEnemyAI : MonoBehaviour
         fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
         hurtBox.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
 
-	/* Debug enemy ability to punch
-        if (Input.GetKeyUp(KeyCode.K))
-        {
-            Debug.Log("Enemy Punched");
-            anim.SetTrigger("LightAttack");
-        }
-	*/
+        /* Debug enemy ability to punch
+            if (Input.GetKeyUp(KeyCode.K))
+            {
+                Debug.Log("Enemy Punched");
+                anim.SetTrigger("LightAttack");
+            }
+        */
     }
 
     void OnCollisionEnter(Collision other)
     {
-        if(other.transform.tag == "Player")
+        if (other.transform.tag == "Player")
         {
             Debug.Log("Enemy hit the player");
         }
@@ -201,14 +203,14 @@ public class BasicEnemyAI : MonoBehaviour
 
     public void Patrolling()
     {
-        if(patrolPoints.Length > 0)
+        if (patrolPoints.Length > 0)
         {
             if (navMeshAgent.remainingDistance <= 0.5 && !navMeshAgent.pathPending)
             {
                 navMeshAgent.SetDestination(patrolPoints[currPoint].transform.position);
                 currPoint++;
 
-                if(currPoint >= patrolPoints.Length)
+                if (currPoint >= patrolPoints.Length)
                 {
                     currPoint = 0;
                 }
@@ -216,7 +218,7 @@ public class BasicEnemyAI : MonoBehaviour
         }
         else
         {
-           // Debug.Log("No waypoints set");
+            // Debug.Log("No waypoints set");
         }
     }
 
@@ -247,8 +249,8 @@ public class BasicEnemyAI : MonoBehaviour
         {
             Debug.Log("Not facing the player!");
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, 
-                                                Quaternion.LookRotation(playerTransform.position - transform.position, Vector3.up), 
+            transform.rotation = Quaternion.Lerp(transform.rotation,
+                                                Quaternion.LookRotation(playerTransform.position - transform.position, Vector3.up),
                                                 navMeshAgent.angularSpeed * Time.deltaTime);
             /* Old way of setting the rotation
             transform.rotation = Quaternion.RotateTowards(transform.rotation, 
@@ -258,12 +260,34 @@ public class BasicEnemyAI : MonoBehaviour
 
             Debug.Log("Rotation of enemy: " + transform.rotation);
         }
+
+        //Enemy will block if player attack is read and based on set block rate of enemy
+        float blockChance = Random.Range(0f, maxBlockRate);
+        if (Input.GetButtonDown("Fire1") && blockChance <= blockRate)
+        {
+            Debug.Log("Read player attack");
+            blocking = true;
+        }
+        //Enemy gets staggered if hit with heavy attack while blocking
+        if (Input.GetButtonDown("Fire2"))
+        {
+            Debug.Log("Stagger");
+            blocking = false;
+        }
+        anim.SetBool("Block", blocking);
+        hurtBox.GetComponent<CapsuleCollider>().enabled = !blocking;
+
         if (restTimer <= 0)
         {
-
             int randomAttack = Random.Range(0, enemyAttacks.Length);
-            //the two anim.SetTrigger were causing a merge error and idk which one is right so i commented out the shorter one
-            //anim.SetTrigger(enemyAttacks[randomAttack]);
+
+            if (blocking)
+            {
+                blocking = false;
+                anim.SetBool("Block", blocking);
+                hurtBox.GetComponent<CapsuleCollider>().enabled = !blocking;
+            }
+
             anim.SetTrigger(enemyAttacks[randomAttack].attackName);
             combat.SetHitboxDamage(fist, enemyAttacks[randomAttack].attackDamage); //call this as animation event
             restTimer = attackRestTime;
@@ -290,8 +314,6 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Death Animation
         anim.SetTrigger("Death");
-
-        GameManager.Instance.playtestStats.incEnemiesDefeated();
 
         //Either disable the GO after the animation or enable ragdoll physics
         //(can set up animation event to do this)

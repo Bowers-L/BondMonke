@@ -16,7 +16,7 @@ public class PlayerStats : MonoBehaviour
     public int stamina_regen_enabled = 1;
     public float staminaRegenDelay; //In seconds
     public float stamina_regen_factor;
-    private int staminaDelayCount = 0;  //ensures that the stamina has to wait until the last move that used stamina is over
+    public int staminaDelayCount = 0;  //ensures that the stamina has to wait until the last move that used stamina is over
 
     // UI ELEMENTS
     public HealthBar health_bar;
@@ -127,9 +127,9 @@ public class PlayerStats : MonoBehaviour
 
     private IEnumerator staminaDelay()
     {
-        staminaDelayCount++;
+        staminaDelayCount = 1;
         yield return new WaitForSeconds(staminaRegenDelay);
-        staminaDelayCount--;
+        staminaDelayCount = 0;
         if (staminaDelayCount == 0)
         {
             stamina_regen_enabled = 1;

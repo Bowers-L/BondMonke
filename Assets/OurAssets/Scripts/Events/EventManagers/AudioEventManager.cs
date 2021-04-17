@@ -8,12 +8,15 @@ public class AudioEventManager : MonoBehaviour
 
     public EventSound3D eventSound3DPrefab;
     public AudioClip punchAudio;
+    public AudioClip deathAudio;
 
     private UnityAction<Vector3> punchEventListener;
+    private UnityAction<Vector3> deathEventListener;
 
     void Awake()
     {
         punchEventListener = new UnityAction<Vector3>(punchEventHandler);
+        deathEventListener = new UnityAction<Vector3>(deathEventHandler);
     }
 
 
@@ -29,11 +32,13 @@ public class AudioEventManager : MonoBehaviour
     void OnEnable()
     {
         EventManager.StartListening<PunchAudioEvent, Vector3>(punchEventListener);
+        EventManager.StartListening<DeathAudioEvent, Vector3>(deathEventListener);
     }
 
     void OnDisable()
     {
         EventManager.StopListening<PunchAudioEvent, Vector3>(punchEventListener);
+        EventManager.StartListening<DeathAudioEvent, Vector3>(deathEventListener);
     }
 
     void punchEventHandler(Vector3 worldPos)
@@ -54,5 +59,22 @@ public class AudioEventManager : MonoBehaviour
         }
     }
 
-    
+    void deathEventHandler(Vector3 worldPos)
+    {
+        //AudioSource.PlayClipAtPoint(this.explosionAudio, worldPos, 1f);
+
+        if (eventSound3DPrefab)
+        {
+            Debug.Log("Death Sound Played");
+            EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
+
+            snd.audioSrc.clip = this.deathAudio;
+
+            snd.audioSrc.minDistance = 5f;
+            snd.audioSrc.maxDistance = 100f;
+
+            snd.audioSrc.Play();
+        }
+    }
+
 }

@@ -6,7 +6,6 @@ public class manager : MonoBehaviour
 {
     public GameObject FirstCanvas;
     public GameObject SecondCanvas;
-    // Start is called before the first frame update
     public void switcher()
     {
         if (FirstCanvas.gameObject.activeInHierarchy == false)

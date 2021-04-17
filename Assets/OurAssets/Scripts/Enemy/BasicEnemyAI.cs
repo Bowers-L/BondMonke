@@ -56,6 +56,18 @@ public class BasicEnemyAI : MonoBehaviour
         {
             Debug.LogError("Player is missing CombatAgent component");
         }
+
+        if (playerTransform == null)
+        {
+            playerTransform = GameObject.Find("Player").transform;
+            if (playerTransform == null)
+            {
+                Debug.LogError("No player in the scene");
+            }
+        }
+
+        DeathFader fader = GetComponentInChildren<DeathFader>();
+        fader.enabled = false;  //start with the enemy
     }
     // Start is called before the first frame update
     void Start()
@@ -87,15 +99,17 @@ public class BasicEnemyAI : MonoBehaviour
 
         restTimer = 0;
 
-        /*
-        if (Input.GetKeyUp(KeyCode.K))
-        {
-            anim.SetTrigger("LightAttack");
-        }
-        */
-
         originPoint = this.transform.position;
         reset = false;
+
+        //Set a default patrol point if there are none
+        if (patrolPoints == null || patrolPoints.Length <= 0)
+        {
+            Debug.Log("Creating patrol point");
+            patrolPoints = new GameObject[1];
+            GameObject emptyToSpawn = new GameObject("waypoint");
+            patrolPoints[0] = GameObject.Instantiate(emptyToSpawn, transform.position, transform.rotation);
+        }
     }
 
     // Update is called once per frame
@@ -153,13 +167,8 @@ public class BasicEnemyAI : MonoBehaviour
             navMeshAgent.SetDestination(target);
         }
         */
-        /*
-        if (Input.GetKeyUp(KeyCode.K))
-        {
-            anim.SetTrigger("LightAttack");
-            combat.SetDamage(fist, lightAttackDamage);
-        }
-        */
+        
+
         if (stats.current_health <= 0)
         {
             Die();
@@ -228,12 +237,31 @@ public class BasicEnemyAI : MonoBehaviour
 
     public void Attacking()
     {
+        //Enemy might be close enough to the player but not facing the player
+        if (!isFacingPlayer())
+        {
+            Debug.Log("Not facing the player!");
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, 
+                                                Quaternion.LookRotation(playerTransform.position - transform.position, Vector3.up), 
+                                                navMeshAgent.angularSpeed * Time.deltaTime);
+            /* Old way of setting the rotation
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, 
+                                                        Quaternion.Euler(playerTransform.rotation.eulerAngles.x, playerTransform.rotation.eulerAngles.y, playerTransform.rotation.eulerAngles.z), 
+                                                        navMeshAgent.angularSpeed * Time.deltaTime);
+            */
+
+            Debug.Log("Rotation of enemy: " + transform.rotation);
+        }
+
         if (restTimer <= 0)
         {
+
             int randomAttack = Random.Range(0, enemyAttacks.Length);
             anim.SetTrigger(enemyAttacks[randomAttack].attackName);
-            combat.SetDamage(fist, enemyAttacks[randomAttack].attackDamage); //call this as animation event
+            combat.SetHitboxDamage(fist, enemyAttacks[randomAttack].attackDamage); //call this as animation event
             restTimer = attackRestTime;
+
         }
     }
 
@@ -243,6 +271,8 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Disable AI
         enabled = false;
+        combat.enabled = false; //So player knows the enemy is dead.
+        EventManager.TriggerEvent<DeathAudioEvent, Vector3>(transform.position);
         if (GetComponentInChildren<DeathFader>() == null)
         {
             Debug.Log("DeathFader not added to enemy mesh");
@@ -258,13 +288,30 @@ public class BasicEnemyAI : MonoBehaviour
         //Either disable the GO after the animation or enable ragdoll physics
         //(can set up animation event to do this)
     }
-    public void EnableFistCollider()
+
+    #region Animation Events
+    public void OnAttackStart(AttackInfo info)
     {
-        combat.StartAttack(fist);
+        combat.SetHitboxDamage(fist, info.damage); //call this as animation event
+        combat.EnableHitbox(fist);
+        //stats.StaminaCost(info.staminaCost);
     }
 
-    public void DisableFistCollider()
+    public void OnAttackFinish()
     {
-        combat.FinishAttack();
+        combat.DisableHitbox();
+    }
+    #endregion
+
+    private bool isFacingPlayer()
+    {
+        LayerMask mask = LayerMask.GetMask("Player");
+        return Physics.Raycast(transform.position, transform.forward, Mathf.Infinity, mask);
+    }
+
+    public void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(new Ray(transform.position, transform.forward));
     }
 }

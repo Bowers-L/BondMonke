@@ -66,4 +66,17 @@ public class EnemyStats : MonoBehaviour
 
         //health_bar.setCurrentHealth(current_health);
     }
+
+    //Need these so that the animation event has a target, but it's better if
+    //we can figure out how to not have these without creating entirely separate
+    //animations for the enemy
+    public void DisableStaminaRegen()
+    {
+
+    }
+
+    public void EnableStaminaRegen()
+    {
+
+    }
 }

@@ -6,6 +6,13 @@ using UnityEngine.AI;
 public class BasicEnemyAI : MonoBehaviour
 {
 
+    [System.Serializable]
+    public struct EnemyAttack
+    {
+        public string attackName;
+        public int attackDamage;
+    }
+
     //public Transform dest;
     public Transform playerTransform;
     public float rangeOfSight;
@@ -13,12 +20,15 @@ public class BasicEnemyAI : MonoBehaviour
     public float attackRange;
     public float attackRestTime;//time between executing an attack
     private float restTimer;
-    public string[] enemyAttacks;
+
+    [SerializeField]
+    public EnemyAttack[] enemyAttacks;
 
     int lightAttackDamage = 4;
     NavMeshAgent navMeshAgent;
     public Animator anim;
     public EnemyStats stats;
+    public float combatStoppingDistance = 2f;
     private CombatAgent combat;
     public Vector3 originPoint;
     public bool reset;
@@ -47,6 +57,18 @@ public class BasicEnemyAI : MonoBehaviour
         {
             Debug.LogError("Player is missing CombatAgent component");
         }
+
+        if (playerTransform == null)
+        {
+            playerTransform = GameObject.Find("Player").transform;
+            if (playerTransform == null)
+            {
+                Debug.LogError("No player in the scene");
+            }
+        }
+
+        DeathFader fader = GetComponentInChildren<DeathFader>();
+        fader.enabled = false;  //start with the enemy
     }
     // Start is called before the first frame update
     void Start()
@@ -75,19 +97,31 @@ public class BasicEnemyAI : MonoBehaviour
         currentState = EnemyState.PATROL;
         currPoint = 0;
 
+
         restTimer = 0;
 
-        if (Input.GetKeyUp(KeyCode.K))
-        {
-            anim.SetTrigger("LightAttack");
-        }
         originPoint = this.transform.position;
         reset = false;
+
+        //Set a default patrol point if there are none
+        if (patrolPoints == null || patrolPoints.Length <= 0)
+        {
+            Debug.Log("Creating patrol point");
+            patrolPoints = new GameObject[1];
+            GameObject emptyToSpawn = new GameObject("waypoint");
+            patrolPoints[0] = GameObject.Instantiate(emptyToSpawn, transform.position, transform.rotation);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (reset) 
+        {
+            navMeshAgent.SetDestination(originPoint);
+            currentState = EnemyState.PATROL;
+            reset = false;
+        }
         switch (currentState)
         {
             case EnemyState.PATROL:
@@ -96,6 +130,7 @@ public class BasicEnemyAI : MonoBehaviour
 
                 if(Vector3.Distance(this.transform.position, playerTransform.transform.position) <= rangeOfSight)
                 {
+                    this.navMeshAgent.stoppingDistance = combatStoppingDistance;
                     currentState = EnemyState.CHASE;
                 }
                 break;
@@ -133,11 +168,8 @@ public class BasicEnemyAI : MonoBehaviour
             navMeshAgent.SetDestination(target);
         }
         */
-        if (Input.GetKeyUp(KeyCode.K))
-        {
-            anim.SetTrigger("LightAttack");
-            combat.SetDamage(fist, lightAttackDamage);
-        }
+        
+
         if (stats.current_health <= 0)
         {
             Die();
@@ -149,6 +181,14 @@ public class BasicEnemyAI : MonoBehaviour
         //Render the visible hurtbox for debug purposes.
         fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
         hurtBox.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
+
+	/* Debug enemy ability to punch
+        if (Input.GetKeyUp(KeyCode.K))
+        {
+            Debug.Log("Enemy Punched");
+            anim.SetTrigger("LightAttack");
+        }
+	*/
     }
 
     void OnCollisionEnter(Collision other)
@@ -202,12 +242,6 @@ public class BasicEnemyAI : MonoBehaviour
 
     public void Attacking()
     {
-<<<<<<< Updated upstream
-        if (restTimer <= 0)
-        {
-            int randomAttack = Random.Range(0, enemyAttacks.Length);
-            anim.SetTrigger(enemyAttacks[randomAttack]);
-=======
         //Enemy might be close enough to the player but not facing the player
         if (!isFacingPlayer())
         {
@@ -224,16 +258,16 @@ public class BasicEnemyAI : MonoBehaviour
 
             Debug.Log("Rotation of enemy: " + transform.rotation);
         }
-
-
         if (restTimer <= 0)
         {
-            int randomAttack = Random.Range(0, enemyAttacks.Length);
 
+            int randomAttack = Random.Range(0, enemyAttacks.Length);
+            //the two anim.SetTrigger were causing a merge error and idk which one is right so i commented out the shorter one
+            //anim.SetTrigger(enemyAttacks[randomAttack]);
             anim.SetTrigger(enemyAttacks[randomAttack].attackName);
             combat.SetHitboxDamage(fist, enemyAttacks[randomAttack].attackDamage); //call this as animation event
->>>>>>> Stashed changes
             restTimer = attackRestTime;
+
         }
     }
 
@@ -243,6 +277,16 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Disable AI
         enabled = false;
+        combat.enabled = false; //So player knows the enemy is dead.
+        EventManager.TriggerEvent<DeathAudioEvent, Vector3>(transform.position);
+        if (GetComponentInChildren<DeathFader>() == null)
+        {
+            Debug.Log("DeathFader not added to enemy mesh");
+        }
+        else
+        {
+            GetComponentInChildren<DeathFader>().enabled = true;
+        }
 
         //Death Animation
         anim.SetTrigger("Death");
@@ -250,13 +294,30 @@ public class BasicEnemyAI : MonoBehaviour
         //Either disable the GO after the animation or enable ragdoll physics
         //(can set up animation event to do this)
     }
-    public void EnableFistCollider()
+
+    #region Animation Events
+    public void OnAttackStart(AttackInfo info)
     {
-        combat.StartAttack(fist);
+        combat.SetHitboxDamage(fist, info.damage); //call this as animation event
+        combat.EnableHitbox(fist);
+        //stats.StaminaCost(info.staminaCost);
     }
 
-    public void DisableFistCollider()
+    public void OnAttackFinish()
     {
-        combat.FinishAttack();
+        combat.DisableHitbox();
+    }
+    #endregion
+
+    private bool isFacingPlayer()
+    {
+        LayerMask mask = LayerMask.GetMask("Player");
+        return Physics.Raycast(transform.position, transform.forward, Mathf.Infinity, mask);
+    }
+
+    public void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(new Ray(transform.position, transform.forward));
     }
 }

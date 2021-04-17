@@ -29,15 +29,16 @@ public class bonfirePrompt : MonoBehaviour
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
             canvasGroup.alpha = 1f;
-            if (Input.GetKeyUp(KeyCode.E))
-            {
-                manager.GetComponent<manager>().switcher();
-            }
         } else
         {
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
             canvasGroup.alpha = 0f;
         }
+    }
+
+    public void TogglePrompt()
+    {
+        manager.GetComponent<manager>().switcher();
     }
 }

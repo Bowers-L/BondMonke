@@ -7,6 +7,8 @@ TagManager:
   - Bonfire
   - Hittable
   - Enemy
+  - Destructible
+  - PromptTrigger
   layers:
   - Default
   - TransparentFX

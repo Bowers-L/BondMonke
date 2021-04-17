@@ -13,7 +13,7 @@ public class PlayerInputController : MonoBehaviour
     private PlayerController playerController;
     PlayerCamera playerCamera;
     private GameControls controls;
-    private bool mapMovementToCircle = true;
+    private bool mapMovementToCircle = false;
 
     public Vector2 cameraInput;
 
@@ -63,8 +63,22 @@ public class PlayerInputController : MonoBehaviour
         //Actions can be added/deleted by going under Assets/Input/PlayerControls and setting them in the UI.
         //They can also be added at runtime in code by using: var action = new InputAction("name", Binding: "<Configuration>/Binding");
 
-        controls.Player.Movement.performed +=       ctx => Movement = GetMovement(ctx.ReadValue<Vector2>());
-        controls.Player.Movement.canceled +=        ctx => Movement = Vector2.zero;
+        controls.Player.Movement.performed += ctx => Movement = GetMovement(ctx.ReadValue<Vector2>());
+        controls.Player.Movement.canceled += ctx => Movement = Vector2.zero;
+
+        /*
+        controls.Player.Movement.performed += ctx =>
+        {
+            Movement = GetMovement(ctx.ReadValue<Vector2>());
+            playerController.OnMovement();
+        };
+
+        controls.Player.Movement.canceled += ctx => 
+        {
+            Movement = Vector2.zero;
+            playerController.OnMovement();
+        };
+        */
 
         controls.Player.Camera.performed +=         ctx => cameraInput = ctx.ReadValue<Vector2>();
 
@@ -74,7 +88,9 @@ public class PlayerInputController : MonoBehaviour
 
         controls.Player.Dodge.performed +=          ctx => playerController.OnDodge();
 
-        controls.Player.Interact.performed +=        ctx => playerController.OnInteract();
+        controls.Player.Interact.performed +=       ctx => playerController.OnInteract();
+
+        controls.Player.LockOn.performed +=         ctx => playerController.OnLockOn();
         
 
         //Im guessing there's a way to do these held actions more elegantly with only one action, but I haven't found it.
@@ -85,6 +101,11 @@ public class PlayerInputController : MonoBehaviour
         controls.Player.StopSprint.performed +=     ctx => Sprint = false;
 
         
+    }
+
+    private void LockOn_performed(InputAction.CallbackContext obj)
+    {
+        throw new NotImplementedException();
     }
 
     private void Pause_performed(InputAction.CallbackContext obj)
@@ -124,20 +145,25 @@ public class PlayerInputController : MonoBehaviour
 
     private void OnDisable()
     {
+        //In case the player was pressing these
+        Sprint = false; 
+        Block = false;
+
         controls.Player.Disable();
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         float delta = Time.fixedDeltaTime;
-
-        Debug.Log(playerCamera);
 
         if (playerCamera)
         {
             
             playerCamera.FollowTarget(delta);
-            playerCamera.CameraRotation(delta, mouseX, mouseY);
+            if (Time.timeScale != 0f)
+            {
+                playerCamera.CameraRotation(delta, mouseX, mouseY);
+            }
         } else
         {
             playerCamera = PlayerCamera.singleton;

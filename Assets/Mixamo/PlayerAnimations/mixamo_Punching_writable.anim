@@ -26944,9 +26944,17 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: EnableFistCollider
+    functionName: DisableStaminaRegen
     data: 
     objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.13333334
+    functionName: OnAttackStart
+    data: 
+    objectReferenceParameter: {fileID: 11400000, guid: 8771fe554e0958a4c90afaa51d9b6914,
+      type: 2}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
@@ -26958,7 +26966,14 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.4
-    functionName: DisableFistCollider
+    functionName: OnAttackFinish
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.5
+    functionName: EnableStaminaRegen
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

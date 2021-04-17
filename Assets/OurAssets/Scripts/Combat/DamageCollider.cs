@@ -8,7 +8,8 @@ public class DamageCollider : MonoBehaviour
 
     //for now, each collider will deal a certain amount of damage, and we can have a different collider per attack.
     //Alternatively, we could set the damageAmount every time the collider is enabled to reuse colliders.
-    public int damageAmount;   
+    public int damageAmount;
+    public float scalar = 10f;
 
     private void Awake()
     {
@@ -42,6 +43,11 @@ public class DamageCollider : MonoBehaviour
                 Debug.Log("Found combat agent");
                 opponent.TakeDamage(damageAmount);
             }
+        } else if (other.CompareTag("Destructible"))
+        {
+            Debug.Log("Hit destructible object");
+            other.GetComponent<Rigidbody>().AddRelativeTorque(gameObject.transform.forward*scalar*-1f, ForceMode.Impulse);
+            other.GetComponent<DeathFader>().enabled = true;
         }
     }
 }

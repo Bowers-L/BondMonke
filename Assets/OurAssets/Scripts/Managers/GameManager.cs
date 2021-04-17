@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
         EnforceSingleton();
 
         controls = new GameControls();
+        controls.UI.Enable();
     }
 
     // Start is called before the first frame update

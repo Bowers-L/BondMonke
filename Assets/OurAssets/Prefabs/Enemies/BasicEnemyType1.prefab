@@ -333,9 +333,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
-  rangeOfSight: 5
+  rangeOfSight: 12
   attackRange: 2
-  attackRestTime: 0.7
+  attackRestTime: 1
   enemyAttacks:
   - attackName: LightAttack
     attackDamage: 5

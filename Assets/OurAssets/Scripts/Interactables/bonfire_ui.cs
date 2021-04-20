@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CanvasGroup))]
 public class bonfire_ui : MonoBehaviour
 {
+    public GameObject manager;
     private GameObject player;
     private CanvasGroup canvasGroup;
     public HealthBar health_bar;
@@ -81,6 +82,6 @@ public class bonfire_ui : MonoBehaviour
                 Time.timeScale = 0f;
             }
         }
-        GameObject.FindObjectOfType<bonfirePrompt>().TogglePrompt();
+        manager.GetComponent<manager>().switcher();
     }
 }

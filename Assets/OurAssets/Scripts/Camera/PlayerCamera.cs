@@ -12,9 +12,9 @@ public class PlayerCamera : MonoBehaviour
     public Vector3 camera_velocity = Vector3.zero;
 
     public static PlayerCamera singleton;
-    public float lookSpd = 0.03f;
+    public float mouseSensitivity;
+    
     public float followSpd = 0.1f;
-    public float pivotSpd = 0.03f;
 
     private float targetPos;
     private float defaultPos;
@@ -38,6 +38,7 @@ public class PlayerCamera : MonoBehaviour
     private void Awake()
     {
         ignorelayers = 1 << 10;
+
         
         singleton = this;
         defaultPos = cameraTransform.localPosition.z;
@@ -75,7 +76,7 @@ public class PlayerCamera : MonoBehaviour
             //free rotation
             // Debug.Log("udbfnuioerbgnfuisbngurieebns");
             // take in free mouse input and change camera orientation based on inputs
-            lookAngle += (mouseX * lookSpd) / delta;
+            lookAngle += (mouseX * mouseSensitivity) / delta;
 
         } else
         {
@@ -83,7 +84,7 @@ public class PlayerCamera : MonoBehaviour
             lookAngle = lookAtEnemy.eulerAngles.y;
         }
 
-        pivotAngle -= (mouseY * pivotSpd) / delta;
+        pivotAngle -= (mouseY * mouseSensitivity) / delta;
         pivotAngle = Mathf.Clamp(pivotAngle, minPivot, maxPivot);
 
         Vector3 rotation = Vector3.zero;

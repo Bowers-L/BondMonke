@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(CanvasGroup))]
 public class bonfire_ui : MonoBehaviour
 {
-    public GameObject manager;
     private GameObject player;
     private CanvasGroup canvasGroup;
     public HealthBar health_bar;
@@ -54,7 +53,6 @@ public class bonfire_ui : MonoBehaviour
         {
             if (canvasGroup.interactable)
             {
-                manager.GetComponent<manager>().switcher();
                 canvasGroup.interactable = false;
                 canvasGroup.blocksRaycasts = false;
                 canvasGroup.alpha = 0f;

@@ -1780,7 +1780,8 @@ MonoBehaviour:
   current_stamina: 0
   stamina_regen_enabled: 1
   staminaRegenDelay: 1.5
-  stamina_regen_factor: 0.5
+  stamina_regen_factor: 1
+  staminaDelayCount: 0
   health_bar: {fileID: 0}
   stamina_bar: {fileID: 0}
 --- !u!114 &3348258692670825735
@@ -1809,6 +1810,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasSkillPoint: 0
   healthIncrease: 5
+  final: 0
+  canvas: {fileID: 0}
 --- !u!1 &7318077977822194332
 GameObject:
   m_ObjectHideFlags: 0

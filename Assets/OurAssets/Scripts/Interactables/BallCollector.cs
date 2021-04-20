@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BallCollector : MonoBehaviour
 {
-    public int hasSkillPoint = 0;
+    public int collectableCount = 0;
     public int healthIncrease;
     public bool final = false;
     public GameObject canvas;
@@ -21,7 +21,7 @@ public class BallCollector : MonoBehaviour
     }
     public void ReceiveBall()
     {
-        hasSkillPoint++;
+        collectableCount++;
 
         //Increase player health?
         PlayerStats stats = GetComponent<PlayerStats>();

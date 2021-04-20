@@ -54,7 +54,6 @@ public class bonfire_ui : MonoBehaviour
         {
             if (canvasGroup.interactable)
             {
-                manager.GetComponent<manager>().switcher();
                 canvasGroup.interactable = false;
                 canvasGroup.blocksRaycasts = false;
                 canvasGroup.alpha = 0f;
@@ -83,6 +82,6 @@ public class bonfire_ui : MonoBehaviour
                 Time.timeScale = 0f;
             }
         }
-        GameObject.FindObjectOfType<bonfirePrompt>().TogglePrompt();
+        manager.GetComponent<manager>().switcher();
     }
 }

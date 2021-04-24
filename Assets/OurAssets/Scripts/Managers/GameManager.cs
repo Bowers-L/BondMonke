@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
 
     public bool debugMode;
 
+    //public bool menuOpen;
+
     private void Awake()
     {
         EnforceSingleton();
@@ -45,6 +47,8 @@ public class GameManager : MonoBehaviour
         controls.UI.Enable();
 
         playtestStats = new PlaytestStats();
+
+        //menuOpen = false;
     }
 
     // Start is called before the first frame update

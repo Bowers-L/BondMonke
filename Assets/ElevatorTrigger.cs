@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ElevatorTrigger : MonoBehaviour
 {
+    [SerializeField] private Animator elevatorController;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,13 +14,20 @@ public class ElevatorTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (this.transform.position.y == -1.75)
+        {
+            elevatorController.SetBool("AtGround", true);
+        } else
+        {
+            elevatorController.SetBool("AtGround", false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            elevatorController.SetBool("PlayerOn", true);
             other.transform.parent = this.transform;
         }
     }
@@ -28,6 +36,7 @@ public class ElevatorTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            elevatorController.SetBool("PlayerOn", false);
             other.transform.parent = null;
         }
     }

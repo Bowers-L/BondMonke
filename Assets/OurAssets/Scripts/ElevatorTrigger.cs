@@ -5,10 +5,18 @@ using UnityEngine;
 public class ElevatorTrigger : MonoBehaviour
 {
     [SerializeField] private Animator elevatorController;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
-        
+        if (elevatorController == null)
+        {
+            elevatorController = GetComponentInParent<Animator>();
+            if (elevatorController == null)
+            {
+                Debug.LogError("Elevator does not have animator");
+            }
+        }
+        elevatorController.SetBool("TutEnemyDefeated", false);
     }
 
     // Update is called once per frame

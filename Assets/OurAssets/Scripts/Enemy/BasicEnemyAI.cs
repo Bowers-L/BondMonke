@@ -295,6 +295,12 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Either disable the GO after the animation or enable ragdoll physics
         //(can set up animation event to do this)
+
+        if (gameObject.name.CompareTo("TutorialEnemy") == 0)
+        {
+            Animator elevatorAnim = GameObject.Find("elevator").GetComponent<Animator>();
+            elevatorAnim.SetBool("TutEnemyDefeated", true);
+        }
     }
 
     #region Animation Events

@@ -232,7 +232,7 @@ BlendTree:
       type: 3}
     m_Threshold: 0.6282051
     m_Position: {x: 0, y: -1}
-    m_TimeScale: 1.3
+    m_TimeScale: 1.6
     m_CycleOffset: 0
     m_DirectBlendParameter: MovementX
     m_Mirror: 0
@@ -402,6 +402,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: Sprint
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: LockOn
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8847783463578209193}

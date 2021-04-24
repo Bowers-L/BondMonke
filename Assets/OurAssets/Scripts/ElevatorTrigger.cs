@@ -14,7 +14,7 @@ public class ElevatorTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (this.transform.position.y == -1.75)
+        if (this.transform.position.y <= -1.75)
         {
             elevatorController.SetBool("AtGround", true);
         } else

@@ -123,8 +123,10 @@ public class PromptAndPopUpManager : MonoBehaviour
         controls.enabled = true;
     }
 
+    /*
     public void setPopUpText(string text)
     {
         descriptionText.text = text;
     }
+    */
 }

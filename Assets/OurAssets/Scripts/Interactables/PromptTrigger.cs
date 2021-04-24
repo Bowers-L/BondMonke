@@ -6,7 +6,10 @@ using TMPro;
 
 public class PromptTrigger: MonoBehaviour
 {
+    [TextArea(2, 20)]
     public string message;
+
+    public float fontSize;
     public PromptAndPopUpManager ui;
 
     private bool firstCollision = true;
@@ -49,7 +52,8 @@ public class PromptTrigger: MonoBehaviour
             if (firstCollision)
             {
                 firstCollision = false;
-                ui.setPopUpText(message);
+                ui.descriptionText.text = message;
+                ui.descriptionText.fontSize = fontSize;
                 ui.enablePopUp();
             } else
             {

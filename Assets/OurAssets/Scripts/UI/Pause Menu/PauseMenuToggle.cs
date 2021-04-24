@@ -43,6 +43,7 @@ public class PauseMenuToggle : MonoBehaviour
             Debug.Log("pause menu pressed");
             if (canvasGroup.interactable)
             {
+                //GameManager.Instance.menuOpen = false;
                 canvasGroup.interactable = false;
                 canvasGroup.blocksRaycasts = false;
                 canvasGroup.alpha = 0f;
@@ -52,12 +53,16 @@ public class PauseMenuToggle : MonoBehaviour
             }
             else
             {
-                canvasGroup.interactable = true;
-                canvasGroup.blocksRaycasts = true;
-                canvasGroup.alpha = 1f;
-                Time.timeScale = 0f;
-                Cursor.visible = true;
-                controls.Player.Disable();
+                //if (!GameManager.Instance.menuOpen)
+                //{
+                    //GameManager.Instance.menuOpen = true;
+                    canvasGroup.interactable = true;
+                    canvasGroup.blocksRaycasts = true;
+                    canvasGroup.alpha = 1f;
+                    Time.timeScale = 0f;
+                    Cursor.visible = true;
+                    controls.Player.Disable();
+                //}
             }
         }
     }

@@ -387,22 +387,26 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Bonfire"))
             enteredBonfire = true;
 
+        /*
         if (other.CompareTag("PromptTrigger"))
         {
             PromptTrigger pt = other.GetComponent<PromptTrigger>();
-            pt.enableText();
+            pt.enablePrompt();
         }
+        */
     }
     public void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Bonfire"))
             enteredBonfire = false;
 
+        /*
         if (other.CompareTag("PromptTrigger"))
         {
             PromptTrigger pt = other.GetComponent<PromptTrigger>();
-            pt.disableText();
+            pt.disablePrompt();
         }
+        */
     }
     #endregion
 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2038234059}
   - component: {fileID: 2038234058}
   - component: {fileID: 2038234057}
+  - component: {fileID: 8549385269730255503}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -92,7 +93,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.2, y: 0.2, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2038234057
 MonoBehaviour:
@@ -107,6 +108,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bananaController: {fileID: 8838758152488311276}
+--- !u!114 &8549385269730255503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038234055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72cbffc0783cf4740ac10f7e111bb152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  message: Go On Then.
+  ui: {fileID: 0}
 --- !u!1001 &4977703305629331727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -184,7 +199,8 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e23d57539caac66438d7c5d348892dd0, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7913811420726379387, guid: 3ce32ffa6ccf60e4ab65d9e396f43433, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3ce32ffa6ccf60e4ab65d9e396f43433, type: 3}
 --- !u!4 &4979669534698823699 stripped
 Transform:

@@ -18,7 +18,7 @@ public class PlayerCamera : MonoBehaviour
 
     private float targetPos;
     private float defaultPos;
-    private float lookAngle;
+    private float lookAngle = 90.0f;
     private float pivotAngle;
     private float minPivot = -35;
     public float maxPivot = 35;
@@ -42,6 +42,7 @@ public class PlayerCamera : MonoBehaviour
         
         singleton = this;
         defaultPos = cameraTransform.localPosition.z;
+
         // ignore layers specificity
 
         if (playerTransform == null)

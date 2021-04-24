@@ -10,7 +10,7 @@ public class PromptAndPopUpManager : MonoBehaviour
     public CanvasGroup popUpCanvas;
     public TextMeshProUGUI descriptionText;
 
-    private GameControls controls;
+    private PlayerInputController controls;
 
     void Awake()
     {
@@ -20,7 +20,7 @@ public class PromptAndPopUpManager : MonoBehaviour
         }
         else
         {
-            controls = GameManager.Instance.controls;
+            controls = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputController>();
         }
 
         if (promptCanvas == null || popUpCanvas == null)
@@ -108,7 +108,7 @@ public class PromptAndPopUpManager : MonoBehaviour
         popUpCanvas.alpha = 1f;
         Time.timeScale = 0f;
         Cursor.visible = true;
-        controls.Player.Disable();
+        controls.enabled = false;
         //}
     }
 
@@ -120,7 +120,7 @@ public class PromptAndPopUpManager : MonoBehaviour
         popUpCanvas.alpha = 0f;
         Time.timeScale = 1f;
         Cursor.visible = false;
-        controls.Player.Enable();
+        controls.enabled = true;
     }
 
     public void setPopUpText(string text)

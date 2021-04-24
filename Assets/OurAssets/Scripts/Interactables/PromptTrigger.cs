@@ -9,8 +9,6 @@ public class PromptTrigger: MonoBehaviour
     public string message;
     public PromptAndPopUpManager ui;
 
-
-    private GameControls controls;
     private bool firstCollision = true;
     private bool playerInTrigger = false;
 
@@ -24,13 +22,6 @@ public class PromptTrigger: MonoBehaviour
 
     public void Awake()
     {
-        if (GameManager.Instance == null)
-        {
-            Debug.LogError("Game Manager Not Found (might need to change script execution order)");
-        } else
-        {
-            controls = GameManager.Instance.controls;
-        }
 
         ui = GameObject.Find("PromptAndPopUp").GetComponent<PromptAndPopUpManager>();
         if (ui == null)

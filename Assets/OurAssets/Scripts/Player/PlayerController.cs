@@ -183,6 +183,7 @@ public class PlayerController : MonoBehaviour
 
         if (input.Sprint)
         {
+            DisableLockOn();
             GameManager.Instance.playtestStats.incSprintTime();
         }
     }

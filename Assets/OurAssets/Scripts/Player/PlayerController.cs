@@ -183,9 +183,14 @@ public class PlayerController : MonoBehaviour
 
         if (input.Sprint)
         {
-            DisableLockOn();
-            GameManager.Instance.playtestStats.incSprintTime();
+            OnSprint();
         }
+    }
+
+    private void OnSprint()
+    {
+        DisableLockOn();
+        GameManager.Instance.playtestStats.incSprintTime();
     }
 
     //Disable Player's Input map

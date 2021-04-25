@@ -41627,6 +41627,11 @@ PrefabInstance:
       propertyPath: health_bar
       value: 
       objectReference: {fileID: 571630408455827271}
+    - target: {fileID: 6051758639109837222, guid: 8b75d8b8adbae8349b4ca659bccea9ce,
+        type: 3}
+      propertyPath: stamina_regen_factor
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6051758639109837228, guid: 8b75d8b8adbae8349b4ca659bccea9ce,
         type: 3}
       propertyPath: player_camera

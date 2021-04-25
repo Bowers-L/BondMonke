@@ -1773,14 +1773,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health_stat: 3
+  healthPerStat1: 10
+  healthPerStat2: 20
   max_health: 1
   current_health: 0
   stamina_stat: 3
+  staminaPerStat1: 50
+  staminaPerStat2: 100
   max_stamina: 0
   current_stamina: 0
   stamina_regen_enabled: 1
   staminaRegenDelay: 0.75
-  stamina_regen_factor: 5
+  stamina_regen_factor: 3
   health_bar: {fileID: 0}
   stamina_bar: {fileID: 0}
 --- !u!114 &3348258692670825735

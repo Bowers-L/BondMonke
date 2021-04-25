@@ -6,10 +6,14 @@ public class PlayerStats : MonoBehaviour
 {
     // STATS
     public int health_stat;
+    public int healthPerStat1;
+    public int healthPerStat2;
     public int max_health;
     public int current_health;
 
     public int stamina_stat;
+    public int staminaPerStat1;
+    public int staminaPerStat2;
     public float max_stamina;
     public float current_stamina;
 
@@ -75,10 +79,10 @@ public class PlayerStats : MonoBehaviour
     {
         if (health_stat <= 5)
         {
-            max_health = 10 * health_stat;
+            max_health = healthPerStat1 * health_stat;
         } else
         {
-            max_health = 50 + 20 * (health_stat - 5);
+            max_health = healthPerStat1*5 + healthPerStat2 * (health_stat - 5);
         }
         return max_health;
     }
@@ -92,11 +96,11 @@ public class PlayerStats : MonoBehaviour
     {
         if (stamina_stat <= 5)
         {
-            max_stamina = 200 * stamina_stat;
+            max_stamina = staminaPerStat1 * stamina_stat;
         }
         else
         {
-            max_stamina = 1000 + 400 * (stamina_stat - 5);
+            max_stamina = staminaPerStat1*5 + staminaPerStat2 * (stamina_stat - 5);
         }
         return max_stamina;
     }

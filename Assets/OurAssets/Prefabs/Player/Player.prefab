@@ -1740,6 +1740,7 @@ MonoBehaviour:
   animationSpeed: 1
   rootMotionMovementSpeed: 1.2
   turnSpeed: 1.3
+  rollStaminaCost: 30
   maxDistLockOn: 15
   player_camera: {fileID: 0}
   fist: {fileID: 6051758638724902051}
@@ -1784,7 +1785,7 @@ MonoBehaviour:
   current_stamina: 0
   stamina_regen_enabled: 1
   staminaRegenDelay: 0.75
-  stamina_regen_factor: 3
+  stamina_regen_factor: 2
   health_bar: {fileID: 0}
   stamina_bar: {fileID: 0}
 --- !u!114 &3348258692670825735

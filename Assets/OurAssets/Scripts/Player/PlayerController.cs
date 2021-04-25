@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float animationSpeed = 1.0f;
     public float rootMotionMovementSpeed = 1.0f;
     public float turnSpeed = 1.0f;
+    public int rollStaminaCost;
     private bool isGrounded;
 
     /* Attacks now under Scripts/Combat/Attacks
@@ -343,7 +344,7 @@ public class PlayerController : MonoBehaviour
      */
     #region Animation Events
 
-    public void OnRollEnter(int staminaCost)
+    public void OnRollEnter()
     {
         GameManager.Instance.playtestStats.incRolls();
         //rolling makes the player collider smaller so
@@ -352,7 +353,7 @@ public class PlayerController : MonoBehaviour
         capsule.center = new Vector3(capsule.center.x, capsule.center.y * 0.5f, capsule.center.z);
         hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y / 2, hurtBox.transform.localScale.z);
 
-        stats.StaminaCost(staminaCost);
+        stats.StaminaCost(rollStaminaCost);
     }
 
     public void OnRollExit()

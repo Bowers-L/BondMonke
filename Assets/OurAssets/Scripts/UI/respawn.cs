@@ -65,7 +65,7 @@ public class respawn : MonoBehaviour
             health_bar.setCurrentHealth(player.GetComponent<PlayerStats>().current_health);
             stamina_bar.setCurrentStamina(player.GetComponent<PlayerStats>().current_stamina);
             player.GetComponent<PlayerStats>().stamina_regen_enabled = 1;
-            player.GetComponent<PlayerStats>().staminaDelayCount = 0;
+            //player.GetComponent<PlayerStats>().staminaDelayCount = 0;
             player.GetComponent<PlayerController>().player_camera.enabled = true;   //in case the player fell
         }
     }

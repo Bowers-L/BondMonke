@@ -357,9 +357,10 @@ public class PlayerController : MonoBehaviour
         hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y * 2, hurtBox.transform.localScale.z);
     }
 
+    //call this as animation event
     public void OnAttackStart(AttackInfo info)
     {
-        combat.SetHitboxDamage(fist, info.damage); //call this as animation event
+        combat.SetHitboxDamage(fist, info.damage);
         combat.EnableHitbox(fist);
         stats.StaminaCost(info.staminaCost);
 

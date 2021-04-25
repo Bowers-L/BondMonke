@@ -16,7 +16,8 @@ public class PlayerStats : MonoBehaviour
     public int stamina_regen_enabled = 1;
     public float staminaRegenDelay; //In seconds
     public float stamina_regen_factor;
-    public int staminaDelayCount = 0;  //ensures that the stamina has to wait until the last move that used stamina is over
+
+    private int staminaDelayQueueCount;
 
     // UI ELEMENTS
     public HealthBar health_bar;
@@ -39,6 +40,8 @@ public class PlayerStats : MonoBehaviour
                 Debug.LogError("Player doesn't have a stamina bar. Forgot to set reference in inspector?");
             }
         }
+
+        staminaDelayQueueCount = 0;
     }
 
     private void Update()
@@ -116,21 +119,24 @@ public class PlayerStats : MonoBehaviour
 
     public void DisableStaminaRegen()
     {
+        StopAllCoroutines();
+        staminaDelayQueueCount = 0;
         stamina_regen_enabled = 0;
     }
 
     public void EnableStaminaRegen()
     {
+        Debug.Log("Called enable stamina");
         StartCoroutine(staminaDelay());
-
     }
 
     private IEnumerator staminaDelay()
     {
-        staminaDelayCount = 1;
+        Debug.Log("Stamina Regen Coroutine");
+        staminaDelayQueueCount++;
         yield return new WaitForSeconds(staminaRegenDelay);
-        staminaDelayCount = 0;
-        if (staminaDelayCount == 0)
+        staminaDelayQueueCount--;
+        if (staminaDelayQueueCount == 0)
         {
             stamina_regen_enabled = 1;
         }

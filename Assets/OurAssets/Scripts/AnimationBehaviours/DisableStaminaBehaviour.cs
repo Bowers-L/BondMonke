@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class DisableStaminaBehaviour : StateMachineBehaviour
 {
+    public PlayerStats playerStats;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
-        animator.gameObject.GetComponent<PlayerStats>().DisableStaminaRegen();
+        playerStats = animator.gameObject.GetComponent<PlayerStats>();
+        if (playerStats == null)
+        {
+            Debug.LogError("Couldn't find PlayerStats on this component.");
+        } else
+        {
+            animator.gameObject.GetComponent<PlayerStats>().DisableStaminaRegen();
+        }
+        
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

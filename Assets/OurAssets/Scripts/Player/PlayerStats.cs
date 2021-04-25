@@ -130,13 +130,11 @@ public class PlayerStats : MonoBehaviour
 
     public void EnableStaminaRegen()
     {
-        Debug.Log("Called enable stamina");
         StartCoroutine(staminaDelay());
     }
 
     private IEnumerator staminaDelay()
     {
-        Debug.Log("Stamina Regen Coroutine");
         staminaDelayQueueCount++;
         yield return new WaitForSeconds(staminaRegenDelay);
         staminaDelayQueueCount--;

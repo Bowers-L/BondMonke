@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float rootMotionMovementSpeed = 1.0f;
     public float turnSpeed = 1.0f;
     public int rollStaminaCost;
+    public float sprintStaminaCPF;
     private bool isGrounded;
 
     /* Attacks now under Scripts/Combat/Attacks
@@ -184,14 +185,11 @@ public class PlayerController : MonoBehaviour
 
         if (input.Sprint)
         {
-            OnSprint();
+            Debug.Log("Sprinting");
+            DisableLockOn();
+            GameManager.Instance.playtestStats.incSprintTime();
+            stats.StaminaCost(sprintStaminaCPF);
         }
-    }
-
-    private void OnSprint()
-    {
-        DisableLockOn();
-        GameManager.Instance.playtestStats.incSprintTime();
     }
 
     //Disable Player's Input map

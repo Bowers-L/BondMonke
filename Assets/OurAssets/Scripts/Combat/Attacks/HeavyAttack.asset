@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackName: Heavy Attack
   damage: 10
-  staminaCost: 100
+  staminaCost: 60
   breaksGuard: 1

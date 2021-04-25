@@ -8,20 +8,18 @@ public class BallCollector : MonoBehaviour
     public int healthIncrease;
     public bool final = false;
     public GameObject canvas;
-    // Start is called before the first frame update
-    void Start()
+
+    public CollectableUI ui;
+
+    public void Awake()
     {
-        
+        ui = GameObject.Find("GameOverlayUI").GetComponentInChildren<CollectableUI>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void ReceiveBall()
     {
         collectableCount++;
+        ui.SetCollectableScore(collectableCount);
 
         //Increase player health?
         PlayerStats stats = GetComponent<PlayerStats>();

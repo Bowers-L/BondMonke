@@ -33,7 +33,11 @@ public class GameManager : MonoBehaviour
 
     public GameControls controls;   //Contains the input mappings for the game
 
+    public PlaytestStats playtestStats;
+
     public bool debugMode;
+
+    //public bool menuOpen;
 
     private void Awake()
     {
@@ -41,6 +45,10 @@ public class GameManager : MonoBehaviour
 
         controls = new GameControls();
         controls.UI.Enable();
+
+        playtestStats = new PlaytestStats();
+
+        //menuOpen = false;
     }
 
     // Start is called before the first frame update
@@ -53,5 +61,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void OnApplicationQuit()
+    {
+        playtestStats.PrintStats();
     }
 }

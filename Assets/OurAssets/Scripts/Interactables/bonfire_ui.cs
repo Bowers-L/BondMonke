@@ -54,14 +54,14 @@ public class bonfire_ui : MonoBehaviour
         {
             if (canvasGroup.interactable)
             {
-                manager.GetComponent<manager>().switcher();
                 canvasGroup.interactable = false;
                 canvasGroup.blocksRaycasts = false;
                 canvasGroup.alpha = 0f;
                 player.GetComponent<PlayerInputController>().enabled = true;
                 Time.timeScale = 1f;
+                manager.GetComponent<manager>().enablePrompt();
             }
-            else
+            else //if (GameManager.Instance.menuOpen)
             {
                 for (int i = 0; i < enemies.Length; i++)
                 {
@@ -81,8 +81,8 @@ public class bonfire_ui : MonoBehaviour
                 canvasGroup.alpha = 1f;
                 player.GetComponent<PlayerInputController>().enabled = false;
                 Time.timeScale = 0f;
+                manager.GetComponent<manager>().disablePrompt();
             }
         }
-        GameObject.FindObjectOfType<bonfirePrompt>().TogglePrompt();
     }
 }

@@ -14,8 +14,6 @@ GameObject:
   - component: {fileID: 1516015717292952426}
   - component: {fileID: 4593048734500497635}
   - component: {fileID: 7913811420726379387}
-  - component: {fileID: 2530097184745652620}
-  - component: {fileID: -3504742123419129229}
   m_Layer: 0
   m_Name: banana
   m_TagString: Untagged
@@ -128,29 +126,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0e3656c9efe344bb2737b7c61ad70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2530097184745652620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1407451490957870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1332fcaeeb4ce7a47b00e7adeb17d10a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bananaController: {fileID: 4593048734500497635}
---- !u!135 &-3504742123419129229
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1407451490957870}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.1
-  m_Center: {x: -0.0012692912, y: 0.0009908592, z: 0}

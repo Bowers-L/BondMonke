@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d50f9edb6046c44be60dbf891a62b6, type: 3}
   m_Name: LightAttack
   m_EditorClassIdentifier: 
+  attackName: Light Attack
   damage: 5
-  staminaCost: 50
+  staminaCost: 40
   breaksGuard: 0

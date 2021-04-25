@@ -49,9 +49,8 @@ MonoBehaviour:
   cameraTransform: {fileID: 2687830578550016860}
   cameraPivotTransform: {fileID: 2687830579330498335}
   camera_velocity: {x: 0, y: 0, z: 0}
-  lookSpd: 0.01
+  mouseSensitivity: 0.005
   followSpd: 0.1
-  pivotSpd: 0.01
   maxPivot: 35
   camera_radius: 0.2
   camera_offset: 0.2

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BananaAnim : MonoBehaviour
 {
     // Start is called before the first frame update
-        [SerializeField] private Animator bananaController;
+    [SerializeField] private Animator bananaController;
     private void OnTriggerEnter(Collider other)
     {
         if (other.attachedRigidbody != null)

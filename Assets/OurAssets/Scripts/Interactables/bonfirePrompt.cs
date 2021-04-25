@@ -5,7 +5,6 @@ using UnityEngine;
 public class bonfirePrompt : MonoBehaviour
 {
     private GameObject player;
-    public GameObject manager;
     private CanvasGroup canvasGroup;
     private void Awake()
     {
@@ -35,10 +34,5 @@ public class bonfirePrompt : MonoBehaviour
             canvasGroup.blocksRaycasts = false;
             canvasGroup.alpha = 0f;
         }
-    }
-
-    public void TogglePrompt()
-    {
-        manager.GetComponent<manager>().switcher();
     }
 }

@@ -32,6 +32,7 @@ public class BasicEnemyAI : MonoBehaviour
     private CombatAgent combat;
     public Vector3 originPoint;
     public bool reset;
+    private bool blocking = false;
 
     public enum EnemyState
     {
@@ -221,6 +222,10 @@ public class BasicEnemyAI : MonoBehaviour
 
     public void Chasing()
     {
+        blocking = false;
+        anim.SetBool("Block", blocking);
+        hurtBox.GetComponent<CapsuleCollider>().enabled = !blocking;
+
         if (playerTransform != null)
         {
             //Lookahead prediction
@@ -253,11 +258,12 @@ public class BasicEnemyAI : MonoBehaviour
 
             Debug.Log("Rotation of enemy: " + transform.rotation);
         }
-
         if (restTimer <= 0)
         {
 
             int randomAttack = Random.Range(0, enemyAttacks.Length);
+            //the two anim.SetTrigger were causing a merge error and idk which one is right so i commented out the shorter one
+            //anim.SetTrigger(enemyAttacks[randomAttack]);
             anim.SetTrigger(enemyAttacks[randomAttack].attackName);
             combat.SetHitboxDamage(fist, enemyAttacks[randomAttack].attackDamage); //call this as animation event
             restTimer = attackRestTime;
@@ -285,8 +291,16 @@ public class BasicEnemyAI : MonoBehaviour
         //Death Animation
         anim.SetTrigger("Death");
 
+        GameManager.Instance.playtestStats.incEnemiesDefeated();
+
         //Either disable the GO after the animation or enable ragdoll physics
         //(can set up animation event to do this)
+
+        if (gameObject.name.CompareTo("TutorialEnemy") == 0)
+        {
+            Animator elevatorAnim = GameObject.Find("elevator").GetComponent<Animator>();
+            elevatorAnim.SetBool("TutEnemyDefeated", true);
+        }
     }
 
     #region Animation Events

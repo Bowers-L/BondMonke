@@ -6,6 +6,7 @@ public class respawn : MonoBehaviour
 {
     private GameObject player;
     public HealthBar health_bar;
+    public StaminaBar stamina_bar;
     private GameObject[] enemies;
     public Material playerMaterial;
 
@@ -29,6 +30,14 @@ public class respawn : MonoBehaviour
         {
             Debug.LogError("there are no tagged enemies dangit");
         }
+        if (stamina_bar == null)
+        {
+            stamina_bar = GameObject.Find("StaminaBar").GetComponent<StaminaBar>();
+            if (stamina_bar == null)
+            {
+                Debug.LogError("Player doesn't have a stamina bar. Forgot to set reference in inspector?");
+            }
+        }
     }
 
     // Update is called once per frame
@@ -48,12 +57,15 @@ public class respawn : MonoBehaviour
         {
             player.transform.position = player.GetComponent<PlayerController>().respawnPoint + new Vector3(0, .01f, 0);
             player.GetComponent<PlayerStats>().current_health = player.GetComponent<PlayerStats>().max_health;
+            player.GetComponent<PlayerStats>().current_stamina = player.GetComponent<PlayerStats>().max_stamina;
             player.GetComponentInChildren<DeathFader>().enabled = false;
             player.GetComponentInChildren<Renderer>().material = playerMaterial;
             player.GetComponent<PlayerController>().enabled = true;
             player.gameObject.SetActive(true);
             health_bar.setCurrentHealth(player.GetComponent<PlayerStats>().current_health);
-
+            stamina_bar.setCurrentStamina(player.GetComponent<PlayerStats>().current_stamina);
+            player.GetComponent<PlayerStats>().stamina_regen_enabled = 1;
+            //player.GetComponent<PlayerStats>().staminaDelayCount = 0;
             player.GetComponent<PlayerController>().player_camera.enabled = true;   //in case the player fell
         }
     }

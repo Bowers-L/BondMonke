@@ -18,4 +18,13 @@ public class manager : MonoBehaviour
         }
     }
 
+    public void enablePrompt()
+    {
+        FirstCanvas.gameObject.SetActive(true);
+    }
+
+    public void disablePrompt()
+    {
+        FirstCanvas.gameObject.SetActive(false);
+    }
 }

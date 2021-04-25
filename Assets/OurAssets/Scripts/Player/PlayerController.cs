@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public float animationSpeed = 1.0f;
     public float rootMotionMovementSpeed = 1.0f;
     public float turnSpeed = 1.0f;
+    public int rollStaminaCost;
+    public float sprintStaminaCPF;
     private bool isGrounded;
 
     /* Attacks now under Scripts/Combat/Attacks
@@ -174,6 +176,20 @@ public class PlayerController : MonoBehaviour
         {
             Die();
         }
+
+        //Inc Playtest Stats
+        if (input.Block)
+        {
+            GameManager.Instance.playtestStats.incBlockTime();
+        }
+
+        if (input.Sprint)
+        {
+            Debug.Log("Sprinting");
+            DisableLockOn();
+            GameManager.Instance.playtestStats.incSprintTime();
+            stats.StaminaCost(sprintStaminaCPF);
+        }
     }
 
     //Disable Player's Input map
@@ -290,6 +306,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log(lockOn);
         if (lockOn != null)
         {
+            GameManager.Instance.playtestStats.incLockOns();
             animator.SetBool("LockOn", true);
             return true;
         } else
@@ -325,15 +342,16 @@ public class PlayerController : MonoBehaviour
      */
     #region Animation Events
 
-    public void OnRollEnter(int staminaCost)
+    public void OnRollEnter()
     {
+        GameManager.Instance.playtestStats.incRolls();
         //rolling makes the player collider smaller so
         //the player can move under obstacles and avoid enemies more easily.
         capsule.height /= 2.0f;
         capsule.center = new Vector3(capsule.center.x, capsule.center.y * 0.5f, capsule.center.z);
         hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y / 2, hurtBox.transform.localScale.z);
 
-        stats.StaminaCost(staminaCost);
+        stats.StaminaCost(rollStaminaCost);
     }
 
     public void OnRollExit()
@@ -343,11 +361,20 @@ public class PlayerController : MonoBehaviour
         hurtBox.transform.localScale = new Vector3(hurtBox.transform.localScale.x, hurtBox.transform.localScale.y * 2, hurtBox.transform.localScale.z);
     }
 
+    //call this as animation event
     public void OnAttackStart(AttackInfo info)
     {
-        combat.SetHitboxDamage(fist, info.damage); //call this as animation event
+        combat.SetHitboxDamage(fist, info.damage);
         combat.EnableHitbox(fist);
         stats.StaminaCost(info.staminaCost);
+
+        if (info.attackName.CompareTo("Light Attack") == 0)
+        {
+            GameManager.Instance.playtestStats.incLightAttacks();
+        } else
+        {
+            GameManager.Instance.playtestStats.incHeavyAttacks();
+        }
     }
 
     public void OnAttackFinish()
@@ -366,22 +393,26 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Bonfire"))
             enteredBonfire = true;
 
+        /*
         if (other.CompareTag("PromptTrigger"))
         {
             PromptTrigger pt = other.GetComponent<PromptTrigger>();
-            pt.enableText();
+            pt.enablePrompt();
         }
+        */
     }
     public void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Bonfire"))
             enteredBonfire = false;
 
+        /*
         if (other.CompareTag("PromptTrigger"))
         {
             PromptTrigger pt = other.GetComponent<PromptTrigger>();
-            pt.disableText();
+            pt.disablePrompt();
         }
+        */
     }
     #endregion
 
@@ -411,6 +442,8 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
+        GameManager.Instance.playtestStats.incDeaths();
+
         enabled = false;
         if (GetComponentInChildren<DeathFader>() == null)
         {

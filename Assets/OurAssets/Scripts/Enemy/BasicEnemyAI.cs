@@ -271,7 +271,7 @@ public class BasicEnemyAI : MonoBehaviour
     {
         blocking = false;
         anim.SetBool("Block", blocking);
-        hurtBox.GetComponent<CapsuleCollider>().enabled = !blocking;
+        //hurtBox.GetComponent<CapsuleCollider>().enabled = !blocking;  //DON'T DO THIS WITH NEW COMBAT SYSTEM!
 
         if (playerTransform != null)
         {
@@ -307,7 +307,7 @@ public class BasicEnemyAI : MonoBehaviour
         }
 
 
-        //hurtBox.GetComponent<CapsuleCollider>().enabled = !blocking;  //DON'T DO THIS WITH NEW COMBAT!
+        //hurtBox.GetComponent<CapsuleCollider>().enabled = !blocking;  //DON'T DO THIS WITH NEW COMBAT SYSTEM!
 
         if (restTimer <= 0)
         {

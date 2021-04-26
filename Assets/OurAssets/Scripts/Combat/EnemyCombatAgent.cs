@@ -2,8 +2,8 @@
 
 class EnemyCombatAgent : CombatAgent
 {
-    public override void TakeDamage(int damage)
+    public override void GetHit(AttackInfo attack)
     {
-        GetComponent<EnemyStats>().TakeDamage(damage);
+        GetComponent<EnemyStats>().TakeDamage(attack.damage);
     }
 }

@@ -364,7 +364,7 @@ public class PlayerController : MonoBehaviour
     //call this as animation event
     public void OnAttackStart(AttackInfo info)
     {
-        combat.SetHitboxDamage(fist, info.damage);
+        combat.SetHitboxDamage(fist, info);
         combat.EnableHitbox(fist);
         stats.StaminaCost(info.staminaCost);
 

@@ -22,9 +22,8 @@ public class BasicEnemyAI : MonoBehaviour
     private float restTimer;
 
     [SerializeField]
-    public EnemyAttack[] enemyAttacks;
+    public AttackInfo[] enemyAttacks;
 
-    int lightAttackDamage = 4;
     NavMeshAgent navMeshAgent;
     public Animator anim;
     public EnemyStats stats;
@@ -265,7 +264,7 @@ public class BasicEnemyAI : MonoBehaviour
             //the two anim.SetTrigger were causing a merge error and idk which one is right so i commented out the shorter one
             //anim.SetTrigger(enemyAttacks[randomAttack]);
             anim.SetTrigger(enemyAttacks[randomAttack].attackName);
-            combat.SetHitboxDamage(fist, enemyAttacks[randomAttack].attackDamage); //call this as animation event
+            combat.SetHitboxDamage(fist, enemyAttacks[randomAttack]); //call this as animation event
             restTimer = attackRestTime;
 
         }
@@ -276,7 +275,7 @@ public class BasicEnemyAI : MonoBehaviour
 
         stats.current_health = stats.max_health;
         transform.position = originPoint;
-        GetComponent<BasicEnemyAI>().reset = true;
+        reset = true;
 
     }
 
@@ -315,7 +314,7 @@ public class BasicEnemyAI : MonoBehaviour
     #region Animation Events
     public void OnAttackStart(AttackInfo info)
     {
-        combat.SetHitboxDamage(fist, info.damage); //call this as animation event
+        combat.SetHitboxDamage(fist, info); //call this as animation event
         combat.EnableHitbox(fist);
         //stats.StaminaCost(info.staminaCost);
     }

@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     public PlaytestStats playtestStats;
 
     public bool debugMode;
+    public bool friendlyFire;
 
     //public bool menuOpen;
 

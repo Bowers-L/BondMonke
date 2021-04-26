@@ -40,7 +40,7 @@ public class DamageInteractable : MonoBehaviour
             if (opponent != null)
             {
                 Debug.Log("Found combat agent");
-                opponent.GetHit(attack);
+                opponent.GetHit(gameObject, attack);
             }
         }
         else if (other.CompareTag("Destructible"))

@@ -45,5 +45,5 @@ public abstract class CombatAgent : MonoBehaviour
 
     //Call TakeDamage everytime a hitbox collides with an opposing hurtbox.
     //This could be different based on if it's a player or enemy.
-    public abstract void GetHit(AttackInfo attack);
+    public abstract void GetHit(GameObject opponent, AttackInfo attack);
 }

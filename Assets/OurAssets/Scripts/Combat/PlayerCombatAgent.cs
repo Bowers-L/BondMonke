@@ -13,7 +13,7 @@ class PlayerCombatAgent : CombatAgent
             Debug.LogError("Player has no controller");
         }
     }
-    public override void GetHit(AttackInfo attack)
+    public override void GetHit(GameObject opponent, AttackInfo attack)
     {
         PlayerStats stats = GetComponent<PlayerStats>();
         if (isBlocking)
@@ -37,6 +37,15 @@ class PlayerCombatAgent : CombatAgent
                 GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
             }
             
+            if (attack.force > 0)
+            {
+                //This is really hacky if the attack isn't performed in front of the enemy, 
+                //but all of our attacks are and we're only doing this with one enemy.
+                Rigidbody rb = GetComponent<Rigidbody>();
+                rb.isKinematic = false;
+                rb.AddForce(attack.force * opponent.transform.forward, ForceMode.Impulse);
+                //rb.AddForceAtPosition(attack.force * opponent.transform.forward, opponent.GetComponentInChildren<DamageCollider>().transform.position, ForceMode.Impulse);
+            }
         }
 
     }

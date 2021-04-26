@@ -6,15 +6,28 @@ using UnityEngine.AI;
 public class BasicEnemyAI : MonoBehaviour
 {
 
+    /* DON'T USE THIS ANYMORE
     [System.Serializable]
     public struct EnemyAttack
     {
         public string attackName;
         public int attackDamage;
     }
+    */
+
+    public enum EnemyType
+    {
+        NORMAL,
+        BLOCKING
+    }
+
+    public EnemyType enemyType;
 
     //public Transform dest;
     public Transform playerTransform;
+    public PlayerInputController playerInput;
+    public Animator playerAnim;
+
     public float rangeOfSight;
     
     public float attackRange;
@@ -32,6 +45,8 @@ public class BasicEnemyAI : MonoBehaviour
     public Vector3 originPoint;
     public bool reset;
     private bool blocking = false;
+    //private float maxBlockRate = 1;
+    public float blockRate = 1.0f;//chance for enemy to block if player attack is read
 
     public enum EnemyState
     {
@@ -50,6 +65,7 @@ public class BasicEnemyAI : MonoBehaviour
 
     private DamageCollider fist;
     private HurtBoxMarker hurtBox;
+
     private void Awake()
     {
         combat = GetComponent<CombatAgent>();
@@ -67,18 +83,26 @@ public class BasicEnemyAI : MonoBehaviour
             }
         }
 
-        DeathFader fader = GetComponentInChildren<DeathFader>();
-        if (fader == null)
+        if (playerInput == null)
         {
-            Debug.LogError("Enemy is missing Fader Component");
+            playerInput = playerTransform.gameObject.GetComponent<PlayerInputController>();
+            if (playerInput == null)
+            {
+                Debug.LogError("Player Input Component Not Found");
+            }
         }
-        fader.enabled = false;  //start with the enemy
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
+
+        if (playerAnim == null)
+        {
+            playerAnim = playerTransform.gameObject.GetComponent<Animator>();
+            if (playerInput == null)
+            {
+                Debug.LogError("Player Animator Component Not Found");
+            }
+        }
+
         navMeshAgent = this.GetComponent<NavMeshAgent>();
-        if(navMeshAgent == null)
+        if (navMeshAgent == null)
         {
             Debug.LogError("No NavMesh Agent component attached");
         }
@@ -94,6 +118,17 @@ public class BasicEnemyAI : MonoBehaviour
         {
             Debug.LogError("Enemy does not have EnemyStats component.");
         }
+
+        DeathFader fader = GetComponentInChildren<DeathFader>();
+        if (fader == null)
+        {
+            Debug.LogError("Enemy is missing Fader Component");
+        }
+        fader.enabled = false;  //start with the enemy
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
 
         fist = GetComponentInChildren<DamageCollider>();
         hurtBox = GetComponentInChildren<HurtBoxMarker>();
@@ -115,6 +150,9 @@ public class BasicEnemyAI : MonoBehaviour
             GameObject emptyToSpawn = new GameObject("waypoint");
             patrolPoints[0] = GameObject.Instantiate(emptyToSpawn, transform.position, transform.rotation);
         }
+
+        GameManager.Instance.controls.Player.LightAttack.performed += ctx => OnPlayerAttemptedAttack();
+        GameManager.Instance.controls.Player.HeavyAttack.performed += ctx => OnPlayerAttemptedAttack();
     }
 
     // Update is called once per frame
@@ -267,20 +305,48 @@ public class BasicEnemyAI : MonoBehaviour
 
             //Debug.Log("Rotation of enemy: " + transform.rotation);
         }
+
+
+        //hurtBox.GetComponent<CapsuleCollider>().enabled = !blocking;  //DON'T DO THIS WITH NEW COMBAT!
+
         if (restTimer <= 0)
         {
+            //If player is still in an attacking state, don't unblock
+            if (!playerAnim.GetCurrentAnimatorStateInfo(playerAnim.GetLayerIndex("Combat")).IsTag("Attack"))
+            {
+                //Get out of the blocking state before attacking
+                blocking = false;
+                anim.SetBool("Block", blocking);
+            }
+
             if (enemyAttacks.Length == 0)
             {
                 Debug.LogWarning("No attacks for this enemy specified in the inspector");
             } else
             {
                 int randomAttack = Random.Range(0, enemyAttacks.Length);
-                //the two anim.SetTrigger were causing a merge error and idk which one is right so i commented out the shorter one
-                //anim.SetTrigger(enemyAttacks[randomAttack]);
                 anim.SetTrigger(enemyAttacks[randomAttack].attackName);
                 combat.SetHitboxDamage(fist, enemyAttacks[randomAttack]);
                 restTimer = attackRestTime;
             }
+        }
+    }
+
+    public void OnPlayerAttemptedAttack()
+    {
+        //Blocking type enemies can read player input and attempt to block.
+        //If the rest timer is up, the enemy is going to either attempt an attack or continue blocking,
+        //so don't let this callback interrupt that.
+        if (enemyType == EnemyType.BLOCKING && restTimer > 0)
+        {
+            //Enemy will block if player attack is read and based on set block rate of enemy
+            float blockChance = Random.Range(0f, 1f);
+            if (blockChance <= blockRate)
+            {
+                Debug.Log("Read player attack");
+                blocking = true;
+            }
+            anim.SetBool("Block", blocking);
         }
     }
 

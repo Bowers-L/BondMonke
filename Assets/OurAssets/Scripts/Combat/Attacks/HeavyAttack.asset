@@ -15,4 +15,5 @@ MonoBehaviour:
   attackName: HeavyAttack
   damage: 10
   staminaCost: 60
+  staminaPenaltyOnGuard: 50
   breaksGuard: 1

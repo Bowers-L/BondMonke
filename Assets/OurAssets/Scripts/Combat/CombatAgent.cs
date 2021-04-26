@@ -6,7 +6,17 @@ using UnityEngine;
 
 public abstract class CombatAgent : MonoBehaviour
 {
+
+    public bool isBlocking;
+    public bool isInvincible;
+
     private DamageCollider lastUsedCollider;
+
+    protected void Awake()
+    {
+        isBlocking = false;
+        isInvincible = false;
+    }
 
     public void EnableHitbox(DamageCollider hitbox)
     {

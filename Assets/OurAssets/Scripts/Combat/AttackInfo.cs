@@ -10,6 +10,7 @@ public class AttackInfo : ScriptableObject
 {
     public string attackName;
     public int damage;
-    public int staminaCost;
+    public float staminaCost;
+    public float staminaPenaltyOnGuard;
     public bool breaksGuard;
 }

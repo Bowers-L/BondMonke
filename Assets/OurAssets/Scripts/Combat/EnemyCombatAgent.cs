@@ -15,7 +15,15 @@ class EnemyCombatAgent : CombatAgent
     }
     public override void GetHit(AttackInfo attack)
     {
-        GetComponent<EnemyStats>().TakeDamage(attack.damage);
-        GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
+        lastUsedCollider.DisableDamageCollider();
+        if (!isInvincible)
+        {
+            EnemyStats stats = GetComponent<EnemyStats>();
+            stats.TakeDamage(attack.damage);
+            if (stats.current_health > 0)
+            {
+                GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
+            }
+        }
     }
 }

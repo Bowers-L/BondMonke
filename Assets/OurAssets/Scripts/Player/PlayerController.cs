@@ -450,6 +450,7 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.Instance.playtestStats.incDeaths();
 
+        lockOn = null;
         enabled = false;
         if (GetComponentInChildren<DeathFader>() == null)
         {

@@ -65,7 +65,7 @@ public class bonfire_ui : MonoBehaviour
             {
                 for (int i = 0; i < enemies.Length; i++)
                 {
-                    if (!enemies[i].activeSelf)
+                    if (enemies[i].GetComponentInChildren<DeathFader>().enabled)
                     {
                         Material mat = enemies[i].GetComponentInChildren<Renderer>().material;
                         enemies[i].GetComponent<BasicEnemyAI>().enabled = true;

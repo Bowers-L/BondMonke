@@ -29284,6 +29284,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1601711016}
   - component: {fileID: 1601711015}
+  - component: {fileID: 1601711017}
   m_Layer: 0
   m_Name: HughMannArea
   m_TagString: Untagged
@@ -29318,6 +29319,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1601711017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601711014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43e2d0e678394374bacd2cf1bae9ce35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1606668356 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2260337508758700050, guid: 228d1ca30e398f24294c3fafd1e64c02,
@@ -39380,17 +39393,17 @@ PrefabInstance:
     - target: {fileID: 6086213670814554115, guid: 8b75d8b8adbae8349b4ca659bccea9ce,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 68.07
+      value: 0.535
       objectReference: {fileID: 0}
     - target: {fileID: 6086213670814554115, guid: 8b75d8b8adbae8349b4ca659bccea9ce,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 23.59
+      value: -0.28
       objectReference: {fileID: 0}
     - target: {fileID: 6086213670814554115, guid: 8b75d8b8adbae8349b4ca659bccea9ce,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -21.65
+      value: -0.86
       objectReference: {fileID: 0}
     - target: {fileID: 6086213670814554115, guid: 8b75d8b8adbae8349b4ca659bccea9ce,
         type: 3}

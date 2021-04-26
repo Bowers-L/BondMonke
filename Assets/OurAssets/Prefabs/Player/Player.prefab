@@ -1491,7 +1491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff763e2cc2d5c9447bbc3ea5e1d445dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 0
+  attack: {fileID: 0}
   torqueFactor: 10
 --- !u!1 &6402085959130626834
 GameObject:
@@ -1663,7 +1663,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &6051758639109837216
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1770,6 +1770,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c12be9e4af8c34b438faa8e3599baf17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlocking: 0
+  isInvincible: 0
 --- !u!114 &2300138869004725424
 MonoBehaviour:
   m_ObjectHideFlags: 0

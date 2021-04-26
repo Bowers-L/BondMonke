@@ -73,7 +73,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110061107027238583}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -5495902117074765545, guid: 5923b9c40352fe34f91f9b926c08d40f, type: 3}
 --- !u!23 &3284915111339159430
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -124,8 +124,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 0.29490155, z: 2}
+  m_Center: {x: 0, y: 0.028781205, z: 0}
 --- !u!54 &4947185763668734317
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -185,8 +185,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.496648, y: 0.9027953, z: 1.3996506}
+  m_Center: {x: 0, y: 0.3630741, z: 0}
 --- !u!114 &3519644230342135366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,4 +199,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97fdb6c940cb1594c8d4759c70454071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 5
+  attack: {fileID: 0}

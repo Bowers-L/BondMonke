@@ -167,7 +167,11 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("MovementMag", input.Movement.magnitude);
 
         //Disable the hurtbox if the player is blocking
-        hurtBox.GetComponent<CapsuleCollider>().enabled = !input.Block;
+        //hurtBox.GetComponent<CapsuleCollider>().enabled = !input.Block;
+
+        //Blocking logic is determined by the animator state, rather than player input.
+        combat.isBlocking = animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Combat")).IsName("Block");
+        combat.isInvincible = animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Combat")).IsTag("Invincible");
 
         //Render the visible hurtbox for debug purposes.
         fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
@@ -437,6 +441,8 @@ public class PlayerController : MonoBehaviour
 
         //Change the transitions
     }
+
+
     #endregion
 
 

@@ -15,4 +15,5 @@ MonoBehaviour:
   attackName: LightAttack
   damage: 5
   staminaCost: 40
+  staminaPenaltyOnGuard: 30
   breaksGuard: 0

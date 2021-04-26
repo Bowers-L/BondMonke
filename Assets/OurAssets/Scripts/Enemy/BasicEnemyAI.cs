@@ -119,6 +119,7 @@ public class BasicEnemyAI : MonoBehaviour
         if (reset) 
         {
             navMeshAgent.SetDestination(originPoint);
+            stats.current_health = stats.max_health;
             currentState = EnemyState.PATROL;
             reset = false;
         }

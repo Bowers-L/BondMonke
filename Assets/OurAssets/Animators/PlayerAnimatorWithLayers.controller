@@ -343,7 +343,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: -203655887218126122, guid: 960d110757785ae4c873d95cffed67b1,
     type: 3}
-  m_Tag: 
+  m_Tag: Invincible
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
@@ -813,7 +813,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: -203655887218126122, guid: 55b80f437458ea04db8634f600c55b06,
     type: 3}
-  m_Tag: 
+  m_Tag: Invincible
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
@@ -1845,7 +1845,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 727e073ea4369494e8665bd54ecbe426, type: 2}
-  m_Tag: 
+  m_Tag: Invincible
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 

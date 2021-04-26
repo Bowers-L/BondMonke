@@ -67,6 +67,8 @@ public class respawn : MonoBehaviour
             player.GetComponent<PlayerStats>().stamina_regen_enabled = 1;
             //player.GetComponent<PlayerStats>().staminaDelayCount = 0;
             player.GetComponent<PlayerController>().player_camera.enabled = true;   //in case the player fell
+            player.GetComponent<Rigidbody>().velocity = Vector3.zero;   //make sure the player doesn't fly off
+            //player.GetComponent<Rigidbody>().isKinematic = true;
         }
     }
 }

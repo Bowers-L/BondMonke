@@ -13,10 +13,21 @@ class EnemyCombatAgent : CombatAgent
             Debug.LogError("Enemy has no AI Component");
         }
     }
-    public override void GetHit(AttackInfo attack)
+    public override void GetHit(GameObject opponent, AttackInfo attack)
     {
-        lastUsedCollider.DisableDamageCollider();
-        if (!isInvincible)
+        if (lastUsedCollider != null)
+        {
+            lastUsedCollider.DisableDamageCollider();
+        }
+        
+        if (isBlocking)
+        {
+            if (attack.breaksGuard)
+            {
+                GetComponent<Animator>().SetTrigger("BlockBroken");
+            }
+        }
+        else if (!isInvincible)
         {
             EnemyStats stats = GetComponent<EnemyStats>();
             stats.TakeDamage(attack.damage);

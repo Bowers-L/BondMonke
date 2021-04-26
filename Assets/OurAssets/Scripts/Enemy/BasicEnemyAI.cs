@@ -180,6 +180,9 @@ public class BasicEnemyAI : MonoBehaviour
         anim.SetFloat("MovementY", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
         anim.SetFloat("MovementMag", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
 
+        combat.isBlocking = blocking;
+        combat.isInvincible = anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex("Combat")).IsTag("Invincible");
+
         //Render the visible hurtbox for debug purposes.
         fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
         hurtBox.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;

@@ -15,10 +15,11 @@ class PlayerCombatAgent : CombatAgent
     }
     public override void GetHit(AttackInfo attack)
     {
+        PlayerStats stats = GetComponent<PlayerStats>();
         if (isBlocking)
         {
-            PlayerStats stats = GetComponent<PlayerStats>();
-            GetComponent<PlayerStats>().StaminaCost(attack.staminaPenaltyOnGuard);
+            
+            stats.StaminaCost(attack.staminaPenaltyOnGuard);
             if (stats.current_stamina <= 0)
             {
                 GetComponent<Animator>().SetTrigger("BlockBroken");
@@ -26,8 +27,13 @@ class PlayerCombatAgent : CombatAgent
             
         } else if (!isInvincible)  //Gives the player i-frames so that the combat is more fair.
         {
+            lastUsedCollider.DisableDamageCollider();   
             GetComponent<PlayerStats>().TakeDamage(attack.damage);
-            GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
+            if (stats.current_health > 0)
+            {
+                GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
+            }
+            
         }
 
     }

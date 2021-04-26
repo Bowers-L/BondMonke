@@ -10,7 +10,7 @@ public abstract class CombatAgent : MonoBehaviour
     public bool isBlocking;
     public bool isInvincible;
 
-    private DamageCollider lastUsedCollider;
+    protected DamageCollider lastUsedCollider;
 
     protected void Awake()
     {

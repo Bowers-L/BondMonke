@@ -27,7 +27,10 @@ class PlayerCombatAgent : CombatAgent
             
         } else if (!isInvincible)  //Gives the player i-frames so that the combat is more fair.
         {
-            lastUsedCollider.DisableDamageCollider();   
+            if (lastUsedCollider != null)
+            {
+                lastUsedCollider.DisableDamageCollider();
+            }
             GetComponent<PlayerStats>().TakeDamage(attack.damage);
             if (stats.current_health > 0)
             {

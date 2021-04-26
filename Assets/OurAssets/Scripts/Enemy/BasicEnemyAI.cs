@@ -55,7 +55,7 @@ public class BasicEnemyAI : MonoBehaviour
         combat = GetComponent<CombatAgent>();
         if (combat == null)
         {
-            Debug.LogError("Player is missing CombatAgent component");
+            Debug.LogError("Enemy is missing CombatAgent component");
         }
 
         if (playerTransform == null)
@@ -63,11 +63,15 @@ public class BasicEnemyAI : MonoBehaviour
             playerTransform = GameObject.Find("Player").transform;
             if (playerTransform == null)
             {
-                Debug.LogError("No player in the scene");
+                Debug.LogError("No Player in the scene");
             }
         }
 
         DeathFader fader = GetComponentInChildren<DeathFader>();
+        if (fader == null)
+        {
+            Debug.LogError("Enemy is missing Fader Component");
+        }
         fader.enabled = false;  //start with the enemy
     }
     // Start is called before the first frame update
@@ -265,14 +269,18 @@ public class BasicEnemyAI : MonoBehaviour
         }
         if (restTimer <= 0)
         {
-
-            int randomAttack = Random.Range(0, enemyAttacks.Length);
-            //the two anim.SetTrigger were causing a merge error and idk which one is right so i commented out the shorter one
-            //anim.SetTrigger(enemyAttacks[randomAttack]);
-            anim.SetTrigger(enemyAttacks[randomAttack].attackName);
-            combat.SetHitboxDamage(fist, enemyAttacks[randomAttack]);
-            restTimer = attackRestTime;
-
+            if (enemyAttacks.Length == 0)
+            {
+                Debug.LogWarning("No attacks for this enemy specified in the inspector");
+            } else
+            {
+                int randomAttack = Random.Range(0, enemyAttacks.Length);
+                //the two anim.SetTrigger were causing a merge error and idk which one is right so i commented out the shorter one
+                //anim.SetTrigger(enemyAttacks[randomAttack]);
+                anim.SetTrigger(enemyAttacks[randomAttack].attackName);
+                combat.SetHitboxDamage(fist, enemyAttacks[randomAttack]);
+                restTimer = attackRestTime;
+            }
         }
     }
 

@@ -22,11 +22,19 @@ public class DamageCollider : MonoBehaviour
     public void EnableDamageCollider()
     {
         damageCollider.enabled = true;
+        foreach (Collider col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = true;
+        }
     }
 
     public void DisableDamageCollider()
     {
         damageCollider.enabled = false;
+        foreach (Collider col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

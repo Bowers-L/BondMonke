@@ -15,10 +15,10 @@ public abstract class CombatAgent : MonoBehaviour
     }
 
     //Call AttackWithDamage during an attack to add a hitbox/damage value to the player.
-    public void EnableHitboxWithDamage(DamageCollider hitbox, int damageAmount)
+    public void EnableHitboxWithAttack(DamageCollider hitbox, AttackInfo attack)
     {
         //enables the hitbox and sets the amount of damage the attack should do.
-        hitbox.damageAmount = damageAmount;
+        hitbox.attack = attack;
         EnableHitbox(hitbox);
     }
 
@@ -28,12 +28,12 @@ public abstract class CombatAgent : MonoBehaviour
         lastUsedCollider.DisableDamageCollider();
     }
 
-    public void SetHitboxDamage(DamageCollider hitbox, int damageAmount)
+    public void SetHitboxDamage(DamageCollider hitbox, AttackInfo attack)
     {
-        hitbox.damageAmount = damageAmount;
+        hitbox.attack = attack;
     }
 
     //Call TakeDamage everytime a hitbox collides with an opposing hurtbox.
     //This could be different based on if it's a player or enemy.
-    public abstract void TakeDamage(int damage);
+    public abstract void GetHit(AttackInfo attack);
 }

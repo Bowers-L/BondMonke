@@ -8,7 +8,7 @@ public class DamageInteractable : MonoBehaviour
 
     //for now, each collider will deal a certain amount of damage, and we can have a different collider per attack.
     //Alternatively, we could set the damageAmount every time the collider is enabled to reuse colliders.
-    public int damageAmount;
+    public AttackInfo attack;
 
     private void Awake()
     {
@@ -40,7 +40,7 @@ public class DamageInteractable : MonoBehaviour
             if (opponent != null)
             {
                 Debug.Log("Found combat agent");
-                opponent.TakeDamage(damageAmount);
+                opponent.GetHit(attack);
             }
         }
         else if (other.CompareTag("Destructible"))

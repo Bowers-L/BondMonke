@@ -5,40 +5,48 @@ using UnityEngine;
 public class DeathFader : MonoBehaviour
 {
     public float speed = 0.01f; // 0.6 looks good on xanders computer
-    Color startAlpha;
+    Color startColor;
+    float startAlpha;
     float startTime;
+
     void OnEnable()
     {
-        Debug.Log("i was enabled");
+        //Debug.Log("i was enabled");
         startTime = Time.time;
-        startAlpha = GetComponent<Renderer>().material.color;
+        startColor = GetComponent<Renderer>().material.color;
+
+        //Make sure the fade always starts at 1
+        startAlpha = 1.0f;
+        GetComponent<Renderer>().material.color = new Color(startColor.r, startColor.g, startColor.b, startAlpha);
     }
 
     // Update is called once per frame
     void Update()
     {
-        SwitchRenderModeToFade(GetComponent<Renderer>().material);
+        Utility.SwitchRenderMode(GetComponent<Renderer>().material, Utility.RenderingModes.Fade);
         if (GetComponent<Renderer>().material.color.a != 0)
         {
-            Debug.Log("Fading dead enemy");
+            //Debug.Log("Fading dead enemy");
             float t = (Time.time - startTime) * speed;
-            GetComponent<Renderer>().material.color = new Color(startAlpha.r, startAlpha.g, startAlpha.b, Mathf.Lerp(1, 0, t * speed));
+            GetComponent<Renderer>().material.color = new Color(startColor.r, startColor.g, startColor.b, Mathf.Lerp(1, 0, t * speed));
         } else
         {
-            Debug.Log("Enemy faded out");
+            //Debug.Log("Enemy faded out");
             gameObject.transform.parent.gameObject.SetActive(false);
         }
     }
 
-    //https://answers.unity.com/questions/1004666/change-material-rendering-mode-in-runtime.html
+    //Moved this to Utility
+    /*
     void SwitchRenderModeToFade(Material mat)
     {
-        mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        mat.SetInt("_SrcBlend", (int) BlendMode.SrcAlpha);
+        mat.SetInt("_DstBlend", (int) BlendMode.OneMinusSrcAlpha);
         mat.SetInt("_ZWrite", 0);
         mat.DisableKeyword("_ALPHATEST_ON");
         mat.EnableKeyword("_ALPHABLEND_ON");
         mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
         mat.renderQueue = 3000;
     }
+    */
 }

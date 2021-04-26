@@ -170,8 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff763e2cc2d5c9447bbc3ea5e1d445dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 0
-  scalar: 10
+  attack: {fileID: 0}
+  torqueFactor: 10
 --- !u!1 &444214884127180255
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +254,7 @@ Animator:
   m_GameObject: {fileID: 786795973199226124}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: d7e75111f51327b41a0b7f847329f9d4, type: 3}
-  m_Controller: {fileID: 9100000, guid: ffc1347316b8a8b4f91c7d414bc0345c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3dae25ef7dc4a1145b6b05b2d2d7ddad, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -306,7 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health_stat: 2
-  max_health: 10
+  max_health: 20
   current_health: 10
 --- !u!114 &7940649506620032304
 MonoBehaviour:
@@ -337,8 +337,8 @@ MonoBehaviour:
   attackRange: 2
   attackRestTime: 1
   enemyAttacks:
-  - attackName: LightAttack
-    attackDamage: 5
+  - {fileID: 11400000, guid: 8771fe554e0958a4c90afaa51d9b6914, type: 2}
+  - {fileID: 11400000, guid: ad26fe2c1da071e4faba0c847706f77f, type: 2}
   anim: {fileID: 6287234797743039948}
   stats: {fileID: 7940649506620032305}
   combatStoppingDistance: 2

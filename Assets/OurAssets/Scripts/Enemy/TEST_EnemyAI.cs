@@ -22,9 +22,8 @@ public class TEST_EnemyAI : MonoBehaviour
     private float restTimer;
 
     [SerializeField]
-    public EnemyAttack[] enemyAttacks;
+    public AttackInfo[] enemyAttacks;
 
-    int lightAttackDamage = 4;
     NavMeshAgent navMeshAgent;
     public Animator anim;
     public EnemyStats stats;
@@ -289,7 +288,7 @@ public class TEST_EnemyAI : MonoBehaviour
             }
 
             anim.SetTrigger(enemyAttacks[randomAttack].attackName);
-            combat.SetHitboxDamage(fist, enemyAttacks[randomAttack].attackDamage); //call this as animation event
+            combat.SetHitboxDamage(fist, enemyAttacks[randomAttack]); //call this as animation event
             restTimer = attackRestTime;
 
         }
@@ -322,7 +321,7 @@ public class TEST_EnemyAI : MonoBehaviour
     #region Animation Events
     public void OnAttackStart(AttackInfo info)
     {
-        combat.SetHitboxDamage(fist, info.damage); //call this as animation event
+        combat.SetHitboxDamage(fist, info); //call this as animation event
         combat.EnableHitbox(fist);
         //stats.StaminaCost(info.staminaCost);
     }

@@ -2,8 +2,9 @@
 
 class PlayerCombatAgent : CombatAgent
 {
-    public override void TakeDamage(int damage)
+    public override void GetHit(AttackInfo attack)
     {
-        GetComponent<PlayerStats>().TakeDamage(damage);
+        GetComponent<PlayerStats>().TakeDamage(attack.damage);
+        GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d50f9edb6046c44be60dbf891a62b6, type: 3}
   m_Name: HeavyAttack
   m_EditorClassIdentifier: 
-  attackName: Heavy Attack
+  attackName: HeavyAttack
   damage: 10
   staminaCost: 60
   breaksGuard: 1

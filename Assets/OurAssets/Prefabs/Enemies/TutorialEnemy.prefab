@@ -67,11 +67,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TutorialEnemy
       objectReference: {fileID: 0}
-    - target: {fileID: 7940649506620032311, guid: 4151fcc4d0a421f418161e4842bff48c,
+    - target: {fileID: 6287234797743039948, guid: 4151fcc4d0a421f418161e4842bff48c,
         type: 3}
-      propertyPath: attackRange
-      value: 2
-      objectReference: {fileID: 0}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3dae25ef7dc4a1145b6b05b2d2d7ddad, type: 2}
     - target: {fileID: 7940649506620032311, guid: 4151fcc4d0a421f418161e4842bff48c,
         type: 3}
       propertyPath: rangeOfSight

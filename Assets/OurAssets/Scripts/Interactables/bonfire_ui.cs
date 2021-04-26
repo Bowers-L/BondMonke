@@ -34,7 +34,7 @@ public class bonfire_ui : MonoBehaviour
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         if (enemies == null)
         {
-            Debug.LogError("there are no tagged enemies dangit");
+            Debug.LogError("there are no tagged enemies");
         }
         if (stamina_bar == null)
         {
@@ -65,11 +65,19 @@ public class bonfire_ui : MonoBehaviour
             {
                 for (int i = 0; i < enemies.Length; i++)
                 {
-                    if (enemies[i].activeSelf)
+                    if (!enemies[i].activeSelf)
                     {
-                        enemies[i].GetComponent<BasicEnemyAI>().transform.position = enemies[i].GetComponent<BasicEnemyAI>().originPoint;
-                        enemies[i].GetComponent<BasicEnemyAI>().reset = true;
+                        Material mat = enemies[i].GetComponentInChildren<Renderer>().material;
+                        enemies[i].GetComponent<BasicEnemyAI>().enabled = true;
+                        enemies[i].GetComponentInChildren<DeathFader>().enabled = false;
+
+                        //Make sure that the enemy respawns in Opaque mode.
+                        Utility.SwitchRenderMode(mat, Utility.RenderingModes.Opaque);
+                        enemies[i].SetActive(true);
                     }
+
+                    enemies[i].GetComponent<BasicEnemyAI>().Respawn();
+
                 }
                 player.GetComponent<PlayerController>().respawnPoint = player.transform.position;
                 health_bar.setCurrentHealth(player.GetComponent<PlayerStats>().max_health);

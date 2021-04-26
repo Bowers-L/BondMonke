@@ -41,6 +41,7 @@ public class BasicEnemyAI : MonoBehaviour
     };
 
     //Current state of this enemy
+    [SerializeField]
     private EnemyState currentState;
 
     //Array of patrol points
@@ -176,6 +177,7 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Animate movement
         anim.SetFloat("MovementY", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
+        anim.SetFloat("MovementMag", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
 
         //Render the visible hurtbox for debug purposes.
         fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
@@ -255,7 +257,7 @@ public class BasicEnemyAI : MonoBehaviour
                                                         navMeshAgent.angularSpeed * Time.deltaTime);
             */
 
-            Debug.Log("Rotation of enemy: " + transform.rotation);
+            //Debug.Log("Rotation of enemy: " + transform.rotation);
         }
         if (restTimer <= 0)
         {
@@ -264,7 +266,7 @@ public class BasicEnemyAI : MonoBehaviour
             //the two anim.SetTrigger were causing a merge error and idk which one is right so i commented out the shorter one
             //anim.SetTrigger(enemyAttacks[randomAttack]);
             anim.SetTrigger(enemyAttacks[randomAttack].attackName);
-            combat.SetHitboxDamage(fist, enemyAttacks[randomAttack]); //call this as animation event
+            combat.SetHitboxDamage(fist, enemyAttacks[randomAttack]);
             restTimer = attackRestTime;
 
         }

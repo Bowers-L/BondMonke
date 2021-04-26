@@ -41,6 +41,7 @@ public class BasicEnemyAI : MonoBehaviour
     };
 
     //Current state of this enemy
+    [SerializeField]
     private EnemyState currentState;
 
     //Array of patrol points
@@ -54,7 +55,7 @@ public class BasicEnemyAI : MonoBehaviour
         combat = GetComponent<CombatAgent>();
         if (combat == null)
         {
-            Debug.LogError("Player is missing CombatAgent component");
+            Debug.LogError("Enemy is missing CombatAgent component");
         }
 
         if (playerTransform == null)
@@ -62,11 +63,15 @@ public class BasicEnemyAI : MonoBehaviour
             playerTransform = GameObject.Find("Player").transform;
             if (playerTransform == null)
             {
-                Debug.LogError("No player in the scene");
+                Debug.LogError("No Player in the scene");
             }
         }
 
         DeathFader fader = GetComponentInChildren<DeathFader>();
+        if (fader == null)
+        {
+            Debug.LogError("Enemy is missing Fader Component");
+        }
         fader.enabled = false;  //start with the enemy
     }
     // Start is called before the first frame update
@@ -118,6 +123,7 @@ public class BasicEnemyAI : MonoBehaviour
         if (reset) 
         {
             navMeshAgent.SetDestination(originPoint);
+            stats.current_health = stats.max_health;
             currentState = EnemyState.PATROL;
             reset = false;
         }
@@ -176,6 +182,10 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Animate movement
         anim.SetFloat("MovementY", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
+        anim.SetFloat("MovementMag", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
+
+        combat.isBlocking = blocking;
+        combat.isInvincible = anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex("Combat")).IsTag("Invincible");
 
         //Render the visible hurtbox for debug purposes.
         fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
@@ -255,18 +265,22 @@ public class BasicEnemyAI : MonoBehaviour
                                                         navMeshAgent.angularSpeed * Time.deltaTime);
             */
 
-            Debug.Log("Rotation of enemy: " + transform.rotation);
+            //Debug.Log("Rotation of enemy: " + transform.rotation);
         }
         if (restTimer <= 0)
         {
-
-            int randomAttack = Random.Range(0, enemyAttacks.Length);
-            //the two anim.SetTrigger were causing a merge error and idk which one is right so i commented out the shorter one
-            //anim.SetTrigger(enemyAttacks[randomAttack]);
-            anim.SetTrigger(enemyAttacks[randomAttack].attackName);
-            combat.SetHitboxDamage(fist, enemyAttacks[randomAttack]); //call this as animation event
-            restTimer = attackRestTime;
-
+            if (enemyAttacks.Length == 0)
+            {
+                Debug.LogWarning("No attacks for this enemy specified in the inspector");
+            } else
+            {
+                int randomAttack = Random.Range(0, enemyAttacks.Length);
+                //the two anim.SetTrigger were causing a merge error and idk which one is right so i commented out the shorter one
+                //anim.SetTrigger(enemyAttacks[randomAttack]);
+                anim.SetTrigger(enemyAttacks[randomAttack].attackName);
+                combat.SetHitboxDamage(fist, enemyAttacks[randomAttack]);
+                restTimer = attackRestTime;
+            }
         }
     }
 
@@ -298,6 +312,7 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Death Animation
         anim.SetTrigger("Death");
+        anim.SetTrigger("LockCombatLayer");
 
         GameManager.Instance.playtestStats.incEnemiesDefeated();
 

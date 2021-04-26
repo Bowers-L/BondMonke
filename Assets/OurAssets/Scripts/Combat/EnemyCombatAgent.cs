@@ -2,8 +2,28 @@
 
 class EnemyCombatAgent : CombatAgent
 {
+    BasicEnemyAI ai;
+
+    void Awake()
+    {
+        base.Awake();
+        ai = GetComponent<BasicEnemyAI>();
+        if (ai == null)
+        {
+            Debug.LogError("Enemy has no AI Component");
+        }
+    }
     public override void GetHit(AttackInfo attack)
     {
-        GetComponent<EnemyStats>().TakeDamage(attack.damage);
+        lastUsedCollider.DisableDamageCollider();
+        if (!isInvincible)
+        {
+            EnemyStats stats = GetComponent<EnemyStats>();
+            stats.TakeDamage(attack.damage);
+            if (stats.current_health > 0)
+            {
+                GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
+            }
+        }
     }
 }

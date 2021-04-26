@@ -462,5 +462,6 @@ public class PlayerController : MonoBehaviour
 
         //Death Animation
         animator.SetTrigger("Death");
+        animator.SetTrigger("LockCombatLayer");
     }
 }

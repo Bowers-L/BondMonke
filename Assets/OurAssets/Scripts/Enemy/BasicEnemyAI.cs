@@ -301,6 +301,7 @@ public class BasicEnemyAI : MonoBehaviour
 
         //Death Animation
         anim.SetTrigger("Death");
+        anim.SetTrigger("LockCombatLayer");
 
         GameManager.Instance.playtestStats.incEnemiesDefeated();
 

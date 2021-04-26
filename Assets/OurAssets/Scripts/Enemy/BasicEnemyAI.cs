@@ -106,7 +106,7 @@ public class BasicEnemyAI : MonoBehaviour
         //Set a default patrol point if there are none
         if (patrolPoints == null || patrolPoints.Length <= 0)
         {
-            Debug.Log("Creating patrol point");
+            //Debug.Log("Creating patrol point");
             patrolPoints = new GameObject[1];
             GameObject emptyToSpawn = new GameObject("waypoint");
             patrolPoints[0] = GameObject.Instantiate(emptyToSpawn, transform.position, transform.rotation);
@@ -269,6 +269,15 @@ public class BasicEnemyAI : MonoBehaviour
             restTimer = attackRestTime;
 
         }
+    }
+
+    public void Respawn()
+    {
+
+        stats.current_health = stats.max_health;
+        transform.position = originPoint;
+        GetComponent<BasicEnemyAI>().reset = true;
+
     }
 
     public void Die()

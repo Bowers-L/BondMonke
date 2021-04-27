@@ -197,6 +197,10 @@ public class BasicEnemyAI : MonoBehaviour
                 {
                     currentState = EnemyState.ATTACKING;
                 }
+                if (Vector3.Distance(this.transform.position, playerTransform.transform.position) > rangeOfSight)
+                {
+                    currentState = EnemyState.PATROL;
+                }
                 break;
 
             case EnemyState.ATTACKING:
@@ -403,7 +407,7 @@ public class BasicEnemyAI : MonoBehaviour
                 Debug.Log("Read player attack");
                 blocking = true;
                 combat.isBlocking = true;
-                currentState = EnemyState.ATTACKING;
+                currentState = (currentState == EnemyState.CHASE) ? EnemyState.ATTACKING : currentState;
             }
             anim.SetBool("Block", blocking);
         }

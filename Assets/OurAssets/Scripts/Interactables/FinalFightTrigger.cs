@@ -13,6 +13,16 @@ public class FinalFightTrigger : MonoBehaviour
             Debug.LogError("Boss Bar not hooked up in game");
         }
     }
+
+    public void OnEnable()
+    {
+            EventManager.StartListening<PlayerDeathEvent, Vector3>(punchEventListener);
+            EventManager.StartListening<DeathAudioEvent, Vector3>(deathEventListener);
+            EventManager.StartListening<PlayerHurtAudioEvent, Vector3>(playerHurtEventListener);
+            EventManager.StartListening<EnemyHurtAudioEvent, Vector3>(enemyHurtEventListener);
+            EventManager.StartListening<CrateHitAudioEvent, Vector3>(crateHitEventListener);
+            EventManager.StartListening<MusicAudioEvent, int>(musicEventListener);
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -24,7 +34,19 @@ public class FinalFightTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        bossBar.SetActive(false);
-        EventManager.TriggerEvent<MusicAudioEvent, int>(0);
+        if (other.CompareTag("Player"))
+        {
+            bossBar.SetActive(false);
+            EventManager.TriggerEvent<MusicAudioEvent, int>(0);
+        }
+    }
+
+    public void OnPlayerDeath()
+    {
+        if (bossBar.activeInHierarchy)
+        {
+            bossBar.SetActive(false);
+            EventManager.TriggerEvent<MusicAudioEvent, int>(0);
+        }
     }
 }

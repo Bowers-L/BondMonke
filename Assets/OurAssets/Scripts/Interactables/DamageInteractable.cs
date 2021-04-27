@@ -45,7 +45,12 @@ public class DamageInteractable : MonoBehaviour
                     opponent.GetComponent<PlayerStats>().TakeDamage(damageAmount);
                 } else
                 {
-                    opponent.GetComponent<EnemyStats>().TakeDamage(damageAmount);
+                    if (!(opponent.GetComponent<BasicEnemyAI>().enemyType == BasicEnemyAI.EnemyType.BOSS))
+                    {
+                        //Don't let boss take damage from traps because that's OP.
+                        opponent.GetComponent<EnemyStats>().TakeDamage(damageAmount);
+                    }
+                    
                 }
                 opponent.GetComponent<Animator>().SetTrigger("HitFromLightAttack");
             }

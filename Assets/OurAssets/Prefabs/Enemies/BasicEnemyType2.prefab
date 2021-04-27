@@ -642,6 +642,7 @@ MonoBehaviour:
   reset: 0
   blocking: 0
   blockRate: 1
+  firstAttackChance: 0.6
   currentState: 0
   patrolPoints: []
 --- !u!195 &3498429869032790293

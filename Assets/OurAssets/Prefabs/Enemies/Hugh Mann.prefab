@@ -467,7 +467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c86e2450c14cd84cb7492c23aca8660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
+  enemyType: 2
   playerTransform: {fileID: 0}
   playerInput: {fileID: 0}
   playerAnim: {fileID: 0}
@@ -482,6 +482,7 @@ MonoBehaviour:
   reset: 0
   blocking: 0
   blockRate: 1
+  firstAttackChance: 1
   currentState: 0
   patrolPoints: []
 --- !u!114 &4308781078425008295

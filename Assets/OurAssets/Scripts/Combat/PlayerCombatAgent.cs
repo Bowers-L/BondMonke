@@ -39,6 +39,9 @@ class PlayerCombatAgent : CombatAgent
                 {
                     GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
                     stats.ResetPoise();
+                } else
+                {
+                    GetComponent<Animator>().SetTrigger("IFramesFromPoise");
                 }
                 EventManager.TriggerEvent<PlayerHurtAudioEvent, Vector3>(opponent.transform.position);
             }

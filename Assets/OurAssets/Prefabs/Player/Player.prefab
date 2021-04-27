@@ -1743,7 +1743,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85dfa88bd4bfbe4eba8716ab61c4482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_stat: 3
+  health_stat: 4
   healthPerStat1: 10
   healthPerStat2: 20
   max_health: 1
@@ -1787,7 +1787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectableCount: 0
-  healthIncrease: 5
+  healthIncrease: 15
   final: 0
   canvas: {fileID: 0}
   ui: {fileID: 0}

@@ -308,6 +308,7 @@ MonoBehaviour:
   health_stat: 2
   max_health: 20
   current_health: 10
+  health_bar: {fileID: 0}
 --- !u!114 &7940649506620032304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,7 +341,7 @@ MonoBehaviour:
   playerAnim: {fileID: 0}
   rangeOfSight: 12
   attackRange: 2.55
-  attackRestTime: 0.8
+  attackRestTime: 1
   enemyAttacks:
   - {fileID: 11400000, guid: 8771fe554e0958a4c90afaa51d9b6914, type: 2}
   - {fileID: 11400000, guid: ad26fe2c1da071e4faba0c847706f77f, type: 2}

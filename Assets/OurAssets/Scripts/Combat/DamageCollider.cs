@@ -64,6 +64,7 @@ public class DamageCollider : MonoBehaviour
             //Debug.Log("Hit destructible object");
             other.GetComponent<Rigidbody>().AddRelativeTorque(gameObject.transform.forward * torqueFactor * -1f, ForceMode.Impulse);
             other.GetComponent<DeathFader>().enabled = true;
+            EventManager.TriggerEvent<CrateHitAudioEvent, Vector3>(other.transform.position);
         }
     }
 }

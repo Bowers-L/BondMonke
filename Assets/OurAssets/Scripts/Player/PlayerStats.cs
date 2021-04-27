@@ -17,6 +17,10 @@ public class PlayerStats : MonoBehaviour
     public float max_stamina;
     public float current_stamina;
 
+    //Prevents the player from getting staggered by the enemy to make combat more fair.
+    public int max_poise;
+    public int current_poise;
+
     public int stamina_regen_enabled = 1;
     public float staminaRegenDelay; //In seconds
     public float stamina_regen_factor;
@@ -68,6 +72,8 @@ public class PlayerStats : MonoBehaviour
 
         stamina_bar.setMaxStamina(max_stamina);
         stamina_bar.setCurrentStamina(current_stamina);
+
+        current_poise = max_poise;
     }
 
     public void SetHealthStat(int _health_stat)
@@ -109,6 +115,7 @@ public class PlayerStats : MonoBehaviour
     public void TakeDamage(int damage)
     {
         current_health -= damage;
+        current_poise -= damage;
         if (current_health < 0)
         {
             current_health = 0;
@@ -117,9 +124,19 @@ public class PlayerStats : MonoBehaviour
         {
             current_health = max_health;
         }
+        if (current_poise < 0)
+        {
+            current_poise = 0;
+        }
 
         health_bar.setCurrentHealth(current_health);
     }
+
+    public void SetPoiseToMax()
+    {
+        current_poise = max_poise;
+    }
+
 
     public void DisableStaminaRegen()
     {

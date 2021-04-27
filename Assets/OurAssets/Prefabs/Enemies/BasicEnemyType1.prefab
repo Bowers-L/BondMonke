@@ -339,9 +339,9 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   playerInput: {fileID: 0}
   playerAnim: {fileID: 0}
-  rangeOfSight: 12
+  rangeOfSight: 5
   attackRange: 2.55
-  attackRestTime: 1
+  attackRestTime: 1.5
   enemyAttacks:
   - {fileID: 11400000, guid: 8771fe554e0958a4c90afaa51d9b6914, type: 2}
   - {fileID: 11400000, guid: ad26fe2c1da071e4faba0c847706f77f, type: 2}
@@ -351,6 +351,7 @@ MonoBehaviour:
   reset: 0
   blocking: 0
   blockRate: 1
+  firstAttackChance: 0.6
   currentState: 0
   patrolPoints: []
 --- !u!195 &2201170341388484394

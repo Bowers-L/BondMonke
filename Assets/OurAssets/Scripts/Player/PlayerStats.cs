@@ -132,7 +132,7 @@ public class PlayerStats : MonoBehaviour
         health_bar.setCurrentHealth(current_health);
     }
 
-    public void SetPoiseToMax()
+    public void ResetPoise()
     {
         current_poise = max_poise;
     }

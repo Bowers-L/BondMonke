@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class FinalFightTrigger : MonoBehaviour
 {
     public GameObject bossBar;
+
+    private UnityAction<Vector3> playerDeathListener;
 
     public void Awake()
     {
@@ -12,6 +15,18 @@ public class FinalFightTrigger : MonoBehaviour
         {
             Debug.LogError("Boss Bar not hooked up in game");
         }
+
+        playerDeathListener = new UnityAction<Vector3>(OnPlayerDeath);
+    }
+
+    public void OnEnable()
+    {
+        EventManager.StartListening<PlayerDeathEvent, Vector3>(playerDeathListener);
+    }
+
+    public void OnDisable()
+    {
+        EventManager.StopListening<PlayerDeathEvent, Vector3>(playerDeathListener);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -24,7 +39,19 @@ public class FinalFightTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        bossBar.SetActive(false);
-        EventManager.TriggerEvent<MusicAudioEvent, int>(0);
+        if (other.CompareTag("Player"))
+        {
+            bossBar.SetActive(false);
+            EventManager.TriggerEvent<MusicAudioEvent, int>(0);
+        }
+    }
+
+    public void OnPlayerDeath(Vector3 playerPos)
+    {
+        if (bossBar.activeInHierarchy)
+        {
+            bossBar.SetActive(false);
+            EventManager.TriggerEvent<MusicAudioEvent, int>(0);
+        }
     }
 }

@@ -18,7 +18,8 @@ public class BasicEnemyAI : MonoBehaviour
     public enum EnemyType
     {
         NORMAL,
-        BLOCKING
+        BLOCKING,
+        BOSS
     }
 
     public EnemyType enemyType;
@@ -47,6 +48,8 @@ public class BasicEnemyAI : MonoBehaviour
     public bool blocking = false;
     //private float maxBlockRate = 1;
     public float blockRate = 1.0f;//chance for enemy to block if player attack is read
+
+    public float firstAttackChance;
 
     public enum EnemyState
     {
@@ -382,7 +385,8 @@ public class BasicEnemyAI : MonoBehaviour
                 }
                 else
                 {
-                    int randomAttack = Random.Range(0, enemyAttacks.Length);
+                    int randomAttack = (int) (Random.Range(0.0f, 1.0f) * (1.0f / firstAttackChance));
+                    //int randomAttack = Random.Range(0, enemyAttacks.Length);
                     anim.SetTrigger(enemyAttacks[randomAttack].attackName);
                     combat.SetHitboxDamage(fist, enemyAttacks[randomAttack]);
                     restTimer = attackRestTime;
@@ -398,7 +402,7 @@ public class BasicEnemyAI : MonoBehaviour
         //If the rest timer is up, the enemy is going to either attempt an attack or continue blocking,
         //so don't let this callback interrupt that.
         if (enemyType == EnemyType.BLOCKING //&& (restTimer > 0 || currentState != EnemyState.ATTACKING)
-            )
+            && (currentState == EnemyState.CHASE || currentState == EnemyState.ATTACKING))
         {
             //Enemy will block if player attack is read and based on set block rate of enemy
             float blockChance = Random.Range(0f, 1f);
@@ -407,7 +411,7 @@ public class BasicEnemyAI : MonoBehaviour
                 Debug.Log("Read player attack");
                 blocking = true;
                 combat.isBlocking = true;
-                currentState = (currentState == EnemyState.CHASE) ? EnemyState.ATTACKING : currentState;
+                currentState = EnemyState.ATTACKING;
             }
             anim.SetBool("Block", blocking);
         }

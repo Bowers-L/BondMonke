@@ -72,10 +72,5 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 3dae25ef7dc4a1145b6b05b2d2d7ddad, type: 2}
-    - target: {fileID: 7940649506620032311, guid: 4151fcc4d0a421f418161e4842bff48c,
-        type: 3}
-      propertyPath: rangeOfSight
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4151fcc4d0a421f418161e4842bff48c, type: 3}

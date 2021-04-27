@@ -37857,11 +37857,11 @@ PrefabInstance:
         type: 3}
       propertyPath: message
       value: "Whoops! Might've left this one too close to the door.\n\nThere's a
-        totem up ahead that you can rest at. There's an ancient legend among us primates
-        that if you rest at these things, they will revive you upon death. \n\nI
-        guess Hugh Mann believes these kinds of tales, because he's left them scattered
-        throughout the premises.\nRest at them if you like. If the legends are true,
-        it'll make your job a whole lot easier. \n\n\n\n"
+        fireplace up ahead that you can rest at. There's an ancient legend among
+        us primates that if you rest at these things, they will revive you upon death.
+        \n\nI guess Hugh Mann believes these kinds of tales, because he's left them
+        scattered throughout the premises.\nRest at them if you like. If the legends
+        are true, it'll make your job a whole lot easier. \n\n\n\n"
       objectReference: {fileID: 0}
     - target: {fileID: 8520554996910080282, guid: de7a13b9040b32e4692cea647d939c1d,
         type: 3}

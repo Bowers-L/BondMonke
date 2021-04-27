@@ -35,7 +35,11 @@ class PlayerCombatAgent : CombatAgent
             GetComponent<PlayerStats>().TakeDamage(attack.damage);
             if (stats.current_health > 0)
             {
-                GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
+                if (stats.current_poise <= 0)
+                {
+                    GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
+                    stats.ResetPoise();
+                }
                 EventManager.TriggerEvent<PlayerHurtAudioEvent, Vector3>(opponent.transform.position);
             }
             

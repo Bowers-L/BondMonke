@@ -1753,6 +1753,8 @@ MonoBehaviour:
   staminaPerStat2: 100
   max_stamina: 0
   current_stamina: 0
+  max_poise: 10
+  current_poise: 0
   stamina_regen_enabled: 1
   staminaRegenDelay: 0.75
   stamina_regen_factor: 2

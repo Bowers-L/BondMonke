@@ -267,14 +267,8 @@ public class TEST_EnemyAI : MonoBehaviour
             Debug.Log("Read player attack");
             blocking = true;
         }
-        //Enemy gets staggered if hit with heavy attack while blocking
-        if (Input.GetButtonDown("Fire2"))
-        {
-            Debug.Log("Stagger");
-            blocking = false;
-        }
         anim.SetBool("Block", blocking);
-        hurtBox.GetComponent<CapsuleCollider>().enabled = !blocking;
+        //hurtBox.GetComponent<CapsuleCollider>().enabled = !blocking;
 
         if (restTimer <= 0)
         {

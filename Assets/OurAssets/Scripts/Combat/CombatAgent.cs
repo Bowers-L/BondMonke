@@ -35,7 +35,10 @@ public abstract class CombatAgent : MonoBehaviour
     //Call FinishAttack after the attack animation finishes to remove the hitbox.
     public void DisableHitbox()
     {
-        lastUsedCollider.DisableDamageCollider();
+        if (lastUsedCollider != null)
+        {
+            lastUsedCollider.DisableDamageCollider();
+        }
     }
 
     public void SetHitboxDamage(DamageCollider hitbox, AttackInfo attack)

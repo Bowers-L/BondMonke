@@ -47,10 +47,22 @@ public class respawn : MonoBehaviour
         {
             for (int i = 0; i < enemies.Length; i++)
             {
-                if (enemies[i].activeSelf)
+                if (enemies[i].GetComponentInChildren<DeathFader>().enabled)
+                {
+                    Material mat = enemies[i].GetComponentInChildren<Renderer>().material;
+                    enemies[i].GetComponent<BasicEnemyAI>().enabled = true;
+                    enemies[i].GetComponentInChildren<DeathFader>().enabled = false;
+
+                    //Make sure that the enemy respawns in Opaque mode.
+                    Utility.SwitchRenderMode(mat, Utility.RenderingModes.Opaque);
+                    enemies[i].SetActive(true);
+                    enemies[i].GetComponent<BasicEnemyAI>().Respawn();
+                } else
                 {
                     enemies[i].GetComponent<BasicEnemyAI>().reset = true;
                 }
+
+                
             }
         }
         if (!player.activeSelf)

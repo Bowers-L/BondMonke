@@ -36,6 +36,7 @@ class PlayerCombatAgent : CombatAgent
             if (stats.current_health > 0)
             {
                 GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
+                EventManager.TriggerEvent<PlayerHurtAudioEvent, Vector3>(opponent.transform.position);
             }
             
             if (attack.force > 0)

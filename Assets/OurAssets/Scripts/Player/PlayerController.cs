@@ -462,6 +462,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Death Animation
+        EventManager.TriggerEvent<DeathAudioEvent, Vector3>(rb.transform.position);
         animator.SetTrigger("Death");
         animator.SetTrigger("LockCombatLayer");
     }

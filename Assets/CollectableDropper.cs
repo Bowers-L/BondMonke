@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class CollectableDropper : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject dropped;
 
-    // Update is called once per frame
-    void Update()
+    public void DropCollectable()
     {
-        
+        GameObject.Instantiate(dropped, new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z), Quaternion.identity);
     }
 }

@@ -163,7 +163,8 @@ public class BasicEnemyAI : MonoBehaviour
         anim.SetBool("Block", blocking);
         anim.SetFloat("MovementY", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
         anim.SetFloat("MovementMag", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
-        combat.isBlocking = anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex("Combat")).IsName("Block");
+        //combat.isBlocking = anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex("Combat")).IsName("Block");
+        combat.isBlocking = blocking && !anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex("Combat")).IsName("BlockBroken");
         combat.isInvincible = anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex("Combat")).IsTag("Invincible");
         //UpdateMovement();
 
@@ -315,8 +316,12 @@ public class BasicEnemyAI : MonoBehaviour
 
     public void Chasing()
     {
-        blocking = false;
-        anim.SetBool("Block", blocking);
+        if (!playerAnim.GetCurrentAnimatorStateInfo(playerAnim.GetLayerIndex("Combat")).IsTag("Attack"))
+        {
+            //Get out of the blocking state before attacking
+            blocking = false;
+            anim.SetBool("Block", blocking);
+        }
         //hurtBox.GetComponent<CapsuleCollider>().enabled = !blocking;  //DON'T DO THIS WITH NEW COMBAT SYSTEM!
 
         if (playerTransform != null)
@@ -397,6 +402,7 @@ public class BasicEnemyAI : MonoBehaviour
             {
                 Debug.Log("Read player attack");
                 blocking = true;
+                combat.isBlocking = true;
                 currentState = EnemyState.ATTACKING;
             }
             anim.SetBool("Block", blocking);

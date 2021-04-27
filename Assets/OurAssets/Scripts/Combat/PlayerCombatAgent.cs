@@ -16,6 +16,11 @@ class PlayerCombatAgent : CombatAgent
     public override void GetHit(GameObject opponent, AttackInfo attack)
     {
         PlayerStats stats = GetComponent<PlayerStats>();
+        if (lastUsedCollider != null)
+        {
+            lastUsedCollider.DisableDamageCollider();
+        }
+
         if (isBlocking)
         {
             
@@ -27,10 +32,6 @@ class PlayerCombatAgent : CombatAgent
             
         } else if (!isInvincible)  //Gives the player i-frames so that the combat is more fair.
         {
-            if (lastUsedCollider != null)
-            {
-                lastUsedCollider.DisableDamageCollider();
-            }
             GetComponent<PlayerStats>().TakeDamage(attack.damage);
             if (stats.current_health > 0)
             {

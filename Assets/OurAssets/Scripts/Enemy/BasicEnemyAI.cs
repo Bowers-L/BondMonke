@@ -40,11 +40,11 @@ public class BasicEnemyAI : MonoBehaviour
     NavMeshAgent navMeshAgent;
     public Animator anim;
     public EnemyStats stats;
-    public float combatStoppingDistance = 2f;
+    //public float combatStoppingDistance = 2f;
     private CombatAgent combat;
     public Vector3 originPoint;
     public bool reset;
-    private bool blocking = false;
+    public bool blocking = false;
     //private float maxBlockRate = 1;
     public float blockRate = 1.0f;//chance for enemy to block if player attack is read
 
@@ -67,7 +67,7 @@ public class BasicEnemyAI : MonoBehaviour
     private HurtBoxMarker hurtBox;
 
     private void Awake()
-    {
+    {   
         combat = GetComponent<CombatAgent>();
         if (combat == null)
         {
@@ -129,7 +129,7 @@ public class BasicEnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //navMeshAgent.updatePosition = false;    //Position should be determined by animator controller via root motion.
         fist = GetComponentInChildren<DamageCollider>();
         hurtBox = GetComponentInChildren<HurtBoxMarker>();
 
@@ -158,6 +158,16 @@ public class BasicEnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        //Animate movement
+        anim.SetBool("Block", blocking);
+        anim.SetFloat("MovementY", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
+        anim.SetFloat("MovementMag", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
+        combat.isBlocking = anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex("Combat")).IsName("Block");
+        combat.isInvincible = anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex("Combat")).IsTag("Invincible");
+        //UpdateMovement();
+
+
         if (reset) 
         {
             navMeshAgent.SetDestination(originPoint);
@@ -165,6 +175,7 @@ public class BasicEnemyAI : MonoBehaviour
             currentState = EnemyState.PATROL;
             reset = false;
         }
+
         switch (currentState)
         {
             case EnemyState.PATROL:
@@ -173,7 +184,7 @@ public class BasicEnemyAI : MonoBehaviour
 
                 if(Vector3.Distance(this.transform.position, playerTransform.transform.position) <= rangeOfSight)
                 {
-                    this.navMeshAgent.stoppingDistance = combatStoppingDistance;
+                    this.navMeshAgent.stoppingDistance = attackRange;
                     currentState = EnemyState.CHASE;
                 }
                 break;
@@ -218,13 +229,6 @@ public class BasicEnemyAI : MonoBehaviour
             Die();
         }
 
-        //Animate movement
-        anim.SetFloat("MovementY", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
-        anim.SetFloat("MovementMag", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
-
-        combat.isBlocking = blocking;
-        combat.isInvincible = anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex("Combat")).IsTag("Invincible");
-
         //Render the visible hurtbox for debug purposes.
         fist.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
         hurtBox.GetComponent<MeshRenderer>().enabled = GameManager.Instance.debugMode;
@@ -237,6 +241,48 @@ public class BasicEnemyAI : MonoBehaviour
         }
 	*/
     }
+
+    
+    //Source: https://docs.unity3d.com/Manual/nav-CouplingAnimationAndNavigation.html
+    private void UpdateMovement()
+    {
+        Vector3 worldDeltaPosition = navMeshAgent.nextPosition - transform.position;
+        Vector2 velocity = Vector2.zero;
+        Vector2 smoothDeltaPosition = Vector2.zero;
+
+        // Map 'worldDeltaPosition' to local space
+        float dx = Vector3.Dot(transform.right, worldDeltaPosition);
+        float dy = Vector3.Dot(transform.forward, worldDeltaPosition);
+        Vector2 deltaPosition = new Vector2(dx, dy);
+
+        // Low-pass filter the deltaMove
+        //float smooth = Mathf.Min(1.0f, Time.deltaTime / 0.15f);
+        //smoothDeltaPosition = Vector2.Lerp(smoothDeltaPosition, deltaPosition, smooth);
+
+        // Update velocity if time advances
+        if (Time.deltaTime > 1e-5f)
+            velocity = deltaPosition / Time.deltaTime;
+        velocity = deltaPosition;
+        bool shouldMove = velocity.magnitude > 0.5f && navMeshAgent.remainingDistance > navMeshAgent.radius;
+
+        // Update animation parameters
+        if (shouldMove)
+        {
+            anim.SetFloat("MovementX", velocity.x);
+            anim.SetFloat("MovementY", velocity.y);
+            anim.SetFloat("MovementMag", velocity.magnitude);
+        } else
+        {
+            anim.SetFloat("MovementX", 0.0f);
+            anim.SetFloat("MovementY", 0.0f);
+            anim.SetFloat("MovementMag", 0.0f);
+        }
+
+
+        //Script in example that causes agent to move their head towards a target using IK
+        //GetComponent<LookAt>().lookAtTargetPosition = agent.steeringTarget + transform.forward;
+    }
+    
 
     void OnCollisionEnter(Collision other)
     {
@@ -319,16 +365,21 @@ public class BasicEnemyAI : MonoBehaviour
                 anim.SetBool("Block", blocking);
             }
 
-            if (enemyAttacks.Length == 0)
+            if (!blocking)
             {
-                Debug.LogWarning("No attacks for this enemy specified in the inspector");
-            } else
-            {
-                int randomAttack = Random.Range(0, enemyAttacks.Length);
-                anim.SetTrigger(enemyAttacks[randomAttack].attackName);
-                combat.SetHitboxDamage(fist, enemyAttacks[randomAttack]);
-                restTimer = attackRestTime;
+                if (enemyAttacks.Length == 0)
+                {
+                    Debug.LogWarning("No attacks for this enemy specified in the inspector");
+                }
+                else
+                {
+                    int randomAttack = Random.Range(0, enemyAttacks.Length);
+                    anim.SetTrigger(enemyAttacks[randomAttack].attackName);
+                    combat.SetHitboxDamage(fist, enemyAttacks[randomAttack]);
+                    restTimer = attackRestTime;
+                }
             }
+
         }
     }
 
@@ -337,7 +388,8 @@ public class BasicEnemyAI : MonoBehaviour
         //Blocking type enemies can read player input and attempt to block.
         //If the rest timer is up, the enemy is going to either attempt an attack or continue blocking,
         //so don't let this callback interrupt that.
-        if (enemyType == EnemyType.BLOCKING && restTimer > 0)
+        if (enemyType == EnemyType.BLOCKING //&& (restTimer > 0 || currentState != EnemyState.ATTACKING)
+            )
         {
             //Enemy will block if player attack is read and based on set block rate of enemy
             float blockChance = Random.Range(0f, 1f);
@@ -345,6 +397,7 @@ public class BasicEnemyAI : MonoBehaviour
             {
                 Debug.Log("Read player attack");
                 blocking = true;
+                currentState = EnemyState.ATTACKING;
             }
             anim.SetBool("Block", blocking);
         }
@@ -355,6 +408,7 @@ public class BasicEnemyAI : MonoBehaviour
 
         stats.current_health = stats.max_health;
         transform.position = originPoint;
+        anim.SetTrigger("Reset");
         reset = true;
 
     }
@@ -366,6 +420,7 @@ public class BasicEnemyAI : MonoBehaviour
         //Disable AI
         enabled = false;
         combat.enabled = false; //So player knows the enemy is dead.
+        fist.DisableDamageCollider();   //Don't let the player run into dead enemy and die to it.
         EventManager.TriggerEvent<DeathAudioEvent, Vector3>(transform.position);
         if (GetComponentInChildren<DeathFader>() == null)
         {
@@ -404,6 +459,22 @@ public class BasicEnemyAI : MonoBehaviour
     {
         combat.DisableHitbox();
     }
+    #endregion
+
+    #region Animation Callbacks
+    
+    /*
+    void OnAnimatorMove()
+    {
+        //Syncs navigation with animation
+        //transform.position = navMeshAgent.nextPosition;
+        
+        Vector3 newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y, anim.rootPosition.z);
+
+        transform.position = newRootPosition;
+    }
+    */
+    
     #endregion
 
     private bool isFacingPlayer()

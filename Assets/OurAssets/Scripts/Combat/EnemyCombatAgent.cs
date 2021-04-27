@@ -30,10 +30,13 @@ class EnemyCombatAgent : CombatAgent
         else if (!isInvincible)
         {
             EnemyStats stats = GetComponent<EnemyStats>();
-            stats.TakeDamage(attack.damage);
-            if (stats.current_health > 0)
+            if (stats != null && attack != null && gameObject.activeInHierarchy)
             {
-                GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
+                stats.TakeDamage(attack.damage);
+                if (stats.current_health > 0)
+                {
+                    GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
+                }
             }
         }
     }

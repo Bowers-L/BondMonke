@@ -18,11 +18,13 @@ public class FinalFightTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             bossBar.SetActive(true);
+            EventManager.TriggerEvent<MusicAudioEvent, int>(1);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         bossBar.SetActive(false);
+        EventManager.TriggerEvent<MusicAudioEvent, int>(0);
     }
 }

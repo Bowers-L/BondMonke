@@ -295,7 +295,7 @@ public class TEST_EnemyAI : MonoBehaviour
         //Disable AI
         enabled = false;
         combat.enabled = false; //So player knows the enemy is dead.
-        EventManager.TriggerEvent<DeathAudioEvent, Vector3>(transform.position);
+        //EventManager.TriggerEvent<DeathAudioEvent, Vector3>(transform.position);
         if (GetComponentInChildren<DeathFader>() == null)
         {
             Debug.Log("DeathFader not added to enemy mesh");

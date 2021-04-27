@@ -35,6 +35,7 @@ class EnemyCombatAgent : CombatAgent
                 stats.TakeDamage(attack.damage);
                 if (stats.current_health > 0)
                 {
+
                     GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
                 }
             }

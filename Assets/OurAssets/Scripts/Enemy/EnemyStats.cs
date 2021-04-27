@@ -8,7 +8,7 @@ public class EnemyStats : MonoBehaviour
     public int current_health;
 
     // UI ELEMENTS
-    //public HealthBar health_bar;
+    public BossBar health_bar;
 
     private void Awake()
     {
@@ -22,6 +22,15 @@ public class EnemyStats : MonoBehaviour
             }
         }
         */
+
+        if (gameObject.name.CompareTo("Hugh Mann") == 0 && health_bar == null)
+        {
+            health_bar = GameObject.Find("GameOverlayUI").GetComponentInChildren<BossBar>();
+            if (health_bar == null)
+            {
+                Debug.LogError("No Boss Bar in Hierarchy");
+            }
+        }
     }
 
     private void Start()
@@ -29,8 +38,12 @@ public class EnemyStats : MonoBehaviour
         max_health = SetMaxHealthFromStat();
         current_health = max_health;
 
-        //health_bar.setMaxHealth(max_health);
-        //health_bar.setCurrentHealth(current_health);
+        if (health_bar != null)
+        {
+            health_bar.setMaxHealth(max_health);
+            health_bar.setCurrentHealth(current_health);
+        }
+
     }
 
     public void SetHealthStat(int _health_stat)
@@ -63,8 +76,11 @@ public class EnemyStats : MonoBehaviour
         {
             current_health = max_health;
         }
-
-        //health_bar.setCurrentHealth(current_health);
+        
+        if (health_bar != null)
+        {
+            health_bar.setCurrentHealth(current_health);
+        }  
     }
 
     //Need these so that the animation event has a target, but it's better if

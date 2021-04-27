@@ -423,11 +423,20 @@ public class BasicEnemyAI : MonoBehaviour
     {
         //TODO: Kill the enemy
 
+        CollectableDropper dropper = GetComponent<CollectableDropper>();
+        if (dropper != null)
+        {
+            Debug.Log("Dropped Collectable");
+            dropper.DropCollectable();
+        }
+
         //Disable AI
         enabled = false;
         combat.enabled = false; //So player knows the enemy is dead.
         fist.DisableDamageCollider();   //Don't let the player run into dead enemy and die to it.
         EventManager.TriggerEvent<DeathAudioEvent, Vector3>(transform.position);
+
+
         if (GetComponentInChildren<DeathFader>() == null)
         {
             Debug.Log("DeathFader not added to enemy mesh");

@@ -1,22 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class GameStarter : MonoBehaviour
+public class UIEventManager : MonoBehaviour
 {
+
+    private UnityAction<bool> fadeListener;
     public GameObject blackPanel;
-    public string sceneName;
-    private void Awake()
+    public float fadeSpeed = 1;
+
+    void Awake()
     {
-    }
-    public void StartGame()
-    {
-        StartCoroutine(FadeOut());
+        fadeListener = new UnityAction<bool>(fadeHandler);
     }
 
-    public IEnumerator FadeOut(bool fadeOut = true, int fadeSpeed = 2)
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    private void OnEnable()
+    {
+        EventManager.StartListening<FadeEvent, bool>(fadeListener);
+    }
+    private void OnDisable()
+    {
+        EventManager.StopListening<FadeEvent, bool>(fadeListener);
+    }
+
+    void fadeHandler(bool fadeDir)
+    {
+        Debug.Log("Handled fade");
+        StartCoroutine(FadeOut(fadeDir));
+    }
+    public IEnumerator FadeOut(bool fadeOut = true)
     {
         Color panelColor = blackPanel.GetComponent<Image>().color;
         float fadeAmount;
@@ -30,10 +56,7 @@ public class GameStarter : MonoBehaviour
                 blackPanel.GetComponent<Image>().color = panelColor;
                 yield return null;
             }
-            SceneManager.LoadScene(sceneName);
-        }
-        else
-        {
+            yield return new WaitForSeconds(1);
             while (blackPanel.GetComponent<Image>().color.a > 0)
             {
                 fadeAmount = panelColor.a - (fadeSpeed * Time.deltaTime);

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CameraSlider : MonoBehaviour
 {
     public PlayerCamera playerCamera;
-    public Text myText;
+    public TextMeshProUGUI myText;
     public Slider mySlider;
 
     // Start is called before the first frame update

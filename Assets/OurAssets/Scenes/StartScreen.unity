@@ -3041,7 +3041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackPanel: {fileID: 76782503}
-  sceneName: AlphaScene
+  sceneName: FInalBuildScene (Logan)
 --- !u!1 &970044980
 GameObject:
   m_ObjectHideFlags: 0

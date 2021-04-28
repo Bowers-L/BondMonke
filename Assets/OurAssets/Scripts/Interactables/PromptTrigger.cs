@@ -49,14 +49,15 @@ public class PromptTrigger: MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInTrigger = true;
+            ui.descriptionText.text = message;
+            ui.descriptionText.fontSize = fontSize;
             if (firstCollision)
             {
                 firstCollision = false;
-                ui.descriptionText.text = message;
-                ui.descriptionText.fontSize = fontSize;
                 ui.enablePopUp();
             } else
             {
+
                 ui.enablePrompt();
             }
         }

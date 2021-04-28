@@ -5,15 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/OurAssets/Scenes/AlphaScene.unity
-    guid: 7ab3b37256f777043862e37152746c77
-  - enabled: 0
-    path: Assets/OurAssets/Scenes/Logan_BlockoutScene.unity
-    guid: a1eb0092d6a07834ba4302eea91691a4
   - enabled: 1
     path: Assets/OurAssets/Scenes/StartScreen.unity
     guid: da9575848ef720a478e5ae65f016a580
+  - enabled: 1
+    path: Assets/OurAssets/Scenes/FinalBuildScene.unity
+    guid: d9af19d8a9240f64396174b72c8a86e9
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: ad75255eacc8c614589a6bd2ecb5be07,
       type: 2}

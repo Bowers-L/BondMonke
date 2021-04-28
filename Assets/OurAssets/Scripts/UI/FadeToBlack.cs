@@ -1,22 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameStarter : MonoBehaviour
+public class FadeToBlack : MonoBehaviour
 {
+
     public GameObject blackPanel;
-    public string sceneName;
-    private void Awake()
+
+    // Start is called before the first frame update
+    void Start()
     {
     }
-    public void StartGame()
+
+    // Update is called once per frame
+    void Update()
+    {
+    }
+
+    public void FadeOutOnClick()
     {
         StartCoroutine(FadeOut());
     }
-
-    public IEnumerator FadeOut(bool fadeOut = true, int fadeSpeed = 2)
+    public IEnumerator FadeOut(bool fadeOut = true, int fadeSpeed = 5)
     {
         Color panelColor = blackPanel.GetComponent<Image>().color;
         float fadeAmount;
@@ -30,9 +36,7 @@ public class GameStarter : MonoBehaviour
                 blackPanel.GetComponent<Image>().color = panelColor;
                 yield return null;
             }
-            SceneManager.LoadScene(sceneName);
-        }
-        else
+        } else
         {
             while (blackPanel.GetComponent<Image>().color.a > 0)
             {

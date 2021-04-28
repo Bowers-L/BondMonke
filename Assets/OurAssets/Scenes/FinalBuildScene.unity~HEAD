@@ -38,7 +38,11 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+<<<<<<< HEAD:Assets/OurAssets/Scenes/FinalBuildScene.unity
+  m_IndirectSpecularColor: {r: 0.44772524, g: 0.49770308, b: 0.57540035, a: 1}
+=======
   m_IndirectSpecularColor: {r: 0.44772518, g: 0.49770248, b: 0.5754002, a: 1}
+>>>>>>> 47656ce3d755aa35a518095d0d1ca724068c23f0:Assets/OurAssets/Scenes/FInalBuildScene (Logan).unity
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -39683,12 +39687,12 @@ PrefabInstance:
     - target: {fileID: 8520554996910080285, guid: de7a13b9040b32e4692cea647d939c1d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.0487475
+      value: 1.05
       objectReference: {fileID: 0}
     - target: {fileID: 8520554996910080285, guid: de7a13b9040b32e4692cea647d939c1d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.3
+      value: -1.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de7a13b9040b32e4692cea647d939c1d, type: 3}

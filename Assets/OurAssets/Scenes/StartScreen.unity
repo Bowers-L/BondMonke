@@ -3040,8 +3040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ba90c3f186b25d4f9b1b21389059317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blackPanel: {fileID: 76782503}
-  sceneName: FInalBuildScene (Logan)
+  sceneName: FinalBuildScene
 --- !u!1 &970044980
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,11 +25,14 @@ public class EnemyStats : MonoBehaviour
 
         if (gameObject.name.CompareTo("Hugh Mann") == 0 && health_bar == null)
         {
+            /*
             health_bar = GameObject.Find("GameOverlayUI").GetComponentInChildren<BossBar>();
             if (health_bar == null)
             {
                 Debug.LogError("No Boss Bar in Hierarchy");
             }
+            */
+            Debug.LogError("Forgot to set boss bar in hierarchy");
         }
     }
 

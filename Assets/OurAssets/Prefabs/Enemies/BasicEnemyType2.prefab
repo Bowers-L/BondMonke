@@ -599,6 +599,7 @@ MonoBehaviour:
   health_stat: 2
   max_health: 20
   current_health: 10
+  health_bar: {fileID: 0}
 --- !u!114 &4625778505805914895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -629,7 +630,7 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   playerInput: {fileID: 0}
   playerAnim: {fileID: 0}
-  rangeOfSight: 7.5
+  rangeOfSight: 5
   attackRange: 2
   attackRestTime: 2
   enemyAttacks:
@@ -641,6 +642,7 @@ MonoBehaviour:
   reset: 0
   blocking: 0
   blockRate: 1
+  firstAttackChance: 0.6
   currentState: 0
   patrolPoints: []
 --- !u!195 &3498429869032790293

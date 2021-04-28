@@ -832,7 +832,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8794152650102664365}
   - component: {fileID: 2466246283807534622}
-  - component: {fileID: 579163966300194727}
+  - component: {fileID: 9020105062820927407}
   m_Layer: 5
   m_Name: BossBar
   m_TagString: Untagged
@@ -911,7 +911,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &579163966300194727
+--- !u!114 &9020105062820927407
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -920,7 +920,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5008499552482785051}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d38165b81cf4c0b4f941887163765d73, type: 3}
+  m_Script: {fileID: 11500000, guid: bbcf3329a32109047b73b60f7c01d8d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2466246283807534622}

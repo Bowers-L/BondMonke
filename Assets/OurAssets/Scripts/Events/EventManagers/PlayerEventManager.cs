@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+//NOT USED WITH NEW COMBAT SYSTEM
 public class PlayerEventManager : MonoBehaviour
 {
     private UnityAction<int> damageEventListener;
+
     public GameObject player; //replace with player manager later
 
     void Awake()

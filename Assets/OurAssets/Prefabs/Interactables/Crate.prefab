@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4358909912623491648}
   - component: {fileID: 4358909912623491651}
   - component: {fileID: 4358909912623491650}
-  - component: {fileID: 4358909912623491661}
+  - component: {fileID: 6306415389740693535}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Destructible
@@ -111,19 +111,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4358909912623491661
+--- !u!114 &6306415389740693535
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4358909912623491663}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf93683cc38fd984b9a2da12c15aa6f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 8550578f0cf81734d81f49c62f1a347f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  shattered_object: {fileID: 5516045804571266471, guid: 40e5cac30dc396343a1e01e329e50502,
+    type: 3}
 --- !u!1 &4358909913806800630
 GameObject:
   m_ObjectHideFlags: 0

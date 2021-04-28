@@ -13,4 +13,5 @@ public class AttackInfo : ScriptableObject
     public float staminaCost;
     public float staminaPenaltyOnGuard;
     public bool breaksGuard;
+    public float force;
 }

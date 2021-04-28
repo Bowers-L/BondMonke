@@ -41,21 +41,30 @@ public class DamageCollider : MonoBehaviour
     {
        if(other.CompareTag("Hittable"))
         {
-            Debug.Log("Damage Collision");
+            //Debug.Log("Damage Collision");
 
             //idk if we should trigger an event for this since it should only affect what is hit.
             //EventManager.TriggerEvent<DamageEvent, int>(5);
+            CombatAgent thisGuy = GetComponentInParent<CombatAgent>();
             CombatAgent opponent = other.GetComponentInParent<CombatAgent>();
-            if (opponent != null)
+            if (opponent != null && thisGuy != null)
             {
-                Debug.Log("Found combat agent");
-                opponent.GetHit(attack);
+                //Debug.Log("Found combat agent");
+                //Ensures that players can only hit enemies and vice versa.
+                if (GameManager.Instance.friendlyFire || 
+                    ((thisGuy is PlayerCombatAgent && opponent is EnemyCombatAgent)
+                    || (thisGuy is EnemyCombatAgent && opponent is PlayerCombatAgent))
+               )
+                {
+                    opponent.GetHit(thisGuy.gameObject, attack);
+                }  
             }
         } else if (other.CompareTag("Destructible"))
         {
-            Debug.Log("Hit destructible object");
+            //Debug.Log("Hit destructible object");
             other.GetComponent<Rigidbody>().AddRelativeTorque(gameObject.transform.forward * torqueFactor * -1f, ForceMode.Impulse);
             other.GetComponent<DeathFader>().enabled = true;
+            EventManager.TriggerEvent<CrateHitAudioEvent, Vector3>(other.transform.position);
         }
     }
 }

@@ -246,7 +246,7 @@ public class TEST_EnemyAI : MonoBehaviour
         //Enemy might be close enough to the player but not facing the player
         if (!isFacingPlayer())
         {
-            Debug.Log("Not facing the player!");
+            //Debug.Log("Not facing the player!");
 
             transform.rotation = Quaternion.Lerp(transform.rotation,
                                                 Quaternion.LookRotation(playerTransform.position - transform.position, Vector3.up),
@@ -257,7 +257,7 @@ public class TEST_EnemyAI : MonoBehaviour
                                                         navMeshAgent.angularSpeed * Time.deltaTime);
             */
 
-            Debug.Log("Rotation of enemy: " + transform.rotation);
+            //Debug.Log("Rotation of enemy: " + transform.rotation);
         }
 
         //Enemy will block if player attack is read and based on set block rate of enemy
@@ -267,14 +267,8 @@ public class TEST_EnemyAI : MonoBehaviour
             Debug.Log("Read player attack");
             blocking = true;
         }
-        //Enemy gets staggered if hit with heavy attack while blocking
-        if (Input.GetButtonDown("Fire2"))
-        {
-            Debug.Log("Stagger");
-            blocking = false;
-        }
         anim.SetBool("Block", blocking);
-        hurtBox.GetComponent<CapsuleCollider>().enabled = !blocking;
+        //hurtBox.GetComponent<CapsuleCollider>().enabled = !blocking;
 
         if (restTimer <= 0)
         {
@@ -284,7 +278,7 @@ public class TEST_EnemyAI : MonoBehaviour
             {
                 blocking = false;
                 anim.SetBool("Block", blocking);
-                hurtBox.GetComponent<CapsuleCollider>().enabled = !blocking;
+                //hurtBox.GetComponent<CapsuleCollider>().enabled = !blocking;
             }
 
             anim.SetTrigger(enemyAttacks[randomAttack].attackName);
@@ -301,7 +295,7 @@ public class TEST_EnemyAI : MonoBehaviour
         //Disable AI
         enabled = false;
         combat.enabled = false; //So player knows the enemy is dead.
-        EventManager.TriggerEvent<DeathAudioEvent, Vector3>(transform.position);
+        //EventManager.TriggerEvent<DeathAudioEvent, Vector3>(transform.position);
         if (GetComponentInChildren<DeathFader>() == null)
         {
             Debug.Log("DeathFader not added to enemy mesh");

@@ -47,10 +47,22 @@ public class respawn : MonoBehaviour
         {
             for (int i = 0; i < enemies.Length; i++)
             {
-                if (enemies[i].activeSelf)
+                if (enemies[i].GetComponentInChildren<DeathFader>().enabled)
+                {
+                    Material mat = enemies[i].GetComponentInChildren<Renderer>().material;
+                    enemies[i].GetComponent<BasicEnemyAI>().enabled = true;
+                    enemies[i].GetComponentInChildren<DeathFader>().enabled = false;
+
+                    //Make sure that the enemy respawns in Opaque mode.
+                    Utility.SwitchRenderMode(mat, Utility.RenderingModes.Opaque);
+                    enemies[i].SetActive(true);
+                    enemies[i].GetComponent<BasicEnemyAI>().Respawn();
+                } else
                 {
                     enemies[i].GetComponent<BasicEnemyAI>().reset = true;
                 }
+
+                
             }
         }
         if (!player.activeSelf)
@@ -67,6 +79,8 @@ public class respawn : MonoBehaviour
             player.GetComponent<PlayerStats>().stamina_regen_enabled = 1;
             //player.GetComponent<PlayerStats>().staminaDelayCount = 0;
             player.GetComponent<PlayerController>().player_camera.enabled = true;   //in case the player fell
+            player.GetComponent<Rigidbody>().velocity = Vector3.zero;   //make sure the player doesn't fly off
+            //player.GetComponent<Rigidbody>().isKinematic = true;
         }
     }
 }

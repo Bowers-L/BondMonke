@@ -8,7 +8,7 @@ public class DamageInteractable : MonoBehaviour
 
     //for now, each collider will deal a certain amount of damage, and we can have a different collider per attack.
     //Alternatively, we could set the damageAmount every time the collider is enabled to reuse colliders.
-    public AttackInfo attack;
+    public int damageAmount;
 
     private void Awake()
     {
@@ -40,7 +40,19 @@ public class DamageInteractable : MonoBehaviour
             if (opponent != null)
             {
                 Debug.Log("Found combat agent");
-                opponent.GetHit(attack);
+                if (opponent is PlayerCombatAgent)
+                {
+                    opponent.GetComponent<PlayerStats>().TakeDamage(damageAmount);
+                } else
+                {
+                    if (!(opponent.GetComponent<BasicEnemyAI>().enemyType == BasicEnemyAI.EnemyType.BOSS))
+                    {
+                        //Don't let boss take damage from traps because that's OP.
+                        opponent.GetComponent<EnemyStats>().TakeDamage(damageAmount);
+                    }
+                    
+                }
+                opponent.GetComponent<Animator>().SetTrigger("HitFromLightAttack");
             }
         }
         else if (other.CompareTag("Destructible"))

@@ -308,6 +308,7 @@ MonoBehaviour:
   health_stat: 2
   max_health: 20
   current_health: 10
+  health_bar: {fileID: 0}
 --- !u!114 &7940649506620032304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,6 +321,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c0363b0e6b522845aa75e055d623662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlocking: 0
+  isInvincible: 0
 --- !u!114 &7940649506620032311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,18 +335,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c86e2450c14cd84cb7492c23aca8660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   playerTransform: {fileID: 0}
-  rangeOfSight: 12
-  attackRange: 2
-  attackRestTime: 0.8
+  playerInput: {fileID: 0}
+  playerAnim: {fileID: 0}
+  rangeOfSight: 5
+  attackRange: 2.55
+  attackRestTime: 1.5
   enemyAttacks:
   - {fileID: 11400000, guid: 8771fe554e0958a4c90afaa51d9b6914, type: 2}
   - {fileID: 11400000, guid: ad26fe2c1da071e4faba0c847706f77f, type: 2}
   anim: {fileID: 6287234797743039948}
   stats: {fileID: 7940649506620032305}
-  combatStoppingDistance: 2
   originPoint: {x: 0, y: 0, z: 0}
   reset: 0
+  blocking: 0
+  blockRate: 1
+  firstAttackChance: 0.6
+  currentState: 0
   patrolPoints: []
 --- !u!195 &2201170341388484394
 NavMeshAgent:

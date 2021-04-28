@@ -35,7 +35,10 @@ public abstract class CombatAgent : MonoBehaviour
     //Call FinishAttack after the attack animation finishes to remove the hitbox.
     public void DisableHitbox()
     {
-        lastUsedCollider.DisableDamageCollider();
+        if (lastUsedCollider != null)
+        {
+            lastUsedCollider.DisableDamageCollider();
+        }
     }
 
     public void SetHitboxDamage(DamageCollider hitbox, AttackInfo attack)
@@ -45,5 +48,5 @@ public abstract class CombatAgent : MonoBehaviour
 
     //Call TakeDamage everytime a hitbox collides with an opposing hurtbox.
     //This could be different based on if it's a player or enemy.
-    public abstract void GetHit(AttackInfo attack);
+    public abstract void GetHit(GameObject opponent, AttackInfo attack);
 }

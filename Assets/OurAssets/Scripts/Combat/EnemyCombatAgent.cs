@@ -13,16 +13,31 @@ class EnemyCombatAgent : CombatAgent
             Debug.LogError("Enemy has no AI Component");
         }
     }
-    public override void GetHit(AttackInfo attack)
+    public override void GetHit(GameObject opponent, AttackInfo attack)
     {
-        lastUsedCollider.DisableDamageCollider();
-        if (!isInvincible)
+        if (lastUsedCollider != null)
+        {
+            lastUsedCollider.DisableDamageCollider();
+        }
+        
+        if (isBlocking)
+        {
+            if (attack.breaksGuard)
+            {
+                GetComponent<Animator>().SetTrigger("BlockBroken");
+            }
+        }
+        else if (!isInvincible)
         {
             EnemyStats stats = GetComponent<EnemyStats>();
-            stats.TakeDamage(attack.damage);
-            if (stats.current_health > 0)
+            if (stats != null && attack != null && gameObject.activeInHierarchy)
             {
-                GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
+                stats.TakeDamage(attack.damage);
+                if (stats.current_health > 0)
+                {
+                    EventManager.TriggerEvent<EnemyHurtAudioEvent, Vector3>(opponent.transform.position);
+                    GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
+                }
             }
         }
     }

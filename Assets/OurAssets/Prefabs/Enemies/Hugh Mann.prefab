@@ -381,6 +381,7 @@ GameObject:
   - component: {fileID: 987881884765999245}
   - component: {fileID: 2777500377101904786}
   - component: {fileID: 5812345931419439222}
+  - component: {fileID: 672586839047806700}
   m_Layer: 0
   m_Name: Hugh Mann
   m_TagString: Enemy
@@ -466,7 +467,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c86e2450c14cd84cb7492c23aca8660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 2
   playerTransform: {fileID: 0}
+  playerInput: {fileID: 0}
+  playerAnim: {fileID: 0}
   rangeOfSight: 12
   attackRange: 4
   attackRestTime: 2
@@ -474,9 +478,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a3d5807daa6345b4ebf2976f7b2d79b0, type: 2}
   anim: {fileID: 6160579820437883011}
   stats: {fileID: 4308781078425008295}
-  combatStoppingDistance: 2
   originPoint: {x: 0, y: 0, z: 0}
   reset: 0
+  blocking: 0
+  blockRate: 1
+  firstAttackChance: 1
   currentState: 0
   patrolPoints: []
 --- !u!114 &4308781078425008295
@@ -491,9 +497,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f82d123082243dd45af7c1c7df3e9d64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health_stat: 50
+  health_stat: 4
   max_health: 0
   current_health: 0
+  health_bar: {fileID: 0}
 --- !u!114 &987881884765999245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,6 +549,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBlocking: 0
   isInvincible: 0
+--- !u!114 &672586839047806700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3706852203698161103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b1a1fd35bd8b149b8bb960ee6b45a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropped: {fileID: 6213358478943689207, guid: ffdc47d21bedc58469c232bf97821b10, type: 3}
 --- !u!1 &6884836216782450176
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,3 +17,4 @@ MonoBehaviour:
   staminaCost: 0
   staminaPenaltyOnGuard: 200
   breaksGuard: 1
+  force: 15

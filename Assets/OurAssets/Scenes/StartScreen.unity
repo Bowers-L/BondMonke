@@ -3040,6 +3040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ba90c3f186b25d4f9b1b21389059317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blackPanel: {fileID: 76782503}
   sceneName: FinalBuildScene
 --- !u!1 &970044980
 GameObject:
@@ -4780,7 +4781,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: af077cbf0b18f0c43875b448418dcaab, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.32
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0

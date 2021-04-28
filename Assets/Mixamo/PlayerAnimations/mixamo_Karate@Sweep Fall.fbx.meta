@@ -44,7 +44,7 @@ ModelImporter:
       name: mixamo_SweepFall
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 0
+      firstFrame: 23
       lastFrame: 75
       wrapMode: 0
       orientationOffsetY: 0

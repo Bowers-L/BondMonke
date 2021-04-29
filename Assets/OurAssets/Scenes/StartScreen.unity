@@ -5399,16 +5399,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Placeholder - Placeholder
+  m_text: 'Low Poly Fruit Pickups - Rem Storms
 
-    Placeholder - Placeholder
+    Low Poly Tree Pack - Unity Asset
+    Store
 
-    Placeholder
-    - Placeholder
+    Warrior Pack Bundle 1 FREE - Explosive LLC
 
-    Placeholder - Placeholder
+    Basic Motions FREE
+    Pack - Unity Asset Store
 
-    Placeholder - Placeholder'
+    Player Animations - Mixamo'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

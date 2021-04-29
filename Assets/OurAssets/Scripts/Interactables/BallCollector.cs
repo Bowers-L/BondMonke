@@ -16,6 +16,12 @@ public class BallCollector : MonoBehaviour
         ui = GameObject.Find("GameOverlayUI").GetComponentInChildren<CollectableUI>();
     }
 
+    public void ResetCollectableCount()
+    {
+        collectableCount = 0;
+        ui.SetCollectableScore(collectableCount);
+    }
+
     public void ReceiveBall()
     {
         collectableCount++;

@@ -175,6 +175,7 @@ MonoBehaviour:
   musicSource: {fileID: 7642063832045644992}
   baseMusic: {fileID: 8300000, guid: 70b1db7323dc81f459aefc9b4e7e8a79, type: 3}
   bossMusic: {fileID: 8300000, guid: 76f2852d2e0f93c45bd5071760f37294, type: 3}
+  winMusic: {fileID: 8300000, guid: f9e893a46d9baa54792bbc749ab511c5, type: 3}
 --- !u!1 &1648835429819664047
 GameObject:
   m_ObjectHideFlags: 0

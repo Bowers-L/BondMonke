@@ -71,7 +71,7 @@ public class PromptAndPopUpManager : MonoBehaviour
 
     public void switchCanvas()
     {
-        Debug.Log("Switching Canvas");
+        //Debug.Log("Switching Canvas");
         if (popUpCanvas.interactable)
         {
             disablePopUp();
@@ -85,7 +85,7 @@ public class PromptAndPopUpManager : MonoBehaviour
 
     public void enablePrompt()
     {
-        Debug.Log("EnablingPrompt");
+        //Debug.Log("EnablingPrompt");
         promptCanvas.interactable = true;
         promptCanvas.blocksRaycasts = true;
         promptCanvas.alpha = 1f;

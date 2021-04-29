@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CanvasGroup))]
 public class PauseMenuToggle : MonoBehaviour
 {
-    private CanvasGroup canvasGroup;
+    public CanvasGroup pauseMenu;
+    public Canvas controlView;
     private GameControls controls;
     // Start is called before the first frame update
     void Start()
@@ -24,13 +24,6 @@ public class PauseMenuToggle : MonoBehaviour
             controls = GameManager.Instance.controls;
         }
 
-        canvasGroup = GetComponent<CanvasGroup>();
-        if (canvasGroup == null)
-        {
-            Debug.LogError("CanvasGroup not found");
-        }
-
-
         controls.Player.Enable();
         Time.timeScale = 1f;
     }
@@ -40,29 +33,34 @@ public class PauseMenuToggle : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            Debug.Log("pause menu pressed");
-            if (canvasGroup.interactable)
+            if (!controlView.enabled)
             {
-                //GameManager.Instance.menuOpen = false;
-                canvasGroup.interactable = false;
-                canvasGroup.blocksRaycasts = false;
-                canvasGroup.alpha = 0f;
-                Time.timeScale = 1f;
-                Cursor.visible = false;
-                controls.Player.Enable();
-            }
-            else
+                if (pauseMenu.interactable)
+                {
+                    //GameManager.Instance.menuOpen = false;
+                    pauseMenu.interactable = false;
+                    pauseMenu.blocksRaycasts = false;
+                    pauseMenu.alpha = 0f;
+                    Time.timeScale = 1f;
+                    Cursor.visible = false;
+                    controls.Player.Enable();
+                }
+                else
+                {
+                    if (Time.timeScale != 0f) //if game isn't already paused
+                    {
+                        //GameManager.Instance.menuOpen = true;
+                        pauseMenu.interactable = true;
+                        pauseMenu.blocksRaycasts = true;
+                        pauseMenu.alpha = 1f;
+                        Time.timeScale = 0f;
+                        Cursor.visible = true;
+                        controls.Player.Disable();
+                    }
+                }
+            } else
             {
-                //if (!GameManager.Instance.menuOpen)
-                //{
-                    //GameManager.Instance.menuOpen = true;
-                    canvasGroup.interactable = true;
-                    canvasGroup.blocksRaycasts = true;
-                    canvasGroup.alpha = 1f;
-                    Time.timeScale = 0f;
-                    Cursor.visible = true;
-                    controls.Player.Disable();
-                //}
+                controlView.enabled = false;
             }
         }
     }

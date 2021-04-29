@@ -219,3 +219,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blackPanel: {fileID: 7440889573199140790}
   fadeSpeed: 0.75
+  delay: 0.5

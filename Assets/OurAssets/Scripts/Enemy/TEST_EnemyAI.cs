@@ -107,7 +107,7 @@ public class TEST_EnemyAI : MonoBehaviour
         //Set a default patrol point if there are none
         if (patrolPoints == null || patrolPoints.Length <= 0)
         {
-            Debug.Log("Creating patrol point");
+            //Debug.Log("Creating patrol point");
             patrolPoints = new GameObject[1];
             GameObject emptyToSpawn = new GameObject("waypoint");
             patrolPoints[0] = GameObject.Instantiate(emptyToSpawn, transform.position, transform.rotation);
@@ -196,7 +196,7 @@ public class TEST_EnemyAI : MonoBehaviour
     {
         if (other.transform.tag == "Player")
         {
-            Debug.Log("Enemy hit the player");
+            //Debug.Log("Enemy hit the player");
         }
     }
 
@@ -237,7 +237,7 @@ public class TEST_EnemyAI : MonoBehaviour
         }
         else
         {
-            Debug.Log("Player transform not set");
+            //Debug.Log("Player transform not set");
         }
     }
 
@@ -264,7 +264,7 @@ public class TEST_EnemyAI : MonoBehaviour
         float blockChance = Random.Range(0f, maxBlockRate);
         if (Input.GetButtonDown("Fire1") && blockChance <= blockRate)
         {
-            Debug.Log("Read player attack");
+            //Debug.Log("Read player attack");
             blocking = true;
         }
         anim.SetBool("Block", blocking);
@@ -298,7 +298,7 @@ public class TEST_EnemyAI : MonoBehaviour
         //EventManager.TriggerEvent<DeathAudioEvent, Vector3>(transform.position);
         if (GetComponentInChildren<DeathFader>() == null)
         {
-            Debug.Log("DeathFader not added to enemy mesh");
+            //Debug.Log("DeathFader not added to enemy mesh");
         }
         else
         {

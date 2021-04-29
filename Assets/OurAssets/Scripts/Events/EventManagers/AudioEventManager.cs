@@ -91,7 +91,7 @@ public class AudioEventManager : MonoBehaviour
 
         if (eventSound3DPrefab)
         {
-            Debug.Log(clip.ToString() + " Sound Played");
+            //Debug.Log(clip.ToString() + " Sound Played");
             EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
 
             snd.audioSrc.clip = clip;

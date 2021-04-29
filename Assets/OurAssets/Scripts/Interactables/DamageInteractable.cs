@@ -32,14 +32,14 @@ public class DamageInteractable : MonoBehaviour
     {
         if (other.CompareTag("Hittable"))
         {
-            Debug.Log("Damage Collision");
+            //Debug.Log("Damage Collision");
 
             //idk if we should trigger an event for this since it should only affect what is hit.
             //EventManager.TriggerEvent<DamageEvent, int>(5);
             CombatAgent opponent = other.GetComponentInParent<CombatAgent>();
             if (opponent != null)
             {
-                Debug.Log("Found combat agent");
+                //Debug.Log("Found combat agent");
                 if (opponent is PlayerCombatAgent)
                 {
                     opponent.GetComponent<PlayerStats>().TakeDamage(damageAmount);
@@ -57,7 +57,7 @@ public class DamageInteractable : MonoBehaviour
         }
         else if (other.CompareTag("Destructible"))
         {
-            Debug.Log("Hit destructible object");
+            //Debug.Log("Hit destructible object");
             other.GetComponent<DeathFader>().enabled = true;
         }
     }

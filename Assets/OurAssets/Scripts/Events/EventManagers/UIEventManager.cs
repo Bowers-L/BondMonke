@@ -43,7 +43,7 @@ public class UIEventManager : MonoBehaviour
 
     void respawnHandler()
     {
-        Debug.Log("Handled fade");
+        //Debug.Log("Handled fade");
         StartCoroutine(Respawn());
     }
     public IEnumerator Respawn()
@@ -71,7 +71,7 @@ public class UIEventManager : MonoBehaviour
 
     void fadeHandler(bool fadeDir)
     {
-        Debug.Log("Handled fade in/out");
+        //Debug.Log("Handled fade in/out");
         StartCoroutine(FadeIO(fadeDir));
     }
     public IEnumerator FadeIO(bool fadeOut = true)

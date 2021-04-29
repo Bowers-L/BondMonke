@@ -56,7 +56,7 @@ public class PlayerCamera : MonoBehaviour
                 playerTransform = player.transform;
             }
         }
-        Debug.Log("Player camera awoke");
+        //Debug.Log("Player camera awoke");
     }
 
     public void FollowTarget(float delta)

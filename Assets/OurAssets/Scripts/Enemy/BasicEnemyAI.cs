@@ -30,7 +30,8 @@ public class BasicEnemyAI : MonoBehaviour
     public Animator playerAnim;
 
     public float rangeOfSight;
-    
+
+    public float patrolStoppingDistance;
     public float attackRange;
     public float attackRestTime;//time between executing an attack
     private float restTimer;
@@ -64,6 +65,8 @@ public class BasicEnemyAI : MonoBehaviour
 
     //Array of patrol points
     public GameObject[] patrolPoints;
+
+    [SerializeField]
     private int currPoint;
 
     private DamageCollider fist;
@@ -140,6 +143,7 @@ public class BasicEnemyAI : MonoBehaviour
 
         currentState = EnemyState.PATROL;
         currPoint = 0;
+        this.navMeshAgent.stoppingDistance = patrolStoppingDistance;
 
 
         restTimer = 0;
@@ -209,6 +213,7 @@ public class BasicEnemyAI : MonoBehaviour
                 }
                 if (Vector3.Distance(this.transform.position, playerTransform.transform.position) > rangeOfSight)
                 {
+                    this.navMeshAgent.stoppingDistance = patrolStoppingDistance;
                     currentState = EnemyState.PATROL;
                 }
                 break;
@@ -224,8 +229,9 @@ public class BasicEnemyAI : MonoBehaviour
                 restTimer -= Time.deltaTime;
                 if (reset)
                 {
-                    navMeshAgent.SetDestination(originPoint);
+                    this.navMeshAgent.SetDestination(originPoint);
                     currentState = EnemyState.PATROL;
+                    this.navMeshAgent.stoppingDistance = patrolStoppingDistance;
                     reset = false;
                 }
                 break;

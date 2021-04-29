@@ -472,6 +472,7 @@ MonoBehaviour:
   playerInput: {fileID: 0}
   playerAnim: {fileID: 0}
   rangeOfSight: 12
+  patrolStoppingDistance: 0.5
   attackRange: 4
   attackRestTime: 2
   enemyAttacks:
@@ -485,6 +486,8 @@ MonoBehaviour:
   firstAttackChance: 1
   currentState: 0
   patrolPoints: []
+  currPoint: 0
+  defeated: 0
 --- !u!114 &4308781078425008295
 MonoBehaviour:
   m_ObjectHideFlags: 0

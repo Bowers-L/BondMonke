@@ -41,6 +41,7 @@ public class FinalFightTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            bossBar.GetComponentInChildren<BossBar>().resetToMax();
             bossBar.SetActive(false);
             EventManager.TriggerEvent<MusicAudioEvent, int>(0);
         }
@@ -50,6 +51,7 @@ public class FinalFightTrigger : MonoBehaviour
     {
         if (bossBar.activeInHierarchy)
         {
+            bossBar.GetComponentInChildren<BossBar>().resetToMax();
             bossBar.SetActive(false);
             EventManager.TriggerEvent<MusicAudioEvent, int>(0);
         }

@@ -17,4 +17,9 @@ public class BossBar : MonoBehaviour
     {
         healthBar.value = newHealth;
     }
+
+    public void resetToMax()
+    {
+        healthBar.value = healthBar.maxValue;
+    }
 }

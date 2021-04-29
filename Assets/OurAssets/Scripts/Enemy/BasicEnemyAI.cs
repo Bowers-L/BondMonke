@@ -471,7 +471,11 @@ public class BasicEnemyAI : MonoBehaviour
             elevatorAnim.SetBool("TutEnemyDefeated", true);
         }
 
-        defeated = true;
+        if (!defeated)
+        {
+            GameManager.Instance.uniqueEnemiesDefeated++;
+            defeated = true;
+        }
     }
 
     #region Animation Events

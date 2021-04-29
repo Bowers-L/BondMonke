@@ -35,6 +35,10 @@ public class GameManager : MonoBehaviour
 
     public PlaytestStats playtestStats;
 
+    public int totalEnemiesInScene;
+    public int totalCollectablesInScene;
+    public int uniqueEnemiesDefeated;
+
     public bool debugMode;
     public bool friendlyFire;
 
@@ -49,23 +53,20 @@ public class GameManager : MonoBehaviour
 
         playtestStats = new PlaytestStats();
 
+        uniqueEnemiesDefeated = 0;
+
         //menuOpen = false;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        totalEnemiesInScene = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        totalCollectablesInScene = GameObject.FindGameObjectsWithTag("Collectable").Length;
     }
 
     void OnApplicationQuit()
     {
-        playtestStats.PrintStats();
+        //playtestStats.PrintStats();
     }
 }

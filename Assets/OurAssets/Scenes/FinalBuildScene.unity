@@ -23544,11 +23544,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a80cfd4f7e1cac4593546b44e89973f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  finalCollectablePrefab: {fileID: 6213358478943689207, guid: ffdc47d21bedc58469c232bf97821b10,
+    type: 3}
   totalEnemiesInScene: 0
   totalCollectablesInScene: 0
   uniqueEnemiesDefeated: 0
   debugMode: 0
   friendlyFire: 0
+  startGameWithFinalCollectable: 0
 --- !u!4 &726100616
 Transform:
   m_ObjectHideFlags: 0

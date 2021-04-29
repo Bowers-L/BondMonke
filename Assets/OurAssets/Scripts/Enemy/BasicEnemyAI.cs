@@ -265,6 +265,7 @@ public class BasicEnemyAI : MonoBehaviour
 
     
     //Source: https://docs.unity3d.com/Manual/nav-CouplingAnimationAndNavigation.html
+    //WE'RE NOT ACTUALLY USING THIS
     private void UpdateMovement()
     {
         Vector3 worldDeltaPosition = navMeshAgent.nextPosition - transform.position;

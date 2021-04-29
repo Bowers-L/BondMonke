@@ -34,6 +34,7 @@ public class FinalCollectableUi : MonoBehaviour
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
             canvasGroup.alpha = 1f;
+            Cursor.visible = true;
             player.GetComponent<PlayerInputController>().enabled = false;
             Time.timeScale = 0f;
         }

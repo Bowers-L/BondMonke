@@ -13,6 +13,7 @@ public class GameStarter : MonoBehaviour
     }
     public void StartGame()
     {
+        Time.timeScale = 1.0f;
         StartCoroutine(FadeOut());
     }
 
@@ -42,5 +43,10 @@ public class GameStarter : MonoBehaviour
                 yield return null;
             }
         }
+    }
+
+    public void StartWithoutFade()
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }

@@ -8,6 +8,7 @@ public class respawn : MonoBehaviour
     public HealthBar health_bar;
     public StaminaBar stamina_bar;
     private GameObject[] enemies;
+    private GameObject[] collectables;
     public Material playerMaterial;
 
     private void Awake()
@@ -30,6 +31,7 @@ public class respawn : MonoBehaviour
         {
             Debug.LogError("there are no tagged enemies dangit");
         }
+        collectables = GameObject.FindGameObjectsWithTag("Collectable");
         if (stamina_bar == null)
         {
             stamina_bar = GameObject.Find("StaminaBar").GetComponent<StaminaBar>();
@@ -80,7 +82,13 @@ public class respawn : MonoBehaviour
             //player.GetComponent<PlayerStats>().staminaDelayCount = 0;
             player.GetComponent<PlayerController>().player_camera.enabled = true;   //in case the player fell
             player.GetComponent<Rigidbody>().velocity = Vector3.zero;   //make sure the player doesn't fly off
+            player.GetComponent<BallCollector>().ResetCollectableCount();
             //player.GetComponent<Rigidbody>().isKinematic = true;
+
+            foreach (GameObject collectable in collectables)
+            {
+                collectable.SetActive(true);
+            }
         }
     }
 }

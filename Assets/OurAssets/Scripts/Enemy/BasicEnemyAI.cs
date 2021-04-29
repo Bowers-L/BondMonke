@@ -69,6 +69,8 @@ public class BasicEnemyAI : MonoBehaviour
     private DamageCollider fist;
     private HurtBoxMarker hurtBox;
 
+    public bool defeated;   //Used for score calculation at the end (do not reset when enemy respawns)
+
     private void Awake()
     {   
         combat = GetComponent<CombatAgent>();
@@ -156,6 +158,8 @@ public class BasicEnemyAI : MonoBehaviour
 
         GameManager.Instance.controls.Player.LightAttack.performed += ctx => OnPlayerAttemptedAttack();
         GameManager.Instance.controls.Player.HeavyAttack.performed += ctx => OnPlayerAttemptedAttack();
+
+        defeated = false;
     }
 
     // Update is called once per frame
@@ -429,8 +433,6 @@ public class BasicEnemyAI : MonoBehaviour
 
     public void Die()
     {
-        //TODO: Kill the enemy
-
         CollectableDropper dropper = GetComponent<CollectableDropper>();
         if (dropper != null)
         {
@@ -468,6 +470,8 @@ public class BasicEnemyAI : MonoBehaviour
             Animator elevatorAnim = GameObject.Find("elevator").GetComponent<Animator>();
             elevatorAnim.SetBool("TutEnemyDefeated", true);
         }
+
+        defeated = true;
     }
 
     #region Animation Events

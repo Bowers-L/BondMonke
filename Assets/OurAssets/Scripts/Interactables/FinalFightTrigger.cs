@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class FinalFightTrigger : MonoBehaviour
 {
     public GameObject bossBar;
+    //public GameObject boss;
 
     private UnityAction<Vector3> playerDeathListener;
 

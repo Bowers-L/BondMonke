@@ -16,6 +16,7 @@ public class AudioEventManager : MonoBehaviour
     public AudioSource musicSource;
     public AudioClip baseMusic;
     public AudioClip bossMusic;
+    public AudioClip winMusic;
 
     private UnityAction<Vector3> punchEventListener;
     private UnityAction<Vector3> deathEventListener;
@@ -104,13 +105,28 @@ public class AudioEventManager : MonoBehaviour
 
     void musicEventHandler(int track)
     {
-        if (track == 0)
+        switch(track)
         {
-            playBaseMusic();
-        } else
-        {
-            playBossMusic();
+            case 0:
+                playBaseMusic();
+                break;
+            case 1:
+                playBossMusic();
+                break;
+            case 2:
+                playWinMusic();
+                break;
+            default:
+                playBaseMusic();
+                break;
         }
+    }
+
+    public void playWinMusic()
+    {
+        musicSource.Stop();
+        musicSource.clip = winMusic;
+        musicSource.Play();
     }
 
     public void playBossMusic()

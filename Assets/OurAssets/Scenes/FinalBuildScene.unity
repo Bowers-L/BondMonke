@@ -20394,6 +20394,18 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &480482697 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6418003657991028738, guid: 6b7d7530acfc78e45b30baac9785cc01,
+    type: 3}
+  m_PrefabInstance: {fileID: 1630453794}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c86e2450c14cd84cb7492c23aca8660, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &496183116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23472,6 +23484,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a80cfd4f7e1cac4593546b44e89973f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalEnemiesInScene: 0
+  totalCollectablesInScene: 0
+  uniqueEnemiesDefeated: 0
   debugMode: 0
   friendlyFire: 0
 --- !u!4 &726100616
@@ -30013,6 +30028,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6836859986073488720, guid: f39d2f4e7d7a19e4bac6207ad1cbeb95,
+        type: 3}
+      propertyPath: boss
+      value: 
+      objectReference: {fileID: 480482697}
     - target: {fileID: 6836859986073488720, guid: f39d2f4e7d7a19e4bac6207ad1cbeb95,
         type: 3}
       propertyPath: bossBar

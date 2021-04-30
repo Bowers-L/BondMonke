@@ -71,7 +71,9 @@ public class respawn : MonoBehaviour
             player.GetComponent<PlayerStats>().current_health = player.GetComponent<PlayerStats>().max_health;
             player.GetComponent<PlayerStats>().current_stamina = player.GetComponent<PlayerStats>().max_stamina;
             player.GetComponentInChildren<DeathFader>().enabled = false;
+            Debug.Log(player.GetComponentInChildren<Renderer>().material);
             player.GetComponentInChildren<Renderer>().material = playerMaterial;
+            
             player.GetComponent<PlayerController>().enabled = true;
             player.gameObject.SetActive(true);
             health_bar.setCurrentHealth(player.GetComponent<PlayerStats>().current_health);

@@ -189,7 +189,7 @@ public class PlayerController : MonoBehaviour
 
         if (input.Sprint)
         {
-            Debug.Log("Sprinting");
+            //Debug.Log("Sprinting");
             DisableLockOn();
             GameManager.Instance.playtestStats.incSprintTime();
             stats.StaminaCost(sprintStaminaCPF);
@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded)
         {
-            Debug.Log("Player dodged");
+            //Debug.Log("Player dodged");
             animator.SetTrigger("Roll");
         }
     }
@@ -220,7 +220,7 @@ public class PlayerController : MonoBehaviour
     {
         if (stats.current_stamina > 0)
         {
-            Debug.Log("Player punched");
+            //Debug.Log("Player punched");
             animator.SetTrigger("LightAttack");
 
         }
@@ -230,14 +230,14 @@ public class PlayerController : MonoBehaviour
     {
         if (stats.current_stamina > 0)
         {
-            Debug.Log("Player uppercut");
+            //Debug.Log("Player uppercut");
             animator.SetTrigger("HeavyAttack");
         }
     }
 
     public void OnLockOn()
     {
-        Debug.Log("Player Locked On");
+        //Debug.Log("Player Locked On");
         if (lockOn != null)
         {
             DisableLockOn();
@@ -249,7 +249,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteract()
     {
-        Debug.Log("Player interacted");
+        //Debug.Log("Player interacted");
         /*
         if (enteredBonfire)
         {
@@ -307,7 +307,7 @@ public class PlayerController : MonoBehaviour
     private bool EnableLockOn()
     {
         lockOn = findNearestCombatAgent();
-        Debug.Log(lockOn);
+        //Debug.Log(lockOn);
         if (lockOn != null)
         {
             GameManager.Instance.playtestStats.incLockOns();
@@ -454,7 +454,7 @@ public class PlayerController : MonoBehaviour
         enabled = false;
         if (GetComponentInChildren<DeathFader>() == null)
         {
-            Debug.Log("DeathFader not added to player mesh");
+           // Debug.Log("DeathFader not added to player mesh");
         }
         else
         {
@@ -464,6 +464,7 @@ public class PlayerController : MonoBehaviour
         //Death Animation
         EventManager.TriggerEvent<PlayerDeathEvent, Vector3>(rb.transform.position);
         EventManager.TriggerEvent<DeathAudioEvent, Vector3>(rb.transform.position);
+        EventManager.TriggerEvent<RespawnEvent>();
         animator.SetTrigger("Death");
         animator.SetTrigger("LockCombatLayer");
 

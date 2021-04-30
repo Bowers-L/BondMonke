@@ -13,7 +13,7 @@ public class CollectableBall : MonoBehaviour
             {
                 bc.ReceiveBall();
                 //EventManager.TriggerEvent<BombBounceEvent, Vector3>(c.transform.position);
-                Destroy(this.gameObject);
+                gameObject.SetActive(false);
             }
         }
     }

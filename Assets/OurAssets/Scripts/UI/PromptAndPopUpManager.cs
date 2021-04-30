@@ -71,7 +71,7 @@ public class PromptAndPopUpManager : MonoBehaviour
 
     public void switchCanvas()
     {
-        Debug.Log("Switching Canvas");
+        //Debug.Log("Switching Canvas");
         if (popUpCanvas.interactable)
         {
             disablePopUp();
@@ -85,7 +85,7 @@ public class PromptAndPopUpManager : MonoBehaviour
 
     public void enablePrompt()
     {
-        Debug.Log("EnablingPrompt");
+        //Debug.Log("EnablingPrompt");
         promptCanvas.interactable = true;
         promptCanvas.blocksRaycasts = true;
         promptCanvas.alpha = 1f;
@@ -93,9 +93,12 @@ public class PromptAndPopUpManager : MonoBehaviour
 
     public void disablePrompt()
     {
-        promptCanvas.interactable = false;
-        promptCanvas.blocksRaycasts = false;
-        promptCanvas.alpha = 0f;
+        if (Time.timeScale != 0f)
+        {
+            promptCanvas.interactable = false;
+            promptCanvas.blocksRaycasts = false;
+            promptCanvas.alpha = 0f;
+        }
     }
 
     public void enablePopUp()
@@ -103,12 +106,16 @@ public class PromptAndPopUpManager : MonoBehaviour
         //if (!GameManager.Instance.menuOpen)
         //{
         //GameManager.Instance.menuOpen = true;
-        popUpCanvas.interactable = true;
-        popUpCanvas.blocksRaycasts = true;
-        popUpCanvas.alpha = 1f;
-        Time.timeScale = 0f;
-        Cursor.visible = true;
-        controls.enabled = false;
+        //extremely hacky way to check if the game is already paused
+        if (Time.timeScale != 0f)
+        {
+            popUpCanvas.interactable = true;
+            popUpCanvas.blocksRaycasts = true;
+            popUpCanvas.alpha = 1f;
+            Time.timeScale = 0f;
+            Cursor.visible = true;
+            controls.enabled = false;
+        }
         //}
     }
 

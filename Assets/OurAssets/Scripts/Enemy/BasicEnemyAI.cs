@@ -30,7 +30,8 @@ public class BasicEnemyAI : MonoBehaviour
     public Animator playerAnim;
 
     public float rangeOfSight;
-    
+
+    public float patrolStoppingDistance;
     public float attackRange;
     public float attackRestTime;//time between executing an attack
     private float restTimer;
@@ -64,10 +65,14 @@ public class BasicEnemyAI : MonoBehaviour
 
     //Array of patrol points
     public GameObject[] patrolPoints;
+
+    [SerializeField]
     private int currPoint;
 
     private DamageCollider fist;
     private HurtBoxMarker hurtBox;
+
+    public bool defeated;   //Used for score calculation at the end (do not reset when enemy respawns)
 
     private void Awake()
     {   
@@ -138,6 +143,7 @@ public class BasicEnemyAI : MonoBehaviour
 
         currentState = EnemyState.PATROL;
         currPoint = 0;
+        this.navMeshAgent.stoppingDistance = patrolStoppingDistance;
 
 
         restTimer = 0;
@@ -156,6 +162,8 @@ public class BasicEnemyAI : MonoBehaviour
 
         GameManager.Instance.controls.Player.LightAttack.performed += ctx => OnPlayerAttemptedAttack();
         GameManager.Instance.controls.Player.HeavyAttack.performed += ctx => OnPlayerAttemptedAttack();
+
+        defeated = false;
     }
 
     // Update is called once per frame
@@ -163,7 +171,10 @@ public class BasicEnemyAI : MonoBehaviour
     {
 
         //Animate movement
-        anim.SetBool("Block", blocking);
+        if (enemyType == EnemyType.BLOCKING)
+        {
+            anim.SetBool("Block", blocking);
+        }
         anim.SetFloat("MovementY", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
         anim.SetFloat("MovementMag", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
         //combat.isBlocking = anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex("Combat")).IsName("Block");
@@ -202,6 +213,7 @@ public class BasicEnemyAI : MonoBehaviour
                 }
                 if (Vector3.Distance(this.transform.position, playerTransform.transform.position) > rangeOfSight)
                 {
+                    this.navMeshAgent.stoppingDistance = patrolStoppingDistance;
                     currentState = EnemyState.PATROL;
                 }
                 break;
@@ -217,8 +229,9 @@ public class BasicEnemyAI : MonoBehaviour
                 restTimer -= Time.deltaTime;
                 if (reset)
                 {
-                    navMeshAgent.SetDestination(originPoint);
+                    this.navMeshAgent.SetDestination(originPoint);
                     currentState = EnemyState.PATROL;
+                    this.navMeshAgent.stoppingDistance = patrolStoppingDistance;
                     reset = false;
                 }
                 break;
@@ -296,7 +309,7 @@ public class BasicEnemyAI : MonoBehaviour
     {
         if(other.transform.tag == "Player")
         {
-            Debug.Log("Enemy hit the player");
+            //Debug.Log("Enemy hit the player");
         }
     }
 
@@ -323,7 +336,7 @@ public class BasicEnemyAI : MonoBehaviour
 
     public void Chasing()
     {
-        if (!playerAnim.GetCurrentAnimatorStateInfo(playerAnim.GetLayerIndex("Combat")).IsTag("Attack"))
+        if (enemyType == EnemyType.BLOCKING && !playerAnim.GetCurrentAnimatorStateInfo(playerAnim.GetLayerIndex("Combat")).IsTag("Attack"))
         {
             //Get out of the blocking state before attacking
             blocking = false;
@@ -341,7 +354,7 @@ public class BasicEnemyAI : MonoBehaviour
         }
         else
         {
-            Debug.Log("Player transform not set");
+            //Debug.Log("Player transform not set");
         }
     }
 
@@ -350,7 +363,7 @@ public class BasicEnemyAI : MonoBehaviour
         //Enemy might be close enough to the player but not facing the player
         if (!isFacingPlayer())
         {
-            Debug.Log("Not facing the player!");
+            //Debug.Log("Not facing the player!");
 
             transform.rotation = Quaternion.Lerp(transform.rotation, 
                                                 Quaternion.LookRotation(playerTransform.position - transform.position, Vector3.up), 
@@ -370,7 +383,7 @@ public class BasicEnemyAI : MonoBehaviour
         if (restTimer <= 0)
         {
             //If player is still in an attacking state, don't unblock
-            if (!playerAnim.GetCurrentAnimatorStateInfo(playerAnim.GetLayerIndex("Combat")).IsTag("Attack"))
+            if (enemyType == EnemyType.BLOCKING && !playerAnim.GetCurrentAnimatorStateInfo(playerAnim.GetLayerIndex("Combat")).IsTag("Attack"))
             {
                 //Get out of the blocking state before attacking
                 blocking = false;
@@ -408,7 +421,7 @@ public class BasicEnemyAI : MonoBehaviour
             float blockChance = Random.Range(0f, 1f);
             if (blockChance <= blockRate)
             {
-                Debug.Log("Read player attack");
+                //Debug.Log("Read player attack");
                 blocking = true;
                 combat.isBlocking = true;
                 currentState = EnemyState.ATTACKING;
@@ -422,19 +435,18 @@ public class BasicEnemyAI : MonoBehaviour
 
         stats.current_health = stats.max_health;
         transform.position = originPoint;
-        anim.SetTrigger("Reset");
+        if (enemyType != EnemyType.BOSS)
+            anim.SetTrigger("Reset");
         reset = true;
 
     }
 
     public void Die()
     {
-        //TODO: Kill the enemy
-
         CollectableDropper dropper = GetComponent<CollectableDropper>();
         if (dropper != null)
         {
-            Debug.Log("Dropped Collectable");
+            //Debug.Log("Dropped Collectable");
             dropper.DropCollectable();
         }
 
@@ -447,7 +459,7 @@ public class BasicEnemyAI : MonoBehaviour
 
         if (GetComponentInChildren<DeathFader>() == null)
         {
-            Debug.Log("DeathFader not added to enemy mesh");
+            //Debug.Log("DeathFader not added to enemy mesh");
         }
         else
         {
@@ -467,6 +479,12 @@ public class BasicEnemyAI : MonoBehaviour
         {
             Animator elevatorAnim = GameObject.Find("elevator").GetComponent<Animator>();
             elevatorAnim.SetBool("TutEnemyDefeated", true);
+        }
+
+        if (!defeated)
+        {
+            GameManager.Instance.uniqueEnemiesDefeated++;
+            defeated = true;
         }
     }
 

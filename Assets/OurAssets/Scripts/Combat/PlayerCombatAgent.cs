@@ -21,41 +21,49 @@ class PlayerCombatAgent : CombatAgent
             lastUsedCollider.DisableDamageCollider();
         }
 
-        if (isBlocking)
+        if (opponent.GetComponent<BasicEnemyAI>().enemyType == BasicEnemyAI.EnemyType.BOSS)
         {
-            
-            stats.StaminaCost(attack.staminaPenaltyOnGuard);
-            if (stats.current_stamina <= 0)
-            {
-                GetComponent<Animator>().SetTrigger("BlockBroken");
-            }
-            
-        } else if (!isInvincible)  //Gives the player i-frames so that the combat is more fair.
-        {
+            GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
             GetComponent<PlayerStats>().TakeDamage(attack.damage);
-            if (stats.current_health > 0)
+        } else
+        {
+            if (isBlocking)
             {
-                if (stats.current_poise <= 0)
+
+                stats.StaminaCost(attack.staminaPenaltyOnGuard);
+                if (stats.current_stamina <= 0)
                 {
-                    GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
-                    stats.ResetPoise();
-                } else
-                {
-                    GetComponent<Animator>().SetTrigger("IFramesFromPoise");
+                    GetComponent<Animator>().SetTrigger("BlockBroken");
                 }
-                EventManager.TriggerEvent<PlayerHurtAudioEvent, Vector3>(opponent.transform.position);
+
             }
-            
-            if (attack.force > 0)
+            else if (!isInvincible)  //Gives the player i-frames so that the combat is more fair.
             {
-                //This is really hacky if the attack isn't performed in front of the enemy, 
-                //but all of our attacks are and we're only doing this with one enemy.
-                Rigidbody rb = GetComponent<Rigidbody>();
-                rb.isKinematic = false;
-                rb.AddForce(attack.force * opponent.transform.forward, ForceMode.Impulse);
-                //rb.AddForceAtPosition(attack.force * opponent.transform.forward, opponent.GetComponentInChildren<DamageCollider>().transform.position, ForceMode.Impulse);
+                GetComponent<PlayerStats>().TakeDamage(attack.damage);
+                if (stats.current_health > 0)
+                {
+                    if (stats.current_poise <= 0)
+                    {
+                        GetComponent<Animator>().SetTrigger("HitFrom" + attack.attackName);
+                        stats.ResetPoise();
+                    }
+                    else
+                    {
+                        GetComponent<Animator>().SetTrigger("IFramesFromPoise");
+                    }
+                    EventManager.TriggerEvent<PlayerHurtAudioEvent, Vector3>(opponent.transform.position);
+                }
             }
         }
 
+        if (attack.force > 0)
+        {
+            //This is really hacky if the attack isn't performed in front of the enemy, 
+            //but all of our attacks are and we're only doing this with one enemy.
+            Rigidbody rb = GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.AddForce(attack.force * opponent.transform.forward, ForceMode.Impulse);
+            //rb.AddForceAtPosition(attack.force * opponent.transform.forward, opponent.GetComponentInChildren<DamageCollider>().transform.position, ForceMode.Impulse);
+        }
     }
 }

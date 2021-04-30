@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class FinalFightTrigger : MonoBehaviour
 {
     public GameObject bossBar;
+    public BasicEnemyAI boss;
 
     private UnityAction<Vector3> playerDeathListener;
 
@@ -17,6 +18,16 @@ public class FinalFightTrigger : MonoBehaviour
         }
 
         playerDeathListener = new UnityAction<Vector3>(OnPlayerDeath);
+    }
+
+    public void Update()
+    {
+        if (boss.defeated)
+        {
+            bossBar.SetActive(false);
+            EventManager.TriggerEvent<MusicAudioEvent, int>(2);
+            enabled = false;
+        }
     }
 
     public void OnEnable()
@@ -41,6 +52,7 @@ public class FinalFightTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            bossBar.GetComponentInChildren<BossBar>().resetToMax();
             bossBar.SetActive(false);
             EventManager.TriggerEvent<MusicAudioEvent, int>(0);
         }
@@ -50,6 +62,7 @@ public class FinalFightTrigger : MonoBehaviour
     {
         if (bossBar.activeInHierarchy)
         {
+            bossBar.GetComponentInChildren<BossBar>().resetToMax();
             bossBar.SetActive(false);
             EventManager.TriggerEvent<MusicAudioEvent, int>(0);
         }

@@ -19,17 +19,25 @@ class EnemyCombatAgent : CombatAgent
         {
             lastUsedCollider.DisableDamageCollider();
         }
-        
+
+        Animator thisAnim = GetComponent<Animator>();
+        EnemyStats stats = GetComponent<EnemyStats>();
+
         if (isBlocking)
         {
             if (attack.breaksGuard)
             {
-                GetComponent<Animator>().SetTrigger("BlockBroken");
+                thisAnim.SetTrigger("BlockBroken");
             }
+        }
+        else if (thisAnim.GetCurrentAnimatorStateInfo(thisAnim.GetLayerIndex("Combat")).IsTag("EnemyStagger"))
+        {
+            EventManager.TriggerEvent<EnemyHurtAudioEvent, Vector3>(opponent.transform.position);
+            stats.TakeDamage(attack.damage);
         }
         else if (!isInvincible)
         {
-            EnemyStats stats = GetComponent<EnemyStats>();
+            
             if (stats != null && attack != null && gameObject.activeInHierarchy)
             {
                 stats.TakeDamage(attack.damage);
@@ -40,5 +48,7 @@ class EnemyCombatAgent : CombatAgent
                 }
             }
         }
+
+
     }
 }

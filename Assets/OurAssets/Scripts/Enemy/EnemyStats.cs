@@ -32,7 +32,7 @@ public class EnemyStats : MonoBehaviour
                 Debug.LogError("No Boss Bar in Hierarchy");
             }
             */
-            Debug.LogError("Forgot to set boss bar in hierarchy");
+            //Debug.LogError("Forgot to set boss bar in hierarchy");
         }
     }
 

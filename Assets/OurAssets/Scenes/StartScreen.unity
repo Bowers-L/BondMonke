@@ -3928,17 +3928,17 @@ MonoBehaviour:
     Boss Theme (Dies Irae) - IMSLP
 
     Win Theme (Mozart
-    3rd Violin Concerto) - IMSLP
+    3rd Violin Concerto) - HenriVieuxtemps (YouTube)
 
     Punch Sound - TheShaggyFreak
 
-    Hurt Sound
-    - Freesound (kevinkace)
+    Hurt
+    Sound - Freesound (kevinkace)
 
     Death Sound - Freesound (tonsil5)
 
-    Crate Breaking
-    Sound - Freesound (kevinkace)
+    Crate
+    Breaking Sound - Freesound (kevinkace)
 
 '
   m_isRightToLeft: 0
@@ -3967,8 +3967,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27
-  m_fontSizeBase: 27
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
